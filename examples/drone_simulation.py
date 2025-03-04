@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from src.simulation.drone import DroneFlight
 from src.google_maps import get_static_map, calculate_google_zoom
-from src.azure_maps import get_azure_maps_image, load_azure_maps_key, calculate_azure_zoom
+from src.azure_maps import get_azure_maps_image, calculate_azure_zoom
 from src.api.elevation import get_elevation
 from src.image_processing import crop_and_resize_azure_image, crop_and_resize_google_image
 import time

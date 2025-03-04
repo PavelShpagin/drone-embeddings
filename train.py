@@ -8,6 +8,11 @@ from src.models.siamese_net import SiameseNet
 from src.losses.triplet_loss import WeightedTripletLoss
 from src.utils.transforms import get_train_transforms
 from dotenv import load_dotenv, dotenv_values
+import json
+import os
+from PIL import Image
+import base64
+from io import BytesIO
 
 def calculate_distances_and_AP(query_embed, positive_embeds, negative_embeds):
     """Calculate distances and Average Precision for one query"""
@@ -64,6 +69,31 @@ def evaluate_model(model, dataloader, device, num_evaluations=5):
     model.train()
     return mean_AP, std_AP
 
+def save_batch_to_json(query, positive, negative, batch_idx, epoch, save_dir='data_samples'):
+    """Save batch images and metadata to JSON"""
+    os.makedirs(save_dir, exist_ok=True)
+    
+    def tensor_to_base64(tensor):
+        # Convert tensor to PIL Image and then to base64
+        img = Image.fromarray((tensor.cpu().numpy().transpose(1, 2, 0) * 255).astype('uint8'))
+        buffered = BytesIO()
+        img.save(buffered, format="PNG")
+        return base64.b64encode(buffered.getvalue()).decode()
+
+    batch_data = {
+        'epoch': epoch,
+        'batch_idx': batch_idx,
+        'images': {
+            'query': [tensor_to_base64(img) for img in query],
+            'positive': [tensor_to_base64(img) for img in positive],
+            'negative': [tensor_to_base64(img) for img in negative]
+        }
+    }
+    
+    json_path = os.path.join(save_dir, f'batch_{epoch}_{batch_idx}.json')
+    with open(json_path, 'w') as f:
+        json.dump(batch_data, f)
+
 def train():
     # Load config
     with open('config/train_config.yaml', 'r') as f:
@@ -119,7 +149,10 @@ def train():
         batch_count = 0
         progress_bar = tqdm(dataloader, desc=f'Epoch {epoch+1}')
         
-        for query, positive, negative in progress_bar:
+        for batch_idx, (query, positive, negative) in enumerate(progress_bar):
+            # Save batch data to JSON
+            save_batch_to_json(query, positive, negative, batch_idx, epoch)
+            
             # Move to device
             query = query.to(device)
             positive = positive.to(device)

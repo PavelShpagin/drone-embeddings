@@ -8,29 +8,7 @@ import numpy as np
 import math
 from datetime import datetime
 
-def load_azure_maps_key() -> str:
-    """
-    Load Azure Maps subscription key from the secrets file.
-    
-    Returns:
-        str: Azure Maps subscription key
-    
-    Raises:
-        FileNotFoundError: If the key file is not found
-        JSONDecodeError: If the key file is not valid JSON
-    """
-    KEY_PATH = Path("secrets/azure-maps-key.txt")
-    if not KEY_PATH.exists():
-        raise FileNotFoundError("Azure Maps key file not found at secrets/azure-maps-key.txt")
-    
-    try:
-        with open(KEY_PATH) as f:
-            key_data = json.load(f)
-        return key_data["api_key"]
-    except json.JSONDecodeError as e:
-        print(f"Error parsing API key JSON: {e}")
-        # If JSON parsing fails, try reading as plain text
-        return KEY_PATH.read_text().strip()
+from src.config import AZURE_MAPS_API_KEY
 
 def get_azure_maps_image(
     latitude: float,
@@ -45,7 +23,6 @@ def get_azure_maps_image(
     Retrieve a static map image from Azure Maps.
     
     Args:
-        subscription_key (str): Azure Maps subscription key
         latitude (float): Center latitude
         longitude (float): Center longitude
         zoom (int): Zoom level (0-20)
@@ -58,7 +35,7 @@ def get_azure_maps_image(
     """
     base_url = "https://atlas.microsoft.com/map/static"
 
-    subscription_key = load_azure_maps_key()
+    subscription_key = AZURE_MAPS_API_KEY
     
     headers = {
         'x-ms-client-id': 'd75127e2-c8d1-48b2-b401-3552da9fe791',  # Replace with your actual client ID
@@ -103,6 +80,7 @@ def get_azure_maps_image(
     except Exception as e:
         print(f"Error fetching Azure Maps image: {e}")
         return None
+
 
 def calculate_azure_zoom(altitude: float, lat: float, image_size: int = 256) -> int:
     """

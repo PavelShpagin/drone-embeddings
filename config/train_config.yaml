@@ -7,8 +7,8 @@ model:
 training:
   num_epochs: 50
   batch_size: 32
-  pos_samples: 5
-  neg_samples: 5
+  pos_samples: 3
+  neg_samples: 3
   learning_rate: 0.0001
   weight_decay: 0.0001
   alpha: 5  # triplet loss margin
