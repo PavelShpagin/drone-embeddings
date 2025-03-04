@@ -14,49 +14,62 @@ class DroneState:
     time: float
 
 class DroneFlight:
-    def __init__(self, 
-                 start_lat: float, 
-                 start_lng: float, 
-                 start_altitude: float,
-                 velocity: np.ndarray,
-                 noise_std: float = 0.1,
-                 dt: float = 1.0):
-        self.states: List[DroneState] = []
-        self.dt = dt
+    """
+    Simulates a drone's flight with drift and noise
+    """
+    def __init__(self, start_lat, start_lng, start_altitude, velocity, noise_std=0.1):
+        self.lat = start_lat
+        self.lng = start_lng
+        self.altitude = start_altitude
+        self.velocity = np.array(velocity)
         self.noise_std = noise_std
-        self.velocity = velocity
+        self.position = np.array([start_lat, start_lng, start_altitude])
         
-        # Initialize first state
-        self.current_state = DroneState(
-            position=np.array([0., 0., start_altitude]),
-            velocity=velocity,
-            lat=start_lat,
-            lng=start_lng,
-            altitude=start_altitude,
-            time=0.0
-        )
-        self.states.append(self.current_state)
+        # Initialize state history
+        self.position_history = [self.position.copy()]
+        self.velocity_history = [self.velocity.copy()]
     
-    def step(self) -> DroneState:
-        # Add Gaussian noise to velocity
+    def step(self):
+        """Move drone forward one time step with noise"""
+        # Add noise to velocity
         noisy_velocity = self.velocity + np.random.normal(0, self.noise_std, 3)
         
         # Update position
-        new_position = self.current_state.position + noisy_velocity * self.dt
+        self.position += noisy_velocity
+        self.lat, self.lng, self.altitude = self.position
         
-        # Update lat/lng based on displacement
-        new_lat = self.current_state.lat + noisy_velocity[0] * self.dt / 111111
-        new_lng = self.current_state.lng + noisy_velocity[1] * self.dt / (111111 * np.cos(np.radians(new_lat)))
+        # Store history
+        self.position_history.append(self.position.copy())
+        self.velocity_history.append(noisy_velocity.copy())
         
-        # Create new state
-        self.current_state = DroneState(
-            position=new_position,
-            velocity=noisy_velocity,
-            lat=new_lat,
-            lng=new_lng,
-            altitude=new_position[2],
-            time=self.current_state.time + self.dt
-        )
+        return self
+    
+    def update_state(self, new_lat, new_lng, new_altitude):
+        """
+        Update drone's state after correction
         
-        self.states.append(self.current_state)
-        return self.current_state 
+        Args:
+            new_lat: New latitude
+            new_lng: New longitude
+            new_altitude: New altitude
+        """
+        # Update position
+        self.lat = new_lat
+        self.lng = new_lng
+        self.altitude = new_altitude
+        self.position = np.array([new_lat, new_lng, new_altitude])
+        
+        # Update velocity based on position change
+        if len(self.position_history) > 0:
+            position_change = self.position - self.position_history[-1]
+            self.velocity = position_change  # New velocity based on correction
+        
+        # Store updated state
+        self.position_history.append(self.position.copy())
+        self.velocity_history.append(self.velocity.copy())
+        
+        return self
+    
+    def get_state(self):
+        """Get current state"""
+        return self.lat, self.lng, self.altitude, self.velocity 

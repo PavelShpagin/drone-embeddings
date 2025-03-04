@@ -19,3 +19,6 @@ numpy>=1.24.0
 
 # Path handling
 pathlib>=1.0.1
+seaborn>=0.12.2
+scipy
+matplotlib>=3.7.1
