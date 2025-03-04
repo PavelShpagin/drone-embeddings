@@ -54,3 +54,18 @@ nosetests.xml
 coverage.xml
 *.cover
 .hypothesis/ 
+
+# Google Cloud credentials
+**/earth-engine-key.json
+**/service-account*.json
+**/credentials*.json
+**/client_secrets*.json
+
+# General credentials and secrets
+**/*.pem
+**/*.key
+**/*.p12
+**/*.pfx
+**/*.keystore
+
+secrets/

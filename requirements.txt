@@ -1,5 +1,21 @@
-requests>=2.31.0
-matplotlib
+torch>=2.0.0
+torchvision>=0.15.0
+tqdm>=4.65.0
+pyyaml>=6.0
 python-dotenv>=1.0.0
-python-dotenv
-IPython
+pillow>=9.5.0
+requests>=2.31.0
+matplotlib>=3.7.1
+numpy>=1.24.3
+
+# Google Cloud & Earth Engine dependencies
+google-auth>=2.22.0
+google-auth-oauthlib>=1.0.0
+google-auth-httplib2>=0.1.0
+
+# Image processing
+Pillow>=10.0.0  # for PIL/Image handling
+numpy>=1.24.0
+
+# Path handling
+pathlib>=1.0.1

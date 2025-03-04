@@ -1,0 +1,10 @@
+model:
+  backbone: shufflenet_v2
+
+training:
+  epochs: 500
+  learning_rate: 0.001
+  batch_size: 32
+  margin: 1.0
+
+device: cuda if torch.cuda.is_available() else 'cpu' 
