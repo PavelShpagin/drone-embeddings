@@ -12,398 +12,823 @@ from dotenv import load_dotenv, dotenv_values
 import torch
 from PIL import Image
 from torchvision import transforms
+
+# Use pyproj for accurate coordinate transformations
+import pyproj
 from src.google_maps import get_static_map, calculate_google_zoom
 from src.azure_maps import get_azure_maps_image, calculate_azure_zoom
 from src.simulation.drone import DroneFlight
 from src.models.siamese_net import SiameseNet
 import pandas as pd
+from src.elevation import get_google_elevation
+
+# Import visualization functions (will be updated next)
+from examples.drone_inference_visualization import (
+    generate_method_visualizations,
+    plot_simulation_error,
+)
 
 # =============================================================================
-# Assume the following functions are defined/imported from your project:
-# get_static_map, calculate_google_zoom, DroneFlight, SiameseNet
-# For demonstration, we'll assume that these functions exist.
+# Helper Functions (like in drone_simulation.py)
 # =============================================================================
 
-# --- Extended GeoLocalizer with top-K lookup ---
+
+def enu_to_ecef_velocity(lat_deg, lon_deg, velocity_enu) -> np.ndarray:
+    """Transforms a velocity vector from local ENU to ECEF frame."""
+    lat_rad = np.radians(lat_deg)
+    lon_rad = np.radians(lon_deg)
+    sin_lat, cos_lat = np.sin(lat_rad), np.cos(lat_rad)
+    sin_lon, cos_lon = np.sin(lon_rad), np.cos(lon_rad)
+
+    # Rotation matrix from ENU to ECEF
+    R = np.array(
+        [
+            [-sin_lon, -sin_lat * cos_lon, cos_lat * cos_lon],
+            [cos_lon, -sin_lat * sin_lon, cos_lat * sin_lon],
+            [0, cos_lat, sin_lat],
+        ]
+    )
+
+    velocity_ecef = R @ np.asarray(velocity_enu)
+    return velocity_ecef
+
+
+# Transformer for LLA -> ECEF coordinate conversion (use class member in GeoLocalizer)
+# _transformer_to_ecef = pyproj.Transformer.from_crs("EPSG:4326", "EPSG:4978", always_xy=True)
+
+
+# =============================================================================
+# GeoLocalizer Class Modifications
+# =============================================================================
 class GeoLocalizer:
-    def __init__(self, model_path, config_path, secrets_path='.env'):
-        # Load config
-        with open(config_path, 'r') as f:
-            self.config = yaml.safe_load(f)
-        
+    def __init__(self, model_path, config_path, secrets_path=".env"):
+        # Load config with explicit encoding handling
+        try:
+            with open(config_path, "r", encoding="utf-8") as f:
+                self.config = yaml.safe_load(f)
+        except UnicodeDecodeError:
+            print(
+                f"Warning: Failed to load {config_path} with UTF-8 encoding. Trying latin-1."
+            )
+            try:
+                with open(config_path, "r", encoding="latin-1") as f:
+                    self.config = yaml.safe_load(f)
+            except Exception as e:
+                print(
+                    f"Error loading config file {config_path} with fallback encoding: {e}"
+                )
+                raise  # Re-raise the exception if fallback also fails
+        except Exception as e:
+            print(f"Error loading config file {config_path}: {e}")
+            raise  # Re-raise other potential errors
+
         # Load environment variables
         load_dotenv(secrets_path)
         self.secrets = dotenv_values(secrets_path)
-        
+
         # Set up device
-        self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         print(f"Using device: {self.device}")
-        
+
         # Initialize model (assumed SiameseNet)
-        model_config = self.config.get('model', {})
-        backbone_name = model_config.get('backbone', 'shufflenet_v2_x1_0')
-        pretrained = model_config.get('pretrained', True)
-        embedding_dim = model_config.get('embedding_dim', 128)
-        
-        print(f"Initializing model with {backbone_name}, embedding_dim: {embedding_dim}")
-        self.model = SiameseNet(backbone_name=backbone_name, 
-                                pretrained=pretrained,
-                                embedding_dim=embedding_dim)
+        model_config = self.config.get("model", {})
+        backbone_name = model_config.get("backbone", "shufflenet_v2_x1_0")
+        pretrained = model_config.get("pretrained", True)
+        embedding_dim = model_config.get("embedding_dim", 128)
+
+        print(
+            f"Initializing model with {backbone_name}, embedding_dim: {embedding_dim}"
+        )
+        self.model = SiameseNet(
+            backbone_name=backbone_name,
+            pretrained=pretrained,
+            embedding_dim=embedding_dim,
+        )
         # Load checkpoint
-        checkpoint = torch.load(model_path, map_location=self.device, weights_only=False)
-        if isinstance(checkpoint, dict) and 'model_state_dict' in checkpoint:
+        checkpoint = torch.load(
+            model_path, map_location=self.device, weights_only=False
+        )
+        if isinstance(checkpoint, dict) and "model_state_dict" in checkpoint:
             print("Loading model from 'model_state_dict' key")
-            self.model.load_state_dict(checkpoint['model_state_dict'])
+            self.model.load_state_dict(checkpoint["model_state_dict"])
         else:
             print("Loading model directly from checkpoint")
             self.model.load_state_dict(checkpoint)
-        
+
         self.model.to(self.device)
         self.model.eval()
-        
+
         # Set up image transformations
-        self.transform = transforms.Compose([
-            transforms.Resize((256, 256)),
-            transforms.ToTensor(),
-            transforms.Normalize(mean=[0.485, 0.456, 0.406],
-                                 std=[0.229, 0.224, 0.225])
-        ])
-        
+        self.transform = transforms.Compose(
+            [
+                transforms.Resize((256, 256)),
+                transforms.ToTensor(),
+                transforms.Normalize(
+                    mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]
+                ),
+            ]
+        )
+
+        # Transformer for coordinate conversions
+        self._transformer_to_ecef = pyproj.Transformer.from_crs(
+            "EPSG:4326", "EPSG:4978", always_xy=True
+        )
+
         # Database containers
         self.db_embeddings = None
-        self.db_coords = None
+        self.db_coords_ecef = None  # Store ECEF coordinates (x, y, z)
         self.db_images = None
 
     def extract_embedding(self, img_tensor):
         """Extract embedding using the model's forward_one method."""
         with torch.no_grad():
-            if hasattr(self.model, 'forward_one'):
+            if hasattr(self.model, "forward_one"):
                 embedding = self.model.forward_one(img_tensor)
                 return embedding.cpu().numpy()
             else:
                 try:
-                    if hasattr(self.model, 'get_embedding'):
+                    if hasattr(self.model, "get_embedding"):
                         return self.model.get_embedding(img_tensor).cpu().numpy()
-                    elif hasattr(self.model, 'embedding'):
+                    elif hasattr(self.model, "embedding"):
                         return self.model.embedding(img_tensor).cpu().numpy()
-                    elif hasattr(self.model, 'encode'):
+                    elif hasattr(self.model, "encode"):
                         return self.model.encode(img_tensor).cpu().numpy()
                     else:
                         return self.model(img_tensor).cpu().numpy()
                 except Exception as e:
                     print(f"Error extracting embedding: {e}")
-                    return np.zeros((1, 512))
-    
-    def build_database(self, lat_center, lng_center, grid_size=9, 
-                       step_meters=50, height_range=30, base_height=100):
-        """Build a database of embeddings for a grid of coordinates."""
+                    # Return a default shape or None if needed
+                    embedding_dim = getattr(
+                        self.model, "embedding_dim", 128
+                    )  # Get dim if possible
+                    return np.zeros((1, embedding_dim))
+
+    def build_database(
+        self,
+        lat_center,
+        lng_center,
+        grid_size=9,
+        step_meters=50,
+        height_range=30,
+        base_height=100,
+    ):
+        """Build a database of embeddings and coordinates (LLA & ECEF)."""
         print(f"Building database around ({lat_center}, {lng_center})...")
-        
+
         lat_deg, lng_deg = self._meters_to_degrees(step_meters, lat_center)
-        lat_range = np.linspace(lat_center - lat_deg * grid_size/2, 
-                                lat_center + lat_deg * grid_size/2, grid_size)
-        lng_range = np.linspace(lng_center - lng_deg * grid_size/2, 
-                                lng_center + lng_deg * grid_size/2, grid_size)
-        height_values = np.array([base_height - height_range, base_height, base_height + height_range])
-        
+        lat_range = np.linspace(
+            lat_center - lat_deg * grid_size / 2,
+            lat_center + lat_deg * grid_size / 2,
+            grid_size,
+        )
+        lng_range = np.linspace(
+            lng_center - lng_deg * grid_size / 2,
+            lng_center + lng_deg * grid_size / 2,
+            grid_size,
+        )
+        height_values = np.array(
+            [base_height - height_range, base_height, base_height + height_range]
+        )
+
         coordinates = []
         for height in height_values:
             for lng in lng_range:
                 for lat in lat_range:
                     coordinates.append((lat, lng, height))
-        
+
         embeddings = []
-        valid_coords = []
+        valid_coords_ecef = []  # Store ECEF coordinates
         images = []
-        
+
         print(f"Fetching {len(coordinates)} images for database...")
         for i, (lat, lng, height) in enumerate(coordinates):
-            print(f"Fetching database image {i+1}/{len(coordinates)}...")
+            # Use print with flush to see progress immediately
+            print(
+                f"\rFetching database image {i+1}/{len(coordinates)}...",
+                end="",
+                flush=True,
+            )
             # Alternate between providers if needed (here we call get_static_map)
             img = get_static_map(lat, lng, calculate_google_zoom(height, lat))
             if img is not None:
-                img_tensor = self.transform(img.convert('RGB')).unsqueeze(0).to(self.device)
+                img_tensor = (
+                    self.transform(img.convert("RGB")).unsqueeze(0).to(self.device)
+                )
                 try:
                     embedding = self.extract_embedding(img_tensor)
-                    embeddings.append(embedding[0])
-                    valid_coords.append((lat, lng, height))
-                    images.append(img)
+                    # Check if embedding is valid before proceeding
+                    if (
+                        embedding is not None
+                        and embedding.ndim == 2
+                        and embedding.shape[0] > 0
+                        and embedding.shape[1] > 0
+                    ):
+                        # Convert LLA to ECEF
+                        x, y, z = self._transformer_to_ecef.transform(lng, lat, height)
+                        ecef_coord = np.array([x, y, z])
+
+                        embeddings.append(embedding[0])  # Assuming batch size 1
+                        valid_coords_ecef.append(ecef_coord)
+                        images.append(
+                            img
+                        )  # Append image only if embedding and coords are successful
+                    else:
+                        # This else belongs to the inner embedding check
+                        print(
+                            f"\nWarning: Got invalid embedding for point {i+1} ({lat:.4f}, {lng:.4f}). Skipping."
+                        )
                 except Exception as e:
-                    print(f"Failed to get embedding for point {i}: {e}")
-            time.sleep(0.5)
-        
+                    # This except belongs to the try block
+                    print(f"\nError processing point {i+1} ({lat:.4f}, {lng:.4f}): {e}")
+            else:
+                # This else belongs to the outer "if img is not None"
+                print(
+                    f"\nWarning: Failed to fetch image for point {i+1} ({lat:.4f}, {lng:.4f}). Skipping."
+                )
+
+            time.sleep(0.2)  # Reduced sleep slightly
+
+        print(
+            f"\nDatabase built with {len(valid_coords_ecef)} points"
+        )  # Newline after progress indicator
+
         self.db_embeddings = np.array(embeddings)
-        self.db_coords = valid_coords
+        self.db_coords_ecef = np.array(valid_coords_ecef)
         self.db_images = images
-        
-        print(f"Database built with {len(valid_coords)} points")
-        return valid_coords
-    
+        # No return needed, data stored in self
+
     def find_closest_point(self, query_img):
-        """Return the single best match from the database."""
-        if self.db_embeddings is None:
-            raise ValueError("Database not built. Call build_database first.")
-        
-        query_tensor = self.transform(query_img.convert('RGB')).unsqueeze(0).to(self.device)
+        """Return the single best match (LLA, ECEF, similarity, index)."""
+        if self.db_embeddings is None or len(self.db_embeddings) == 0:
+            raise ValueError(
+                "Database not built or is empty. Call build_database first."
+            )
+
+        query_tensor = (
+            self.transform(query_img.convert("RGB")).unsqueeze(0).to(self.device)
+        )
         try:
-            query_embedding = self.extract_embedding(query_tensor)[0]
+            query_embedding = self.extract_embedding(query_tensor)
+            if query_embedding is None or query_embedding.shape[0] == 0:
+                raise ValueError("Empty query embedding")
+            query_embedding = query_embedding[0]  # Assuming batch size 1
         except Exception as e:
             print(f"Error extracting query embedding: {e}")
-            idx = np.random.randint(0, len(self.db_coords))
-            return self.db_coords[idx], 0.0, idx
-        
-        distances = distance.cdist([query_embedding], self.db_embeddings, 'cosine')[0]
+            idx = np.random.randint(0, len(self.db_coords_ecef))
+            return (
+                None,
+                self.db_coords_ecef[idx],
+                0.0,
+                idx,
+            )  # Return random point
+
+        distances = distance.cdist([query_embedding], self.db_embeddings, "cosine")[0]
         best_idx = np.argmin(distances)
         similarity = 1 - distances[best_idx]
-        return self.db_coords[best_idx], similarity, best_idx
+        return (
+            None,
+            self.db_coords_ecef[best_idx],
+            similarity,
+            best_idx,
+        )
 
     def find_top_k_points(self, query_img, k=5):
-        """Find the top K closest points in the database to the query image"""
-        if self.db_embeddings is None:
-            raise ValueError("Database not built. Call build_database first.")
-        
+        """Find the top K closest points (LLA coords, ECEF coords, similarities, indices)."""
+        if self.db_embeddings is None or len(self.db_embeddings) == 0:
+            raise ValueError(
+                "Database not built or is empty. Call build_database first."
+            )
+
         # Process query image
-        query_tensor = self.transform(query_img.convert('RGB')).unsqueeze(0).to(self.device)
-        
+        query_tensor = (
+            self.transform(query_img.convert("RGB")).unsqueeze(0).to(self.device)
+        )
+
         # Get query embedding
         try:
-            # Get embedding from model
-            print(f"Query tensor shape: {query_tensor.shape}")
             query_embedding = self.extract_embedding(query_tensor)
-            
-            # Handle different return types
-            if isinstance(query_embedding, np.ndarray):
-                if query_embedding.ndim > 1:
-                    query_embedding = query_embedding[0]  # Get first element if array of arrays
-            elif isinstance(query_embedding, torch.Tensor):
-                query_embedding = query_embedding.cpu().numpy()
-                if query_embedding.ndim > 1:
-                    query_embedding = query_embedding[0]
-                
-            print(f"Query embedding shape: {query_embedding.shape}")
-            
+            if query_embedding is None or query_embedding.shape[0] == 0:
+                raise ValueError("Empty query embedding")
+            query_embedding = query_embedding[0]  # Assuming batch size 1
         except Exception as e:
             print(f"Error extracting query embedding: {e}")
-            # Return random points if we can't get an embedding
-            import random
-            indices = random.sample(range(len(self.db_coords)), min(k, len(self.db_coords)))
-            return [self.db_coords[i] for i in indices], [0.0] * len(indices), indices
-        
-        # Compute distances to all database points
-        print(f"Query embedding: {query_embedding.shape}, DB embeddings: {self.db_embeddings.shape}")
-        distances = distance.cdist([query_embedding], self.db_embeddings, 'cosine')[0]
-        
+            # Return random points if failed
+            num_available = len(self.db_coords_ecef)
+            actual_k = min(k, num_available)
+            indices = np.random.choice(num_available, actual_k, replace=False)
+            return (
+                None,
+                [self.db_coords_ecef[i] for i in indices],  # Also return random ECEF
+                [0.0] * actual_k,
+                indices,
+            )
+
+        # Compute distances
+        distances = distance.cdist([query_embedding], self.db_embeddings, "cosine")[0]
+
         # Find top k points
-        top_indices = np.argsort(distances)[:k]
-        top_coords = [self.db_coords[i] for i in top_indices]
-        similarities = [1 - distances[i] for i in top_indices]  # Convert cosine distance to similarity
-        
+        # Ensure k is not larger than the database size
+        num_available = len(self.db_coords_ecef)
+        actual_k = min(k, num_available)
+        if actual_k < k:
+            print(
+                f"Warning: Requested k={k}, but database only has {num_available} points. Returning {actual_k} points."
+            )
+
+        top_indices = np.argsort(distances)[:actual_k]
+
+        # Retrieve corresponding ECEF coordinates
+        top_coords_ecef = [self.db_coords_ecef[i] for i in top_indices]
+
+        similarities = [1 - distances[i] for i in top_indices]
+
         print(f"Found {len(top_indices)} matches with similarities: {similarities}")
-        
-        # Make sure we're returning all three values
-        return top_coords, similarities, top_indices
+
+        return None, top_coords_ecef, similarities, top_indices
 
     def _meters_to_degrees(self, meters, latitude):
-        """Convert meters to degrees."""
+        """Approximate conversion of meters to degrees."""
         lat_deg = meters / 111111
         lng_deg = meters / (111111 * np.cos(np.radians(latitude)))
         return lat_deg, lng_deg
 
-# =============================================================================
-# Dual-Trajectory Simulation and Correction Methods
-# =============================================================================
 
+# =============================================================================
+# Simplified Simulation Function
+# =============================================================================
 def simulate_dual_trajectories(
-    start_lat, start_lng, start_altitude, velocity, 
-    model_path, config_path,
-    drift_std=0.1, drift_velocity=np.array([0.1, -0.05, 0.02]),
-    duration=50, sample_interval=1):
+    start_lat,
+    start_lng,
+    start_altitude,
+    velocity_enu,
+    model_path,
+    config_path,
+    drift_std=0.1,
+    drift_velocity_enu=np.array([0.1, -0.05, 0.02]),
+    duration=50,
+    sample_interval=1,
+):
     """
-    Simulate both true and drifted trajectories, apply correction methods
-    
-    Args:
-        start_lat, start_lng, start_altitude: Starting position
-        velocity: Base velocity vector for both drones
-        model_path, config_path: Paths for model and config
-        drift_std: Standard deviation of the Gaussian noise added to drifted trajectory
-        drift_velocity: Additional velocity vector added to drifted trajectory
-        duration: Duration of simulation in seconds
-        sample_interval: Interval between sampling points
-    
+    Simulates true/drifted trajectories, applies Top-K Mean Momentum correction,
+    and returns ECEF coordinates, error metrics, and database info.
+
+    Noise (drift_std) is applied to the drifted trajectory's velocity in the ENU frame at each step.
+
     Returns:
-        DataFrame with trajectory data and statistics
+        tuple: (df, true_ecef, drifted_ecef, corrected_ecef, db_ecef, transformer)
     """
-    # Create output directories
-    os.makedirs('output/drone_inference', exist_ok=True)
-    
-    # Initialize GeoLocalizer
-    localizer = GeoLocalizer(model_path, config_path)
-    
-    # Build database around start point
+    os.makedirs("output/drone_inference", exist_ok=True)
+
+    # --- Ensure correct arguments are passed to GeoLocalizer ---
+    # The first argument should be the model path (.pth)
+    # The second argument should be the config path (.yaml)
+    print(f"Initializing GeoLocalizer with model: {model_path}, config: {config_path}")
+    localizer = GeoLocalizer(model_path=model_path, config_path=config_path)
+    # ----------------------------------------------------------
+
+    # Build database
+    grid_size_db = localizer.config.get("database", {}).get("grid_size", 15)
+    # ... (load other db params) ...
     localizer.build_database(
         lat_center=start_lat,
         lng_center=start_lng,
-        grid_size=2,  # Expanded grid
-        step_meters=100,
-        base_height=start_altitude
+        grid_size=grid_size_db,
+        base_height=start_altitude,  # Use start_altitude as base_height default
+        height_range=localizer.config.get("database", {}).get("height_range", 30),
+        step_meters=localizer.config.get("database", {}).get("step_meters", 50),
     )
-    
-    # Initialize true drone flight
-    true_drone = DroneFlight(
-        start_lat=start_lat,
-        start_lng=start_lng,
-        start_altitude=start_altitude,
-        velocity=velocity,
-        noise_std=0.01  # Small noise for true trajectory
-    )
-    
-    # Initialize drifted drone flight
-    # Start from same position but with drift
-    drifted_drone = DroneFlight(
-        start_lat=start_lat,
-        start_lng=start_lng,
-        start_altitude=start_altitude,
-        velocity=velocity + drift_velocity,
-        noise_std=drift_std  # Larger noise for drifted trajectory
-    )
-    
-    # Initialize correction methods
-    method1_drone_pos = [(start_lat, start_lng, start_altitude)]  # top 1 constant shift
-    method2_drone_pos = [(start_lat, start_lng, start_altitude)]  # top K mean shift
-    method3_drone_pos = [(start_lat, start_lng, start_altitude)]  # top K weighted by std
-    method4_drone_pos = [(start_lat, start_lng, start_altitude)]  # top K gaussian product
-    
-    # Initialize data collectors
-    true_positions = []
-    true_coords = []
-    drifted_positions = []
-    drifted_coords = []
-    
-    # Top K for methods (hyperparameter)
-    K = 5
-    
-    # Shift strength factor (hyperparameter)
-    alpha = 0.3  # How strongly to shift towards the prediction (0 to 1)
-    
-    # Data collection for analysis
-    data = []
-    
-    # Run simulation
-    for t in range(duration):
-        # Step drones forward
-        true_state = true_drone.step()
-        drifted_state = drifted_drone.step()
-        
-        # Extract individual x, y, z components to make it easier to convert to numpy array later
-        true_pos = true_state.position
-        true_positions.append([true_pos[0], true_pos[1], true_pos[2]])
-        true_coords.append((true_state.lat, true_state.lng, true_state.altitude))
-        
-        drifted_pos = drifted_state.position
-        drifted_positions.append([drifted_pos[0], drifted_pos[1], drifted_pos[2]])
-        drifted_coords.append((drifted_state.lat, drifted_state.lng, drifted_state.altitude))
-        
-        # Process every sample_interval steps
-        if t % sample_interval == 0:
-            print(f"\nTime step: {t}/{duration}")
-            
-            # Get true image at current position
-            if t % 2 == 0:
-                true_img = get_static_map(
-                    true_state.lat, true_state.lng,
-                    calculate_google_zoom(true_state.altitude, true_state.lat),
-                    scale=2
-                )
-            else:
-                true_img = get_azure_maps_image(
-                    true_state.lat, true_state.lng,
-                    calculate_azure_zoom(true_state.altitude, true_state.lat),
-                    size=256, scale=2
-                )
-            
-            if true_img is None:
-                print(f"Warning: Could not get image at {t}, skipping correction")
-                continue
-            
-            # Find top K matches
-            top_coords, similarities, indices = localizer.find_top_k_points(true_img, k=K)
-            
-            # Save current drone position in lat, lng, alt format
-            current_drifted = np.array([drifted_state.lat, drifted_state.lng, drifted_state.altitude])
-            current_true = np.array([true_state.lat, true_state.lng, true_state.altitude])
-            
-            # Convert top coordinates to numpy array
-            top_coords_array = np.array(top_coords)
-            
-            # Method 1: Simple shift towards top 1 prediction (constant shift)
-            top_1_coord = np.array(top_coords[0])
-            method1_shift = alpha * (top_1_coord - current_drifted)
-            method1_new_pos = current_drifted + method1_shift
-            method1_drone_pos.append(tuple(method1_new_pos))
-    
-    # Convert lists to numpy arrays for proper indexing
-    true_positions = np.array(true_positions)
-    drifted_positions = np.array(drifted_positions)
-    
-    # Convert method positions to numpy arrays - skipping the initial position which was repeated
-    method1_positions = lat_lng_alt_to_xyz(method1_drone_pos[1:], start_lat, start_lng)
-    method2_positions = lat_lng_alt_to_xyz(method2_drone_pos[1:], start_lat, start_lng)
-    method3_positions = lat_lng_alt_to_xyz(method3_drone_pos[1:], start_lat, start_lng)
-    method4_positions = lat_lng_alt_to_xyz(method4_drone_pos[1:], start_lat, start_lng)
-    
-    # Now the arrays can be properly indexed with [:, 0], [:, 1], [:, 2]
-    
-    # Visualization functions would work correctly here with numpy arrays
-    
-    # Return the data frame for analysis
-    return pd.DataFrame(data)
 
-def lat_lng_alt_to_xyz(coords_list, ref_lat, ref_lng):
-    """
-    Convert list of (lat, lng, alt) tuples to numpy array of (x, y, z) relative to reference
-    
-    Args:
-        coords_list: List of (lat, lng, alt) tuples
-        ref_lat: Reference latitude in degrees
-        ref_lng: Reference longitude in degrees
-    
-    Returns:
-        numpy array of shape (n, 3) with [x, y, z] coordinates in meters
-    """
-    result = []
-    for lat, lng, alt in coords_list:
-        # Convert to meters from reference point
-        # 1 degree of latitude is approximately 111,111 meters
-        x = (lat - ref_lat) * 111111
-        # 1 degree of longitude varies with latitude
-        y = (lng - ref_lng) * 111111 * np.cos(np.radians(ref_lat))
-        # Altitude is already in meters
-        z = alt
-        result.append([x, y, z])
-    
-    # Return as numpy array for easier indexing
-    return np.array(result) if result else np.zeros((0, 3))
+    db_positions_ecef = localizer.db_coords_ecef
+    if db_positions_ecef is None or len(db_positions_ecef) == 0:
+        print("Warning: Database ECEF coordinates are empty.")
+        db_positions_ecef = np.empty((0, 3))
+
+    transformer_to_ecef = localizer._transformer_to_ecef
+    start_x, start_y, start_z = transformer_to_ecef.transform(
+        start_lng, start_lat, start_altitude
+    )
+    initial_pos_ecef = np.array([start_x, start_y, start_z])
+
+    # Calculate intended ECEF velocities (deterministic part)
+    true_velocity_ecef = enu_to_ecef_velocity(start_lat, start_lng, velocity_enu)
+    intended_drifted_velocity_ecef = enu_to_ecef_velocity(
+        start_lat, start_lng, velocity_enu + drift_velocity_enu
+    )
+
+    # --- Initialize DroneFlight using correct parameters (NO noise_std) ---
+    print("Initializing drone objects...")
+    try:
+        true_drone = DroneFlight(
+            start_lat=start_lat,
+            start_lng=start_lng,
+            start_altitude=start_altitude,
+            velocity_ecef=true_velocity_ecef,
+        )
+        drifted_drone = DroneFlight(
+            start_lat=start_lat,
+            start_lng=start_lng,
+            start_altitude=start_altitude,
+            velocity_ecef=intended_drifted_velocity_ecef,  # Store the base drift velocity
+        )
+    except TypeError as e:
+        print(f"Error initializing DroneFlight: {e}")
+        print(
+            "Please ensure DroneFlight.__init__ accepts 'start_lat', 'start_lng', 'start_altitude', 'velocity_ecef' keyword arguments."
+        )
+        raise  # Re-raise the error after printing context
+    # --------------------------------------------------
+
+    # Data collectors
+    data = []
+    true_positions_ecef = [initial_pos_ecef.copy()]
+    drifted_positions_ecef = [initial_pos_ecef.copy()]
+    corrected_positions_ecef = [initial_pos_ecef.copy()]  # Renamed from method2
+
+    # Momentum vector (only one needed now)
+    momentum = np.zeros(3)  # Renamed from momentum2
+
+    correction_params = localizer.config.get("correction", {})
+    beta = correction_params.get("momentum_beta", 0.9)
+    alpha = correction_params.get("adjustment_alpha", 0.05)
+    smoothing_window = correction_params.get("smoothing_window", 5)
+    K = correction_params.get("top_k", 5)
+
+    prev_positions = []  # Renamed from prev_positions2
+
+    def apply_momentum_correction_ecef(
+        current_pos_ecef, target_pos_ecef, momentum, prev_positions, alpha, beta
+    ):
+        # (This helper function remains the same as before)
+        raw_adjustment = np.asarray(target_pos_ecef) - np.asarray(current_pos_ecef)
+        scaled_adjustment = alpha * raw_adjustment
+        momentum = beta * momentum + (1 - beta) * scaled_adjustment
+        new_pos = current_pos_ecef + momentum
+
+        prev_positions.append(new_pos)
+        if len(prev_positions) > smoothing_window:
+            prev_positions.pop(0)
+        if len(prev_positions) > 1:
+            weights = np.exp(
+                np.linspace(
+                    -1.0 * (smoothing_window - 1) / smoothing_window,
+                    0,
+                    len(prev_positions),
+                )
+            )
+            weights /= weights.sum()
+            smoothed_pos = np.average(prev_positions, axis=0, weights=weights)
+            return smoothed_pos, momentum
+        return new_pos, momentum
+
+    last_query_img_failed = False
+    print(f"Running simulation for {duration} steps...")
+    for t in range(duration):
+        # --- Step 1: Move the true drone (deterministic) ---
+        true_drone.step()
+
+        # --- Step 2: Calculate noisy velocity for the drifted drone ---
+        # Get current drifted state for noise calculation reference
+        drift_lat, drift_lng, _, intended_vel_ecef = drifted_drone.get_state()
+
+        # Convert intended ECEF velocity to ENU at current drifted location
+        intended_vel_enu = DroneFlight._ecef_to_enu_velocity(
+            drift_lat, drift_lng, intended_vel_ecef
+        )
+
+        # Add Gaussian noise in the ENU frame
+        noise_enu = np.random.normal(0, drift_std, 3)
+        noisy_vel_enu = intended_vel_enu + noise_enu
+
+        # Convert noisy ENU velocity back to ECEF
+        noisy_vel_ecef_step = DroneFlight._enu_to_ecef_velocity(
+            drift_lat, drift_lng, noisy_vel_enu
+        )
+
+        # --- Step 3: Move the drifted drone using the noisy velocity ---
+        drifted_drone.step(velocity_step_ecef=noisy_vel_ecef_step)
+
+        # --- Step 4: Record positions ---
+        true_pos_ecef = true_drone.position
+        drifted_pos_ecef = drifted_drone.position
+        true_positions_ecef.append(true_pos_ecef.copy())
+        drifted_positions_ecef.append(drifted_pos_ecef.copy())
+
+        # --- Step 5: Perform Localization and Correction (using drifted LLA) ---
+        drift_lat_curr, drift_lng_curr, drift_alt_curr, _ = drifted_drone.get_state()
+
+        current_data_step = {
+            "time": t,
+            "error_original": np.linalg.norm(drifted_pos_ecef - true_pos_ecef),
+        }
+        top_k_indices_current = []
+
+        if t % sample_interval == 0 and not last_query_img_failed:
+            query_img = None
+            try:
+                # Use current drifted LLA for fetching images
+                zoom_level_g = calculate_google_zoom(drift_alt_curr, drift_lat_curr)
+                zoom_level_a = calculate_azure_zoom(drift_alt_curr, drift_lat_curr)
+
+                if t % (2 * sample_interval) == 0:
+                    query_img = get_static_map(
+                        drift_lat_curr, drift_lng_curr, zoom_level_g, scale=2
+                    )
+                else:
+                    query_img = get_azure_maps_image(
+                        drift_lat_curr, drift_lng_curr, zoom_level_a, size=256, scale=2
+                    )
+
+                if query_img is None:
+                    print(f"\nWarning: Failed to fetch query image at step {t}.")
+                    last_query_img_failed = True
+                    # Predict next corrected position based on momentum only
+                    corrected_positions_ecef.append(
+                        corrected_positions_ecef[-1] + momentum
+                    )
+                else:
+                    last_query_img_failed = False
+                    print(f"\rStep {t}/{duration}: Localizing...", end="", flush=True)
+                    try:
+                        # Find top K matches (returns LLA, ECEF, similarities, indices)
+                        _, top_coords_ecef, similarities, indices = (
+                            localizer.find_top_k_points(query_img, k=K)
+                        )
+                        top_k_indices_current = indices.tolist()
+
+                        current_drifted_ecef = drifted_pos_ecef
+                        top_coords_ecef_array = np.array(top_coords_ecef)
+
+                        # --- Top-K Mean Shift (ECEF) --- ONLY METHOD NOW ---
+                        top_k_mean_ecef = np.mean(top_coords_ecef_array, axis=0)
+                        corrected_new_pos, momentum = apply_momentum_correction_ecef(
+                            current_drifted_ecef,
+                            top_k_mean_ecef,
+                            momentum,
+                            prev_positions,
+                            alpha
+                            * np.mean(similarities),  # Scale alpha by mean similarity
+                            beta,
+                        )
+                        corrected_positions_ecef.append(corrected_new_pos)
+                        # -----------------------------------------------------
+
+                        # Store similarities and momentum
+                        current_data_step["similarity_top1"] = (
+                            similarities[0] if similarities else 0
+                        )
+                        current_data_step["similarity_mean"] = (
+                            np.mean(similarities) if similarities else 0
+                        )
+                        current_data_step["momentum_magnitude"] = np.linalg.norm(
+                            momentum
+                        )  # Renamed
+                    except Exception as e:
+                        print(
+                            f"\nError during localization/correction at step {t}: {e}"
+                        )
+                        # Predict next corrected position based on momentum only
+                        corrected_positions_ecef.append(
+                            corrected_positions_ecef[-1] + momentum
+                        )
+            except Exception as e:
+                print(f"\nError fetching image at step {t}: {e}")
+                last_query_img_failed = True
+                # Predict next corrected position based on momentum only
+                corrected_positions_ecef.append(corrected_positions_ecef[-1] + momentum)
+        else:  # Not a sample interval or image failed previously
+            # Predict next corrected position based on momentum only
+            corrected_positions_ecef.append(corrected_positions_ecef[-1] + momentum)
+
+        # --- Step 6: Calculate and store corrected error ---
+        current_true_ecef = true_positions_ecef[-1]  # Get the latest true position
+        current_data_step["error_corrected"] = np.linalg.norm(
+            corrected_positions_ecef[-1] - current_true_ecef
+        )
+
+        # Store top_k_indices
+        current_data_step["top_k_indices"] = (
+            top_k_indices_current if top_k_indices_current else None
+        )
+        data.append(current_data_step)
+
+    print("\nSimulation finished.")
+
+    # Convert lists to numpy arrays
+    true_positions_ecef_np = np.array(true_positions_ecef)
+    drifted_positions_ecef_np = np.array(drifted_positions_ecef)
+    corrected_positions_ecef_np = np.array(corrected_positions_ecef)  # Renamed
+
+    # Pad/Trim arrays
+    target_len = duration + 1
+
+    def pad_or_trim(arr, length):
+        # (This helper function remains the same)
+        if len(arr) < length:
+            padding = np.repeat(arr[-1:], length - len(arr), axis=0)
+            return np.vstack((arr, padding))
+        elif len(arr) > length:
+            return arr[:length]
+        return arr
+
+    true_positions_ecef_np = pad_or_trim(true_positions_ecef_np, target_len)
+    drifted_positions_ecef_np = pad_or_trim(drifted_positions_ecef_np, target_len)
+    corrected_positions_ecef_np = pad_or_trim(
+        corrected_positions_ecef_np, target_len
+    )  # Renamed
+
+    df = pd.DataFrame(data)
+
+    # Print summary statistics
+    if (
+        not df.empty
+        and "error_original" in df.columns
+        and "error_corrected" in df.columns
+    ):
+        avg_orig_error = df["error_original"].mean()
+        avg_corr_error = df["error_corrected"].mean()
+        improvement = (
+            (avg_orig_error - avg_corr_error) / avg_orig_error * 100
+            if avg_orig_error > 1e-9
+            else 0
+        )
+        print("\n=== Performance Summary (ECEF Errors - meters) ===")
+        print(f"Average error (original): {avg_orig_error:.2f}")
+        print(
+            f"Corrected (TopK-Mean-Momentum): Avg Error={avg_corr_error:.2f}, Improvement={improvement:.1f}%"
+        )
+    else:
+        print(
+            "\nWarning: DataFrame missing error columns, cannot calculate statistics."
+        )
+
+    df.to_csv("output/drone_inference/trajectory_stats_ecef.csv", index=False)
+
+    # --- Return ECEF data, db points, and transformer ---
+    return (
+        df,
+        true_positions_ecef_np,
+        drifted_positions_ecef_np,
+        corrected_positions_ecef_np,  # Single corrected trajectory
+        db_positions_ecef,
+        transformer_to_ecef,
+    )
+
 
 # =============================================================================
-# Main entry point
+# Main entry point (Example Usage)
 # =============================================================================
 if __name__ == "__main__":
-    # Configuration parameters (example values)
-    start_lat = 46.4825  # e.g., Odesa City latitude
-    start_lng = 30.7233
-    start_altitude = 100  # meters
-    velocity = np.array([0.5, 0.5, 0.1])  # meters per second
-    
-    model_path = "models/siamese_net_best.pth"  # Update to your model path
-    config_path = "config/train_config.yaml"
-    
-    # Run dual-trajectory simulation with corrections over 50 frames
-    simulation_results = simulate_dual_trajectories(
-        start_lat=start_lat,
-        start_lng=start_lng,
-        start_altitude=start_altitude,
-        velocity=velocity,
-        model_path=model_path,
-        config_path=config_path,
-        duration=50
+    # Configuration parameters
+    start_lat = 46.4825  # Odesa City latitude
+    start_lng = 30.7233  # Odesa City longitude
+    start_height = 100  # Local height above ground (meters)
+
+    # Base velocity in local ENU frame (m/step)
+    velocity_enu = np.array([1.0, 1.0, 0.1])
+
+    # Noise parameters (standard deviation in ENU frame m/step)
+    drift_std_enu = 0.2  # Noise applied each step
+
+    # Simulation parameters
+    duration = 500  # Number of steps
+    update_interval = 5  # Run drone.update() every N steps
+
+    # Paths
+    model_path = Path("models/siamese_net_best.pth")
+    config_path = Path("config/train_config.yaml")
+    output_dir = Path("output/drone_inference")
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    # --- Input Validation ---
+    if not model_path.is_file():
+        print(f"Error: Model file not found at {model_path}")
+        exit()
+    if not config_path.is_file():
+        print(f"Error: Config file not found at {config_path}")
+        exit()
+
+    # --- Initialize Drone ---
+    print("--- Initializing Drone ---")
+    try:
+        drone = DroneFlight(
+            model_path=str(model_path),
+            config_path=str(config_path),
+            start_lat=start_lat,
+            start_lng=start_lng,
+            start_height=start_height,
+        )
+    except Exception as e:
+        print(f"Error initializing DroneFlight: {e}")
+        exit()
+    print("--- Drone Initialized ---")
+
+    # --- Initialize True Path Simulation ---
+    # Need a separate way to track the ideal path without noise/correction
+    # Re-use drone's coordinate transformers and helpers for consistency
+    print("--- Initializing True Path ---")
+    true_ground_elev = get_google_elevation(start_lat, start_lng) or 0
+    true_start_alt = true_ground_elev + start_height
+    true_start_ecef = drone._transformer_to_ecef.transform(
+        start_lng, start_lat, true_start_alt
     )
+    true_position_ecef = np.array(true_start_ecef)
+    true_positions_history = [true_position_ecef.copy()]
+    print(f"True Start ECEF: {true_position_ecef}")
+    print("--- True Path Initialized ---")
+
+    # --- Simulation Loop ---
+    print(f"--- Running Simulation ({duration} steps) ---")
+    simulation_errors = []  # Store error between true and simulated path
+    # --- ADDED: Store top K results per update step ---
+    top_k_results_history = {}  # Dict: {step_index: results_dict}
+
+    for t in range(duration):
+        print(f"\rStep {t+1}/{duration}...", end="", flush=True)
+
+        # 1. Calculate True Path step (deterministic)
+        true_lat, true_lng, _ = drone._transformer_to_lla.transform(*true_position_ecef)
+        true_velocity_ecef_step = drone._enu_to_ecef_velocity(
+            true_lat, true_lng, velocity_enu
+        )
+        true_position_ecef += true_velocity_ecef_step
+        true_positions_history.append(true_position_ecef.copy())
+
+        # 2. Calculate Noisy Velocity for Drone
+        noise_enu = np.random.normal(0, drift_std_enu, 3)
+        current_step_velocity_enu = velocity_enu + noise_enu
+
+        # 3. Step the Drone
+        drone.step(current_step_velocity_enu)
+
+        # 4. Update Drone periodically
+        if (t + 1) % update_interval == 0:
+            print(f"\n - Running Update at step {t+1} -")
+            use_azure_map = (t // update_interval) % 2 != 0
+            drone.update(use_azure=use_azure_map)
+            # --- ADDED: Retrieve and store results ---
+            last_results = drone.get_last_top_k_results()
+            if last_results is not None:
+                top_k_results_history[t] = last_results  # Store results for this step t
+            print(f" - Update finished -")
+
+        # 5. Calculate Error
+        current_simulated_pos = drone.position_history[-1]
+        error = np.linalg.norm(current_simulated_pos - true_position_ecef)
+        simulation_errors.append(error)
+
+    print("\n--- Simulation Finished ---")
+
+    # --- Prepare Data for Visualization ---
+    # Drone history already includes initial position
+    simulated_positions_ecef_np = np.array(drone.position_history)
+    # True history also includes initial position
+    true_positions_ecef_np = np.array(true_positions_history)
+    # Get database points
+    db_positions_ecef_np = drone.get_database_ecef()
+
+    # Create a simple DataFrame for error plotting
+    error_df = pd.DataFrame(
+        {
+            "time": np.arange(duration),  # 0 to duration-1
+            "simulated_error": simulation_errors,
+        }
+    )
+    error_df.to_csv(output_dir / "simulation_error_stats_ecef.csv", index=False)
+
+    print("\n--- Generating Visualizations ---")
+    # Check data shapes
+    print(f"True positions shape: {true_positions_ecef_np.shape}")
+    print(f"Simulated positions shape: {simulated_positions_ecef_np.shape}")
+    if db_positions_ecef_np is not None:
+        print(f"Database positions shape: {db_positions_ecef_np.shape}")
+    else:
+        print("Database positions: None")
+
+    # --- UPDATED: Call with top_k_results_history ---
+    generate_method_visualizations(
+        true_positions_ecef=true_positions_ecef_np,
+        simulated_positions_ecef=simulated_positions_ecef_np,
+        db_positions_ecef=(
+            db_positions_ecef_np
+            if db_positions_ecef_np is not None
+            else np.empty((0, 3))
+        ),
+        error_data=error_df,
+        top_k_history=top_k_results_history,  # Pass the new data
+        update_interval=update_interval,  # Pass interval info
+    )
+
+    # Also call the error plot function if it exists and you want it
+    # (Assuming plot_simulation_error was also intended to be called)
+    # Check if error_df exists and has the required columns
+    if (
+        "error_df" in locals()
+        and error_df is not None
+        and "simulated_error" in error_df.columns
+    ):
+        plot_simulation_error(error_df, output_dir / "simulation_error_ecef.png")
+    else:
+        print("Skipping error plot: Data not available.")
+
+    print("\n--- Visualization Script Finished ---")
+    print(f"Output files generated in: {output_dir}")

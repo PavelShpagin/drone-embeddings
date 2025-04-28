@@ -5,7 +5,7 @@ from io import BytesIO
 import time
 import math
 
-def get_azure_maps_image(subscription_key, lat, lng, zoom=16, size=1024):
+def get_azure_maps_image(lat, lng, zoom=16, size=1024):
     """
     Get satellite imagery from Azure Maps Static Image API
     Returns PIL Image object or None
@@ -15,8 +15,8 @@ def get_azure_maps_image(subscription_key, lat, lng, zoom=16, size=1024):
         
         # Add the subscription-key in the header instead of params
         headers = {
-            'x-ms-client-id': 'd75127e2-c8d1-48b2-b401-3552da9fe791',  # Your client ID
-            'Subscription-Key': 'BWF9aLzBYG5kIICl9gFAFld8VctJgkmv4Vz2A8mc3YoJeG4ZMB4XJQQJ99BCACYeBjFhybFzAAAgAZMP1lhm'  # Your primary key
+            'x-ms-client-id': '7a43d81a-e128-4cc0-9769-433ec717aa42',  # Your client ID
+            'Subscription-Key': '3zKUk0Fuq2iutrlylXutSyc9VreaUeChrmC07ozXw3NfinBB3VoEJQQJ99BCACYeBjFDrzgVAAAgAZMP1Qrw'  # Your primary key
         }
         
         params = {
@@ -58,16 +58,6 @@ def lat_to_tile_y(lat, zoom):
     return y
 
 def test_azure_maps_api():
-    # Load Azure Maps key
-    KEY_PATH = Path("secrets/azure-maps-key.txt")
-    
-    if not KEY_PATH.exists():
-        raise FileNotFoundError(
-            f"Azure Maps key file not found at {KEY_PATH}. "
-            "Please place your Azure Maps subscription key in this location."
-        )
-    
-    subscription_key = KEY_PATH.read_text().strip()
     
     # Test locations with appropriate zoom levels
     locations = [
@@ -104,7 +94,6 @@ def test_azure_maps_api():
                 print(f"Testing with image size: {size}x{size}")
                 
                 image = get_azure_maps_image(
-                    subscription_key,
                     location['lat'],
                     location['lng'],
                     zoom=zoom,

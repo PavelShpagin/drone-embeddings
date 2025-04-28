@@ -4,18 +4,20 @@ from PIL import Image
 from io import BytesIO
 from dotenv import load_dotenv, dotenv_values
 
+
 def display_maps(locations, api_key):
     for i, location in enumerate(locations):
         lat, lon = location
         url = f"https://maps.googleapis.com/maps/api/staticmap?center={lat},{lon}&zoom=15&size=400x400&maptype=satellite&key={api_key}"
         response = requests.get(url)
         image = Image.open(BytesIO(response.content))
-        
+
         plt.figure(figsize=(5, 5))
         plt.imshow(image)
         plt.title(f"Location {i+1}: ({lat}, {lon})")
-        plt.axis('off')
+        plt.axis("off")
         plt.show()
+
 
 if __name__ == "__main__":
     locations = [
@@ -36,4 +38,3 @@ if __name__ == "__main__":
     secrets = dotenv_values(".env")
     API_KEY = secrets.get("GOOGLE_MAPS_API_KEY")
     display_maps(locations, API_KEY)
-

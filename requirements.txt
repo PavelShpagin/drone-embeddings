@@ -22,3 +22,5 @@ pathlib>=1.0.1
 seaborn>=0.12.2
 scipy
 matplotlib>=3.7.1
+
+pyproj
