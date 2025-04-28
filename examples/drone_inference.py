@@ -741,37 +741,75 @@ if __name__ == "__main__":
     simulation_errors = []  # Store error between true and simulated path
     # --- ADDED: Store top K results per update step ---
     top_k_results_history = {}  # Dict: {step_index: results_dict}
+    image_fetch_status = {}  # Dict: {step_index: bool (True if fetch succeeded)}
 
     for t in range(duration):
         print(f"\rStep {t+1}/{duration}...", end="", flush=True)
 
         # 1. Calculate True Path step (deterministic)
-        true_lat, true_lng, _ = drone._transformer_to_lla.transform(*true_position_ecef)
+        # Get LLA *before* updating position for image fetching
+        true_lat, true_lng, true_alt = drone._transformer_to_lla.transform(
+            *true_position_ecef
+        )
         true_velocity_ecef_step = drone._enu_to_ecef_velocity(
             true_lat, true_lng, velocity_enu
         )
         true_position_ecef += true_velocity_ecef_step
         true_positions_history.append(true_position_ecef.copy())
 
-        # 2. Calculate Noisy Velocity for Drone
+        # 2. Fetch Image for Update (if on interval) using PREVIOUS step's true LLA
+        image_for_update = None
+        fetch_succeeded = False
+        if (t + 1) % update_interval == 0:
+            print(
+                f"\n - Fetching image for update at step {t+1} using true coords ({true_lat:.4f}, {true_lng:.4f}, alt {true_alt:.1f}) - "
+            )
+            try:
+                # Decide which map provider to use (logic moved from drone.update)
+                use_azure_map = (t // update_interval) % 2 != 0
+                if use_azure_map:
+                    zoom_level_a = calculate_azure_zoom(true_alt, true_lat)
+                    image_for_update = get_azure_maps_image(
+                        true_lat, true_lng, zoom_level_a, size=256
+                    )
+                    print("   (Using Azure Maps)")
+                else:
+                    zoom_level_g = calculate_google_zoom(true_alt, true_lat)
+                    image_for_update = get_static_map(true_lat, true_lng, zoom_level_g)
+                    print("   (Using Google Maps)")
+
+                if image_for_update is None:
+                    print("   Warning: Failed to fetch map image.")
+                    fetch_succeeded = False
+                else:
+                    fetch_succeeded = True
+                    print("   Image fetched successfully.")
+
+            except Exception as e:
+                print(f"   Error fetching map image: {e}")
+                fetch_succeeded = False
+                image_for_update = None
+
+            image_fetch_status[t] = fetch_succeeded
+
+        # 3. Calculate Noisy Velocity for Drone Step
         noise_enu = np.random.normal(0, drift_std_enu, 3)
         current_step_velocity_enu = velocity_enu + noise_enu
 
-        # 3. Step the Drone
+        # 4. Step the Drone (apply noisy movement)
         drone.step(current_step_velocity_enu)
 
-        # 4. Update Drone periodically
+        # 5. Update Drone State (if on interval)
         if (t + 1) % update_interval == 0:
-            print(f"\n - Running Update at step {t+1} -")
-            use_azure_map = (t // update_interval) % 2 != 0
-            drone.update(use_azure=use_azure_map)
+            print(f" - Running Drone Internal Update at step {t+1} -")
+            drone.update(query_img=image_for_update)  # Pass the fetched image (or None)
             # --- ADDED: Retrieve and store results ---
             last_results = drone.get_last_top_k_results()
             if last_results is not None:
                 top_k_results_history[t] = last_results  # Store results for this step t
             print(f" - Update finished -")
 
-        # 5. Calculate Error
+        # 6. Calculate Error
         current_simulated_pos = drone.position_history[-1]
         error = np.linalg.norm(current_simulated_pos - true_position_ecef)
         simulation_errors.append(error)

@@ -192,10 +192,16 @@ class DroneFlight:
         if self.position_history:  # Should always be true after init
             self.position_history[-1] = self.position.copy()
 
-    def update(self, use_azure=False):
+    def update(self, query_img: Optional[Image.Image]):
         """
         Performs localization using the onboard GeoLocalizer and updates
-        the drone's ECEF position based on the Top-K Mean Momentum method.
+        the drone's ECEF position based on the Top-K Mean Momentum method,
+        using the provided query image.
+
+        Args:
+            query_img: The satellite image (PIL.Image) corresponding to the drone's
+                       assumed true location at this update step. If None, indicates
+                       image fetching failed, and only momentum drift should be applied.
         Stores the top-k results.
         """
         # Reset last results before attempting update
@@ -208,86 +214,60 @@ class DroneFlight:
             print("Update skipped: GeoLocalizer database is empty.")
             return
 
-        if self._last_query_img_failed:
+        # --- Check if a valid query image was provided ---
+        if query_img is None:
             print(
-                "Update skipped: Previous image fetch failed. Applying momentum only."
+                "Update Warning: No query image provided (fetch failed?). Applying momentum drift only."
             )
-            # Apply only momentum drift, without new localization data
             self.position += self.momentum
             if self.position_history:
                 self.position_history[-1] = self.position.copy()
-            # Attempting update again might fetch image next time
-            # self._last_query_img_failed = False # Reset? Or keep skipping until success? Let's reset.
-            self._last_query_img_failed = False
             return
 
-        # 1. Get current LLA and Altitude for image fetching
-        current_lat, current_lng, current_alt = self.get_current_lla()
-        # print(f"Update: Current LLA: ({current_lat:.4f}, {current_lng:.4f}), Alt: {current_alt:.1f}m") # Debug
-
-        # 2. Fetch image
-        query_img = None
+        # --- Localization using the provided image ---
+        # 1. Find Top-K matches (ECEF coordinates)
+        K = self._correction_params.get("top_k", 5)
         try:
-            if use_azure:
-                zoom_level_a = calculate_azure_zoom(current_alt, current_lat)
-                query_img = get_azure_maps_image(
-                    current_lat, current_lng, zoom_level_a, size=256
-                )
-            else:
-                zoom_level_g = calculate_google_zoom(current_alt, current_lat)
-                query_img = get_static_map(current_lat, current_lng, zoom_level_g)
+            # Use the provided query_img directly
+            _, top_coords_ecef, similarities, indices = (
+                self.localizer.find_top_k_points(query_img, k=K)
+            )
+            # Store results BEFORE check for failure
+            if top_coords_ecef is not None:  # Store even if empty list was returned
+                self._last_top_k_results = {
+                    "ecef_coords": [
+                        c.tolist() for c in top_coords_ecef
+                    ],  # Store as lists
+                    "similarities": similarities,
+                    "indices": indices,
+                }
+            else:  # Ensure reset if localization returns None
+                self._last_top_k_results = None
 
-            if query_img is None:
+            if top_coords_ecef is None or not top_coords_ecef:
                 print(
-                    f"Warning: Failed to fetch query image at LLA ({current_lat:.4f}, {current_lng:.4f})."
+                    "Update Warning: Localization failed to find matches using provided image."
                 )
-                self._last_query_img_failed = True
-                # Apply momentum drift if image fetch fails
+                # Apply momentum drift if no matches
                 self.position += self.momentum
                 if self.position_history:
                     self.position_history[-1] = self.position.copy()
-                return  # Skip rest of update
-
-            self._last_query_img_failed = False  # Success
+                return  # Skip correction
 
         except Exception as e:
-            print(
-                f"Error fetching image at LLA ({current_lat:.4f}, {current_lng:.4f}): {e}"
-            )
-            self._last_query_img_failed = True
+            print(f"Error during localization in drone.update: {e}")
+            self._last_top_k_results = None  # Reset results on error
             # Apply momentum drift on error
-            self.position += self.momentum
-            if self.position_history:
-                self.position_history[-1] = self.position.copy()
-            return  # Skip rest of update
-
-        # 3. Find Top-K matches (ECEF coordinates)
-        K = self._correction_params.get("top_k", 5)
-        top_coords_ecef, similarities, indices = self.localizer.find_top_k_points(
-            query_img, k=K
-        )
-
-        # --- ADDED: Store results BEFORE check for failure ---
-        if top_coords_ecef is not None:  # Store even if empty list was returned
-            self._last_top_k_results = {
-                "ecef_coords": [c.tolist() for c in top_coords_ecef],  # Store as lists
-                "similarities": similarities,
-                "indices": indices,
-            }
-
-        if top_coords_ecef is None or not top_coords_ecef:
-            print("Update skipped: Localization failed to find matches.")
-            # Apply momentum drift if no matches
             self.position += self.momentum
             if self.position_history:
                 self.position_history[-1] = self.position.copy()
             return  # Skip correction
 
-        # 4. Calculate target position (mean of Top-K ECEF points)
+        # 2. Calculate target position (mean of Top-K ECEF points)
         top_k_mean_ecef = np.mean(np.array(top_coords_ecef), axis=0)
         mean_similarity = np.mean(similarities) if similarities else 0
 
-        # 5. Apply Correction
+        # 3. Apply Correction
         self._apply_momentum_correction(top_k_mean_ecef, mean_similarity)
         # print(f"Update: Corrected Pos ECEF: {self.position}, Momentum: {self.momentum}") # Debug
 
