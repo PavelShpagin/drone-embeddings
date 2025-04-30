@@ -12,6 +12,7 @@ from dotenv import load_dotenv, dotenv_values
 import torch
 from PIL import Image
 from torchvision import transforms
+import json
 
 # Use pyproj for accurate coordinate transformations
 import pyproj
@@ -482,6 +483,7 @@ def simulate_dual_trajectories(
 
     last_query_img_failed = False
     print(f"Running simulation for {duration} steps...")
+    top_k_results_history = {}  # Dict: {step_index: results_dict}
     for t in range(duration):
         # --- Step 1: Move the true drone (deterministic) ---
         true_drone.step()
@@ -611,6 +613,19 @@ def simulate_dual_trajectories(
         )
         data.append(current_data_step)
 
+        # --- ADDED: Retrieve and store results ---
+        last_results = {
+            "ecef_coords": drifted_pos_ecef.tolist(),
+            "corrected_ecef": corrected_positions_ecef[-1].tolist(),
+            "similarity_top1": current_data_step["similarity_top1"],
+            "similarity_mean": current_data_step["similarity_mean"],
+            "momentum_magnitude": current_data_step["momentum_magnitude"],
+            "error_original": current_data_step["error_original"],
+            "error_corrected": current_data_step["error_corrected"],
+            "top_k_indices": current_data_step["top_k_indices"],
+        }
+        top_k_results_history[t] = last_results  # Store results for this step t
+
     print("\nSimulation finished.")
 
     # Convert lists to numpy arrays
@@ -671,6 +686,7 @@ def simulate_dual_trajectories(
         corrected_positions_ecef_np,  # Single corrected trajectory
         db_positions_ecef,
         transformer_to_ecef,
+        top_k_results_history,
     )
 
 
@@ -690,7 +706,7 @@ if __name__ == "__main__":
     drift_std_enu = 0.2  # Noise applied each step
 
     # Simulation parameters
-    duration = 500  # Number of steps
+    duration = 100  # Number of steps
     update_interval = 5  # Run drone.update() every N steps
 
     # Paths
@@ -717,6 +733,18 @@ if __name__ == "__main__":
             start_lng=start_lng,
             start_height=start_height,
         )
+        # --- ADDED: Initialize Baseline Drone (same start, no updates) ---
+        baseline_drone = DroneFlight(
+            model_path=str(model_path),  # Needs model for coordinate helpers
+            config_path=str(config_path),  # Needs config for coordinate helpers
+            start_lat=start_lat,
+            start_lng=start_lng,
+            start_height=start_height,
+            # --- ADDED: Skip database init for baseline ---
+            initialize_database=False,
+            # --- END ADDED ---
+        )
+        # --- END ADDED ---
     except Exception as e:
         print(f"Error initializing DroneFlight: {e}")
         exit()
@@ -739,6 +767,9 @@ if __name__ == "__main__":
     # --- Simulation Loop ---
     print(f"--- Running Simulation ({duration} steps) ---")
     simulation_errors = []  # Store error between true and simulated path
+    # --- ADDED: Store baseline drone errors ---
+    baseline_errors = []
+    # --- END ADDED ---
     # --- ADDED: Store top K results per update step ---
     top_k_results_history = {}  # Dict: {step_index: results_dict}
     image_fetch_status = {}  # Dict: {step_index: bool (True if fetch succeeded)}
@@ -798,6 +829,9 @@ if __name__ == "__main__":
 
         # 4. Step the Drone (apply noisy movement)
         drone.step(current_step_velocity_enu)
+        # --- ADDED: Step the Baseline Drone with the same noisy velocity ---
+        baseline_drone.step(current_step_velocity_enu)
+        # --- END ADDED ---
 
         # 5. Update Drone State (if on interval)
         if (t + 1) % update_interval == 0:
@@ -813,6 +847,11 @@ if __name__ == "__main__":
         current_simulated_pos = drone.position_history[-1]
         error = np.linalg.norm(current_simulated_pos - true_position_ecef)
         simulation_errors.append(error)
+        # --- ADDED: Calculate Baseline Error ---
+        current_baseline_pos = baseline_drone.position_history[-1]
+        baseline_error = np.linalg.norm(current_baseline_pos - true_position_ecef)
+        baseline_errors.append(baseline_error)
+        # --- END ADDED ---
 
     print("\n--- Simulation Finished ---")
 
@@ -821,6 +860,9 @@ if __name__ == "__main__":
     simulated_positions_ecef_np = np.array(drone.position_history)
     # True history also includes initial position
     true_positions_ecef_np = np.array(true_positions_history)
+    # --- ADDED: Get baseline drone history ---
+    baseline_positions_ecef_np = np.array(baseline_drone.position_history)
+    # --- END ADDED ---
     # Get database points
     db_positions_ecef_np = drone.get_database_ecef()
 
@@ -829,6 +871,9 @@ if __name__ == "__main__":
         {
             "time": np.arange(duration),  # 0 to duration-1
             "simulated_error": simulation_errors,
+            # --- ADDED: Include baseline error in DataFrame ---
+            "baseline_error": baseline_errors,
+            # --- END ADDED ---
         }
     )
     error_df.to_csv(output_dir / "simulation_error_stats_ecef.csv", index=False)
@@ -837,6 +882,9 @@ if __name__ == "__main__":
     # Check data shapes
     print(f"True positions shape: {true_positions_ecef_np.shape}")
     print(f"Simulated positions shape: {simulated_positions_ecef_np.shape}")
+    # --- ADDED: Print baseline shape ---
+    print(f"Baseline positions shape: {baseline_positions_ecef_np.shape}")
+    # --- END ADDED ---
     if db_positions_ecef_np is not None:
         print(f"Database positions shape: {db_positions_ecef_np.shape}")
     else:
@@ -846,6 +894,9 @@ if __name__ == "__main__":
     generate_method_visualizations(
         true_positions_ecef=true_positions_ecef_np,
         simulated_positions_ecef=simulated_positions_ecef_np,
+        # --- ADDED: Pass baseline trajectory to visualization ---
+        baseline_positions_ecef=baseline_positions_ecef_np,
+        # --- END ADDED ---
         db_positions_ecef=(
             db_positions_ecef_np
             if db_positions_ecef_np is not None
@@ -862,7 +913,10 @@ if __name__ == "__main__":
     if (
         "error_df" in locals()
         and error_df is not None
+        # --- UPDATED: Check for both error columns ---
         and "simulated_error" in error_df.columns
+        and "baseline_error" in error_df.columns
+        # --- END UPDATED ---
     ):
         plot_simulation_error(error_df, output_dir / "simulation_error_ecef.png")
     else:
@@ -870,3 +924,16 @@ if __name__ == "__main__":
 
     print("\n--- Visualization Script Finished ---")
     print(f"Output files generated in: {output_dir}")
+
+    # results[0] is the DataFrame
+    # results[1] to results[6] are the ECEF position arrays
+    # These can be passed to the visualization script/functions
+    # results[6] is the top_k_results_history dictionary
+
+    # print("\nSimulation finished. Results contain DataFrame and ECEF position arrays.")
+    # Check if results tuple and DataFrame are not empty before printing shapes
+    # --- REMOVED UNNECESSARY AND ERRONEOUS 'if results:' BLOCK ---
+    # This block referred to a variable 'results' that was never defined
+    # in this execution path. All necessary data was already collected
+    # and passed to generate_method_visualizations earlier.
+    # --- END REMOVED BLOCK ---

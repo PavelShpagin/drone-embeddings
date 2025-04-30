@@ -30,6 +30,7 @@ class DroneFlight:
 
     # --- Fields with defaults (for __init__) ---
     secrets_path: str = ".env"
+    initialize_database: bool = True
 
     # --- Fields excluded from __init__ or with default_factory ---
     position: np.ndarray = field(init=False)  # ECEF [x, y, z] meters
@@ -94,17 +95,21 @@ class DroneFlight:
         self.position_history = [self.position.copy()]
 
         # 5. Build database (can be slow, do it during init)
-        db_params = self.localizer.config.get("database", {})
-        self.localizer.build_database(
-            lat_center=self.start_lat,
-            lng_center=self.start_lng,
-            grid_size=db_params.get("grid_size", 15),
-            step_meters=db_params.get("step_meters", 50),
-            height_range=db_params.get("height_range", 30),
-            base_height=db_params.get(
-                "base_height", 100
-            ),  # Use configured base height for DB
-        )
+        if self.initialize_database:
+            print("Building database...")
+            db_params = self.localizer.config.get("database", {})
+            self.localizer.build_database(
+                lat_center=self.start_lat,
+                lng_center=self.start_lng,
+                grid_size=db_params.get("grid_size", 10),
+                step_meters=db_params.get("step_meters", 50),
+                height_range=db_params.get("height_range", 30),
+                base_height=db_params.get(
+                    "base_height", 100
+                ),  # Use configured base height for DB
+            )
+        else:
+            print("Skipping database initialization as requested.")
 
     @staticmethod
     def _rotation_matrix_enu_to_ecef(lat_rad, lon_rad) -> np.ndarray:
@@ -182,7 +187,7 @@ class DroneFlight:
 
         if len(self.prev_corrected_positions) > 1:
             # Use simple moving average for now, could use exponential weights
-            smoothed_pos = np.mean(self.prev_corrected_positions, axis=0)
+            smoothed_pos = new_pos  # np.mean(self.prev_corrected_positions, axis=0)
         else:
             smoothed_pos = new_pos  # No smoothing possible yet
 
@@ -229,8 +234,8 @@ class DroneFlight:
         K = self._correction_params.get("top_k", 5)
         try:
             # Use the provided query_img directly
-            _, top_coords_ecef, similarities, indices = (
-                self.localizer.find_top_k_points(query_img, k=K)
+            top_coords_ecef, similarities, indices = self.localizer.find_top_k_points(
+                query_img, k=K
             )
             # Store results BEFORE check for failure
             if top_coords_ecef is not None:  # Store even if empty list was returned

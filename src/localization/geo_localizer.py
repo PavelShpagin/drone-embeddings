@@ -7,6 +7,7 @@ from PIL import Image
 from torchvision import transforms
 import pyproj
 from scipy.spatial import distance
+import concurrent.futures
 
 # Import necessary components
 from src.google_maps import get_static_map, calculate_google_zoom
@@ -87,14 +88,81 @@ class GeoLocalizer:
         return lat_deg, lng_deg
 
     def extract_embedding(self, img_tensor):
-        """Extract embedding using the model."""
+        """Extract embedding using the model for a batch of images."""
         with torch.no_grad():
+            # Ensure tensor is on the correct device
+            if img_tensor.device != self.device:
+                img_tensor = img_tensor.to(self.device)
+
             # Simplified: Assume model has forward_one or just call model
             if hasattr(self.model, "forward_one"):
-                embedding = self.model.forward_one(img_tensor)
+                # If forward_one exists but doesn't handle batches, this needs adjustment.
+                # Assuming direct model call handles batches correctly.
+                # Check SiameseNet implementation if forward_one is intended for single images.
+                try:
+                    embedding = self.model(img_tensor)
+                except TypeError:
+                    print(
+                        "Warning: Model direct call failed for batch, attempting loop with forward_one (may be slow)."
+                    )
+                    # Fallback: Process batch items individually (less efficient)
+                    embeddings_list = [
+                        self.model.forward_one(item.unsqueeze(0)) for item in img_tensor
+                    ]
+                    embedding = torch.cat(embeddings_list, dim=0)
             else:
-                embedding = self.model(img_tensor)  # Fallback
+                embedding = self.model(
+                    img_tensor
+                )  # Standard model call assumes batch handling
             return embedding.cpu().numpy()
+
+    def _fetch_and_process_point(
+        self, lat, lng, altitude, max_retries=3, initial_delay=0.2
+    ):
+        """Fetches image, transforms it to tensor, and converts coords for a single point."""
+        current_delay = initial_delay
+        for attempt in range(max_retries):
+            try:
+                # --- API Call with Rate Limit ---
+                zoom_level = calculate_google_zoom(altitude, lat)  # Or Azure equivalent
+                img = get_static_map(lat, lng, zoom_level)  # Or Azure equivalent
+                time.sleep(0.1)
+
+                if img is not None:
+                    # --- Process Image (Transform only) ---
+                    img_tensor = self.transform(img.convert("RGB")).unsqueeze(0)
+                    # --- Convert Coords ---
+                    x, y, z = self._transformer_to_ecef.transform(lng, lat, altitude)
+                    ecef_coord = np.array([x, y, z])
+                    # Return successful result (tensor, coord, original_img)
+                    # Remove the extra batch dim from tensor before returning
+                    return img_tensor.squeeze(0), ecef_coord, img
+                else:
+                    # Image fetch failed
+                    print(
+                        f"\nWarning: Failed fetch attempt {attempt+1}/{max_retries} for ({lat:.4f}, {lng:.4f}, {altitude:.1f}).",
+                        flush=True,
+                    )
+
+            except Exception as e:
+                print(
+                    f"\nError processing point ({lat:.4f}, {lng:.4f}, {altitude:.1f}) on attempt {attempt+1}: {e}",
+                    flush=True,
+                )
+
+            # --- Retry Logic ---
+            if attempt < max_retries - 1:
+                print(f"Retrying in {current_delay:.1f}s...", flush=True)
+                time.sleep(current_delay)
+                current_delay *= 2
+            else:
+                print(
+                    f"Max retries reached for ({lat:.4f}, {lng:.4f}, {altitude:.1f}). Skipping.",
+                    flush=True,
+                )
+                return None, None, None
+
+        return None, None, None
 
     def build_database(
         self,
@@ -102,14 +170,18 @@ class GeoLocalizer:
         lng_center,
         grid_size=9,
         step_meters=50,
-        height_range=30,  # Local height variation around base_height
-        base_height=50,  # Local height above ground for the center altitude layer
+        height_range=30,
+        base_height=50,
+        max_workers=8,  # Number of parallel threads for fetching
+        batch_size=32,  # Batch size for model inference
     ):
-        """Builds a database of image embeddings and ECEF coordinates."""
+        """Builds a database of image embeddings and ECEF coordinates in parallel, using batch inference."""
         print(
             f"Building database around ({lat_center:.4f}, {lng_center:.4f}), base height {base_height}m..."
         )
+        start_time = time.time()
 
+        # --- 1. Generate Target Coordinates (Elevation still sequential) ---
         lat_step_deg, lng_step_deg = self._meters_to_degrees(step_meters, lat_center)
         lat_range = np.linspace(
             lat_center - lat_step_deg * (grid_size // 2),
@@ -121,93 +193,160 @@ class GeoLocalizer:
             lng_center + lng_step_deg * (grid_size // 2),
             grid_size,
         )
-        # Local heights relative to ground elevation
         height_offsets = np.array([-height_range, 0, height_range])
 
         target_coordinates_lla = []
+        print("Calculating grid coordinates and fetching ground elevations...")
+        coord_candidates = []
         for lng in lng_range:
             for lat in lat_range:
-                # Get ground elevation for this specific grid point
-                ground_elevation = get_google_elevation(lat, lng)
-                if ground_elevation is None:
-                    print(
-                        f"\nWarning: Failed to get elevation for DB point ({lat:.4f}, {lng:.4f}). Skipping."
-                    )
-                    continue
+                coord_candidates.append({"lat": lat, "lng": lng})
 
-                for offset in height_offsets:
-                    # Calculate absolute altitude (ellipsoidal)
-                    altitude = ground_elevation + base_height + offset
-                    target_coordinates_lla.append((lat, lng, altitude))
+        for candidate in coord_candidates:
+            lat, lng = candidate["lat"], candidate["lng"]
+            ground_elevation = get_google_elevation(lat, lng)
+            if ground_elevation is None:
+                print(
+                    f"\nWarning: Failed to get elevation for DB point ({lat:.4f}, {lng:.4f}). Skipping heights for this point.",
+                    flush=True,
+                )
+                continue
+            for offset in height_offsets:
+                altitude = ground_elevation + base_height + offset
+                target_coordinates_lla.append((lat, lng, altitude))
+            time.sleep(0.05)
 
         if not target_coordinates_lla:
-            print(
-                "Error: No valid coordinates generated for the database (check elevation API?)."
+            print("Error: No valid coordinates generated for the database.")
+            # Assign empty arrays with correct dimensions
+            embedding_dim = (
+                self.model.embedding_dim
+                if hasattr(self.model, "embedding_dim")
+                else self.config.get("model", {}).get("embedding_dim", 128)
             )
-            return  # Cannot proceed
+            self.db_embeddings = np.empty((0, embedding_dim))
+            self.db_coords_ecef = np.empty((0, 3))
+            self.db_images = []
+            return
 
-        embeddings_list = []
-        ecef_coords_list = []
-        images_list = []  # Keep for potential debugging
+        # --- 2. Fetch and Transform Images in Parallel ---
+        print(
+            f"Fetching and transforming {len(target_coordinates_lla)} images using up to {max_workers} workers..."
+        )
+        fetch_results = []  # Store tuples of (tensor, ecef_coord, img)
+        processed_count = 0
+        total_points = len(target_coordinates_lla)
 
-        print(f"Fetching {len(target_coordinates_lla)} images for database...")
-        for i, (lat, lng, altitude) in enumerate(target_coordinates_lla):
-            print(
-                f"\rProcessing database point {i+1}/{len(target_coordinates_lla)}...",
-                end="",
-                flush=True,
-            )
-
-            # Use altitude directly for zoom calculation
-            zoom_level = calculate_google_zoom(altitude, lat)  # Or Azure equivalent
-            img = get_static_map(lat, lng, zoom_level)  # Or Azure equivalent
-
-            if img is not None:
-                img_tensor = (
-                    self.transform(img.convert("RGB")).unsqueeze(0).to(self.device)
+        with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
+            future_to_coord = {
+                executor.submit(self._fetch_and_process_point, lat, lng, alt): (
+                    lat,
+                    lng,
+                    alt,
                 )
+                for lat, lng, alt in target_coordinates_lla
+            }
+
+            for future in concurrent.futures.as_completed(future_to_coord):
+                coord = future_to_coord[future]
                 try:
-                    embedding = self.extract_embedding(img_tensor)
+                    img_tensor, ecef_coord, img = future.result()
                     if (
-                        embedding is not None
-                        and embedding.ndim == 2
-                        and embedding.shape[0] > 0
-                    ):
-                        # Convert final LLA to ECEF
-                        x, y, z = self._transformer_to_ecef.transform(
-                            lng, lat, altitude
-                        )
-                        ecef_coord = np.array([x, y, z])
-
-                        embeddings_list.append(embedding[0])
-                        ecef_coords_list.append(ecef_coord)
-                        images_list.append(img)  # Store image
-                    else:
-                        print(
-                            f"\nWarning: Got invalid embedding for ({lat:.4f}, {lng:.4f}, {altitude:.1f}). Skipping."
-                        )
-                except Exception as e:
+                        img_tensor is not None
+                    ):  # Check if fetch/transform was successful
+                        fetch_results.append((img_tensor, ecef_coord, img))
+                except Exception as exc:
+                    lat, lng, alt = coord
                     print(
-                        f"\nError processing point ({lat:.4f}, {lng:.4f}, {altitude:.1f}): {e}"
+                        f"\nError processing ({lat:.4f}, {lng:.4f}, {alt:.1f}) during fetch/transform: {exc}",
+                        flush=True,
                     )
-            else:
+                processed_count += 1
                 print(
-                    f"\nWarning: Failed to fetch image for ({lat:.4f}, {lng:.4f}, {altitude:.1f}). Skipping."
+                    f"\rFetched/Transformed {processed_count}/{total_points} images...",
+                    end="",
+                    flush=True,
                 )
 
-            time.sleep(0.1)  # Be nice to APIs
+        print(f"\nFinished fetching. Got {len(fetch_results)} successful results.")
 
-        print(f"\nDatabase built with {len(ecef_coords_list)} points.")
+        if not fetch_results:
+            print(
+                "Warning: No images were successfully fetched and transformed. Database will be empty."
+            )
+            embedding_dim = (
+                self.model.embedding_dim
+                if hasattr(self.model, "embedding_dim")
+                else self.config.get("model", {}).get("embedding_dim", 128)
+            )
+            self.db_embeddings = np.empty((0, embedding_dim))
+            self.db_coords_ecef = np.empty((0, 3))
+            self.db_images = []
+            return
 
-        if not ecef_coords_list:
+        # --- 3. Batch Inference ---
+        print(f"Running batch inference (batch size: {batch_size})...")
+        inference_start_time = time.time()
+        all_embeddings = []
+        all_coords = []
+        all_images = []  # Keep corresponding images if needed
+
+        # Sort results by coordinate perhaps? Or maintain order? Let's maintain order for now.
+        # Unzip the fetched results
+        img_tensors, ecef_coords, imgs = zip(*fetch_results)
+
+        num_batches = (len(img_tensors) + batch_size - 1) // batch_size
+
+        for i in range(num_batches):
+            batch_start_idx = i * batch_size
+            batch_end_idx = min((i + 1) * batch_size, len(img_tensors))
+            tensor_batch_list = img_tensors[batch_start_idx:batch_end_idx]
+
+            if not tensor_batch_list:
+                continue
+
+            # Stack tensors into a batch
+            tensor_batch = torch.stack(tensor_batch_list)
+
+            # Run inference
+            embedding_batch = self.extract_embedding(
+                tensor_batch
+            )  # Expects batch, returns numpy array
+
+            # Append results
+            all_embeddings.extend(embedding_batch)
+            all_coords.extend(ecef_coords[batch_start_idx:batch_end_idx])
+            all_images.extend(imgs[batch_start_idx:batch_end_idx])
+
+            print(f"\rProcessed batch {i+1}/{num_batches}...", end="", flush=True)
+
+        inference_end_time = time.time()
+        print(
+            f"\nInference finished in {inference_end_time - inference_start_time:.2f} seconds."
+        )
+
+        # --- 4. Assemble Database ---
+        print(f"Assembling final database...")
+        end_time = time.time()
+        print(f"Total time: {end_time - start_time:.2f} seconds.")
+
+        if not all_coords:
             print("Warning: Database is empty after processing.")
-            self.db_embeddings = np.empty((0, embedding_dim))  # Ensure correct shape
+            embedding_dim = (
+                self.model.embedding_dim
+                if hasattr(self.model, "embedding_dim")
+                else self.config.get("model", {}).get("embedding_dim", 128)
+            )
+            self.db_embeddings = np.empty((0, embedding_dim))
             self.db_coords_ecef = np.empty((0, 3))
             self.db_images = []
         else:
-            self.db_embeddings = np.array(embeddings_list)
-            self.db_coords_ecef = np.array(ecef_coords_list)
-            self.db_images = images_list
+            self.db_embeddings = np.array(all_embeddings)
+            self.db_coords_ecef = np.array(all_coords)
+            self.db_images = all_images  # Store the collected images
+            print(f"Final database size: {len(self.db_coords_ecef)} points.")
+            print(f"Embeddings shape: {self.db_embeddings.shape}")
+            print(f"Coordinates shape: {self.db_coords_ecef.shape}")
 
     def find_top_k_points(self, query_img, k=5):
         """
