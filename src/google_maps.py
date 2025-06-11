@@ -5,6 +5,37 @@ from .config import API_KEY
 import numpy as np
 import math
 from datetime import datetime
+import hmac
+import hashlib
+import base64
+import urllib.parse
+
+SECRET = 'f-wE4QmRL1mE2hUaaE8MTRrGKGs='
+
+def sign_url(input_url, secret):
+    """Sign a URL using a URL-signing secret."""
+    if not secret:
+        return input_url
+
+    url = urllib.parse.urlparse(input_url)
+    url_to_sign = url.path + "?" + url.query
+
+    # The secret is a URL-safe base64-encoded string.
+    # It must be decoded into bytes. It may not be padded correctly.
+    # Add padding to the secret.
+    secret_bytes = secret.encode('ascii')
+    padded_secret = secret_bytes + b'=' * (-len(secret_bytes) % 4)
+    decoded_key = base64.urlsafe_b64decode(padded_secret)
+
+    # Create a signature using the private key and the URL-encoded
+    # string using HMAC-SHA1.
+    signature = hmac.new(decoded_key, url_to_sign.encode('ascii'), hashlib.sha1)
+
+    # Encode the binary signature into base64 for use within a URL.
+    encoded_signature = base64.urlsafe_b64encode(signature.digest())
+
+    return url.geturl() + "&signature=" + encoded_signature.decode('ascii')
+
 
 def get_static_map(lat, lng, zoom=19, size="1024x1024", scale=1, date=None):
     """Get static map image from Google Maps API"""
@@ -24,8 +55,11 @@ def get_static_map(lat, lng, zoom=19, size="1024x1024", scale=1, date=None):
     if date:
         params["timestamp"] = int(datetime.strptime(date, '%Y-%m-%d').timestamp())
     
+    unsigned_url = base_url + '?' + urllib.parse.urlencode(params)
+    signed_url = sign_url(unsigned_url, SECRET)
+    
     try:
-        response = requests.get(base_url, params=params, timeout=10)
+        response = requests.get(signed_url, timeout=10)
         response.raise_for_status()
         # Check if we received actual image data
         if response.content:
