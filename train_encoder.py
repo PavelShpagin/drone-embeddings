@@ -29,10 +29,10 @@ class Config:
     OUTPUT_DIR = os.getenv("OUTPUT_DIR", "training_results")
 
     # Models to train (using timm model names)
-    BACKBONES = ['resnet50', 'efficientnet_b0', 'mobilenetv2_100', 'mobilenetv3_small_100']
+    BACKBONES = ['efficientnet_b0']
 
     # Training Hyperparameters
-    NUM_EPOCHS = int(os.getenv("NUM_EPOCHS", 500))
+    NUM_EPOCHS = int(os.getenv("NUM_EPOCHS", 100))
     SAMPLES_PER_EPOCH = 20000  # Full scale
     BATCH_SIZE = int(os.getenv("BATCH_SIZE", 16))
     LR = float(os.getenv("LEARNING_RATE", 1e-6))
@@ -334,10 +334,10 @@ def train_one_epoch(model, dataloader, criterion, optimizer, device):
 
 
 @torch.no_grad()
-def evaluate(model, test_img_path, device, output_dir):
+def evaluate(model, test_img_path, device, output_dir, epoch=None):
     if not os.path.exists(test_img_path):
         print(f"Test image not found at {test_img_path}. Skipping evaluation.")
-        return
+        return {}, {}
 
     print("Running evaluation...")
     model.eval()
@@ -345,56 +345,93 @@ def evaluate(model, test_img_path, device, output_dir):
     test_img = Image.open(test_img_path).convert("RGB")
     w, h = test_img.size
     
-    # Create a gallery of database embeddings
+    test_transforms = get_augmentations()
+    
+    # Create gallery of database embeddings
     db_crops = []
     db_coords = []
     while len(db_crops) < Config.EVAL_SAMPLES:
         x = random.randint(0, w - Config.CROP_SIZE_PIXELS - 1)
         y = random.randint(0, h - Config.CROP_SIZE_PIXELS - 1)
-        # Ensure non-overlap (simplified check)
+        # Simple non-overlap check
         is_overlap = any(np.sqrt((x-cx)**2 + (y-cy)**2) < Config.CROP_SIZE_PIXELS for cx, cy in db_coords)
         if not is_overlap:
             crop = test_img.crop((x, y, x + Config.CROP_SIZE_PIXELS, y + Config.CROP_SIZE_PIXELS))
-            db_crops.append(get_augmentations()(crop))
-            db_coords.append((x,y))
+            db_crops.append(test_transforms(crop))
+            db_coords.append((x, y))
+
+    if not db_crops:
+        print("Could not generate any database crops for evaluation.")
+        return {}, {}
 
     db_embs = model(torch.stack(db_crops).to(device))
     
-    # Create a set of query embeddings (perturbed versions of db)
-    query_embs = []
+    # Create query embeddings (perturbed versions of db)
+    query_embs_list = []
     gt_indices = list(range(len(db_crops)))
     for i, (x, y) in enumerate(db_coords):
-        px = int(x + random.uniform(-10, 10))
-        py = int(y + random.uniform(-10, 10))
+        # Small perturbation
+        px = int(x + random.uniform(-20, 20))
+        py = int(y + random.uniform(-20, 20))
         px = max(0, min(px, w - Config.CROP_SIZE_PIXELS))
         py = max(0, min(py, h - Config.CROP_SIZE_PIXELS))
         crop = test_img.crop((px, py, px + Config.CROP_SIZE_PIXELS, py + Config.CROP_SIZE_PIXELS))
-        query_embs.append(get_augmentations()(crop))
+        query_embs_list.append(test_transforms(crop))
+    
+    if not query_embs_list:
+        print("Could not generate any query crops for evaluation.")
+        return {}, {}
         
-    query_embs = model(torch.stack(query_embs).to(device))
+    query_embs = model(torch.stack(query_embs_list).to(device))
 
-    # Calculate recall
+    # Calculate recall and mAP
     recalls = {k: 0 for k in Config.EVAL_RECALL_K}
+    mAPs = {k: 0 for k in Config.EVAL_RECALL_K}
+    
     for i in range(len(query_embs)):
         q_emb = query_embs[i].unsqueeze(0)
         dists = F.pairwise_distance(q_emb, db_embs)
         sorted_indices = torch.argsort(dists)
         
+        # Find rank of the ground truth item
+        try:
+            gt_rank = (sorted_indices == gt_indices[i]).nonzero(as_tuple=True)[0].item() + 1
+        except IndexError:
+            continue # Should not happen if gt_indices are correct
+
         for k in Config.EVAL_RECALL_K:
-            if gt_indices[i] in sorted_indices[:k]:
+            if gt_rank <= k:
                 recalls[k] += 1
+                mAPs[k] += 1.0 / gt_rank  # Add Average Precision for this query
     
     for k in Config.EVAL_RECALL_K:
-        recalls[k] /= len(query_embs)
-        print(f"Recall@{k}: {recalls[k]:.4f}")
+        if len(query_embs) > 0:
+            recalls[k] /= len(query_embs)
+            mAPs[k] /= len(query_embs)
+        print(f"Recall@{k}: {recalls[k]:.4f}, mAP@{k}: {mAPs[k]:.4f}")
     
-    # Save recall plot
-    plt.figure()
-    plt.bar([str(k) for k in recalls.keys()], recalls.values())
-    plt.title("Recall@K")
-    plt.ylim(0, 1)
-    plt.savefig(os.path.join(output_dir, "evaluation_recall.png"))
+    # Plotting
+    plt.figure(figsize=(12, 7))
+    bar_width = 0.35
+    index = np.arange(len(Config.EVAL_RECALL_K))
+    
+    plt.bar(index, recalls.values(), bar_width, label='Recall@K')
+    plt.bar(index + bar_width, mAPs.values(), bar_width, label='mAP@K (Precision)')
+    
+    plt.title(f"Evaluation Metrics at Epoch {epoch}" if epoch is not None else "Final Evaluation Metrics")
+    plt.xlabel("K")
+    plt.ylabel("Score")
+    plt.xticks(index + bar_width / 2, [str(k) for k in Config.EVAL_RECALL_K])
+    plt.legend()
+    plt.ylim(0, 1.1)
+    plt.grid(True, alpha=0.3, axis='y')
+    
+    # Save the plot
+    fname = f"evaluation_metrics_epoch_{epoch}.png" if epoch is not None else "evaluation_metrics_final.png"
+    plt.savefig(os.path.join(output_dir, fname), dpi=150, bbox_inches='tight')
     plt.close()
+    
+    return recalls, mAPs
 
 
 def run_training_pipeline():
@@ -437,27 +474,95 @@ def run_training_pipeline():
             )
 
             loss_history = []
+            recall_history = {k: [] for k in Config.EVAL_RECALL_K}
+            map_history = {k: [] for k in Config.EVAL_RECALL_K}
+            best_recall_at_1 = -1.0
+            
             for epoch in range(Config.NUM_EPOCHS):
                 print(f"\nEpoch {epoch+1}/{Config.NUM_EPOCHS}")
+                
                 epoch_loss = train_one_epoch(model, dataloader, criterion, optimizer, Config.DEVICE)
                 loss_history.append(epoch_loss)
-            
-            # --- Save Loss Plot ---
-            plt.figure()
-            plt.plot(loss_history)
-            plt.title(f"Stage {stage} Training Loss")
-            plt.xlabel("Epoch")
-            plt.ylabel("Loss")
-            plt.savefig(os.path.join(stage_dir, "loss_curve.png"))
-            plt.close()
-            
-            # --- Save Model ---
-            model_path = os.path.join(stage_dir, f"{backbone}_stage{stage}.pth")
-            torch.save(model.state_dict(), model_path)
-            print(f"Saved model to {model_path}")
+                
+                print(f"Epoch {epoch+1} Loss: {epoch_loss:.6f}")
+                
+                # --- Per-epoch evaluation ---
+                print("Running per-epoch evaluation...")
+                recalls, mAPs = evaluate(model, Config.TEST_IMG_PATH, Config.DEVICE, stage_dir, epoch=epoch+1)
+                
+                for k in Config.EVAL_RECALL_K:
+                    recall_history[k].append(recalls[k])
+                    map_history[k].append(mAPs[k])
 
-            # --- Evaluation ---
-            evaluate(model, Config.TEST_IMG_PATH, Config.DEVICE, stage_dir)
+                # Save best model based on Recall@1
+                current_recall_at_1 = recalls.get(1, -1.0)
+                if current_recall_at_1 > best_recall_at_1:
+                    best_recall_at_1 = current_recall_at_1
+                    best_model_path = os.path.join(stage_dir, f"{backbone}_stage{stage}_best_recall.pth")
+                    torch.save(model.state_dict(), best_model_path)
+                    print(f"New best model saved with Recall@1: {best_recall_at_1:.4f}")
+                
+                # Save periodic checkpoints
+                if (epoch + 1) % 50 == 0:
+                    checkpoint_path = os.path.join(stage_dir, f"{backbone}_stage{stage}_epoch{epoch+1}.pth")
+                    torch.save(model.state_dict(), checkpoint_path)
+            
+                # --- End of stage plotting ---
+
+                # Save loss plot
+                plt.figure(figsize=(12, 6))
+                plt.plot(loss_history)
+                plt.title(f"{backbone} - Stage {stage} Training Loss")
+                plt.xlabel("Epoch")
+                plt.ylabel("Loss")
+                plt.grid(True, alpha=0.3)
+                plt.savefig(os.path.join(stage_dir, "loss_curve.png"), dpi=150, bbox_inches='tight')
+                plt.close()
+
+                # Save Recall and mAP history plots
+                plt.figure(figsize=(14, 8))
+                for k in Config.EVAL_RECALL_K:
+                    plt.plot(recall_history[k], label=f'Recall@{k}')
+                plt.title(f"{backbone} - Stage {stage} Recall@K vs. Epochs")
+                plt.xlabel("Epoch")
+                plt.ylabel("Recall")
+                plt.legend()
+                plt.grid(True, alpha=0.3)
+                plt.savefig(os.path.join(stage_dir, "recall_history.png"), dpi=150, bbox_inches='tight')
+                plt.close()
+
+                plt.figure(figsize=(14, 8))
+                for k in Config.EVAL_RECALL_K:
+                    plt.plot(map_history[k], label=f'mAP@{k}')
+                plt.title(f"{backbone} - Stage {stage} mAP@K vs. Epochs")
+                plt.xlabel("Epoch")
+                plt.ylabel("mAP (Precision)")
+                plt.legend()
+                plt.grid(True, alpha=0.3)
+                plt.savefig(os.path.join(stage_dir, "map_history.png"), dpi=150, bbox_inches='tight')
+                plt.close()
+                
+                # Save final model
+                final_model_path = os.path.join(stage_dir, f"{backbone}_stage{stage}_final.pth")
+                torch.save(model.state_dict(), final_model_path)
+                print(f"Saved final model to {final_model_path}")
+
+                # Final Evaluation
+                final_recalls, final_mAPs = evaluate(model, Config.TEST_IMG_PATH, Config.DEVICE, stage_dir, epoch='final')
+                
+                # Save evaluation results
+                eval_results = {
+                    'backbone': backbone,
+                    'stage': stage,
+                    'final_loss': loss_history[-1] if loss_history else 0,
+                    'best_recall_at_1': best_recall_at_1,
+                    'final_recalls': final_recalls,
+                    'final_mAPs': final_mAPs
+                }
+                
+                import json
+                with open(os.path.join(stage_dir, "evaluation_results.json"), "w") as f:
+                    json.dump(eval_results, f)
 
     print("\nTraining complete for all backbones.")
 
