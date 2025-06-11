@@ -10,6 +10,13 @@ import random
 import matplotlib.pyplot as plt
 from tqdm import tqdm
 import itertools
+import time
+from pathlib import Path
+from dotenv import load_dotenv
+import timm
+
+# Load environment variables
+load_dotenv()
 
 # --- CONFIGURATION ---
 class Config:
@@ -17,12 +24,12 @@ class Config:
     DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
     
     # Data
-    DATA_DIR = "data/earth_imagery"
-    TEST_IMG_PATH = "data/test/test.jpg"
-    OUTPUT_DIR = "training_results"
+    DATA_DIR = os.getenv("DATA_DIR", "data/earth_imagery")
+    TEST_IMG_PATH = os.getenv("TEST_IMG_PATH", "data/test/test.jpg")
+    OUTPUT_DIR = os.getenv("OUTPUT_DIR", "training_results")
 
-    # Models to train
-    BACKBONES = ['resnet50', 'efficientnet_b0', 'mobilenet_v2'] # mobilenet_v3 and shufflenet are more complex to adapt
+    # Models to train (using timm model names)
+    BACKBONES = ['resnet50', 'efficientnet_b0', 'mobilenetv2_100', 'mobilenetv3_small_100']
 
     # Training Hyperparameters
     NUM_EPOCHS = int(os.getenv("NUM_EPOCHS", 500))
@@ -113,25 +120,30 @@ class NetVLAD(nn.Module):
 
         return vlad
 
-def get_backbone(backbone_name):
-    if backbone_name == 'resnet50':
-        model = models.resnet50(weights=models.ResNet50_Weights.DEFAULT)
-        out_channels = model.fc.in_features
-        model.fc = nn.Identity()
-        # Return model and a hookable layer
-        return model, out_channels
-    elif backbone_name == 'efficientnet_b0':
-        model = models.efficientnet_b0(weights=models.EfficientNet_B0_Weights.DEFAULT)
-        out_channels = model.classifier[1].in_features
-        model.classifier = nn.Identity()
-        return model, out_channels
-    elif backbone_name == 'mobilenet_v2':
-        model = models.mobilenet_v2(weights=models.MobileNet_V2_Weights.DEFAULT)
-        out_channels = model.classifier[1].in_features
-        model.classifier = nn.Identity()
-        return model, out_channels
-    else:
-        raise ValueError(f"Backbone {backbone_name} not supported.")
+# --- Backbone Networks ---
+def get_backbone(backbone_name: str) -> (nn.Module, int):
+    """
+    Creates a backbone model using the timm library, configured to output a
+    4D feature map instead of a classification vector.
+
+    Args:
+        backbone_name (str): The name of the model in timm's library.
+        
+    Returns:
+        A tuple containing the model (nn.Module) and the number of output
+        feature channels (int).
+    """
+    model = timm.create_model(
+        backbone_name,
+        pretrained=True,
+        num_classes=0,    # Remove classifier head
+        global_pool='',   # Remove final pooling layer
+    )
+    
+    # Get the number of output channels from the model's feature_info
+    feature_dim = model.feature_info.channels()
+    
+    return model, feature_dim
 
 class SiameseNet(nn.Module):
     def __init__(self, backbone_name):
