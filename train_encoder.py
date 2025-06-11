@@ -14,6 +14,8 @@ import time
 from pathlib import Path
 from dotenv import load_dotenv
 import timm
+import kornia.augmentation as K
+import kornia.geometry.transform as T
 
 # Load environment variables
 load_dotenv()
@@ -51,19 +53,34 @@ class Config:
 
 
 # --- AUGMENTATIONS ---
-def get_augmentations():
+def get_cpu_augmentations():
+    """Returns basic augmentations to be run on the CPU."""
     return transforms.Compose([
-        transforms.RandomInvert(p=0.1),
-        transforms.RandomApply([transforms.GaussianBlur(kernel_size=(5, 9), sigma=(0.1, 5))], p=0.3),
-        transforms.RandomAdjustSharpness(sharpness_factor=2, p=0.2),
-        transforms.RandomAutocontrast(p=0.2),
-        transforms.ColorJitter(brightness=0.3, contrast=0.3, saturation=0.3, hue=0.2),
-        transforms.RandomRotation(degrees=180),
-        transforms.RandomHorizontalFlip(),
-        transforms.RandomVerticalFlip(),
         transforms.ToTensor(),
-        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
-        transforms.RandomErasing(p=0.1, scale=(0.02, 0.1), ratio=(0.3, 3.3)),
+    ])
+
+def get_gpu_augmentations(device: torch.device) -> nn.Module:
+    """Returns a sequential module of augmentations to be run on the GPU."""
+    return nn.Sequential(
+        # Note: Kornia expects (B, C, H, W) and values in range [0, 1]
+        K.RandomInvert(p=0.1),
+        K.RandomGaussianBlur(kernel_size=(5, 9), sigma=(0.1, 5), p=0.3),
+        K.RandomSharpness(sharpness=2, p=0.2),
+        K.RandomAutocontrast(p=0.2),
+        K.ColorJitter(brightness=0.3, contrast=0.3, saturation=0.3, hue=0.2, p=0.8),
+        K.RandomRotation(degrees=180, p=0.5),
+        K.RandomHorizontalFlip(p=0.5),
+        K.RandomVerticalFlip(p=0.5),
+        # Normalize after all other augmentations
+        K.Normalize(mean=torch.tensor([0.485, 0.456, 0.406]), std=torch.tensor([0.229, 0.224, 0.225])),
+        K.RandomErasing(p=0.1, scale=(0.02, 0.1), ratio=(0.3, 3.3)),
+    ).to(device)
+
+def get_eval_transforms():
+    """Returns basic transforms for evaluation."""
+    return transforms.Compose([
+        transforms.ToTensor(),
+        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
     ])
 
 # --- LOSS FUNCTION ---
@@ -297,55 +314,67 @@ class SatelliteDataset(Dataset):
 
 # --- TRAINING & EVALUATION ---
 
-def train_one_epoch(model, dataloader, criterion, optimizer, device):
+def train_one_epoch(model, dataloader, criterion, optimizer, device, gpu_augmentations):
     model.train()
     total_loss = 0.0
+    progress_bar = tqdm(dataloader, desc="Training", leave=False)
     
-    pbar = tqdm(dataloader, desc="Epoch Loss: ?")
-    for batch in pbar:
+    for anchor, positives, negatives in progress_bar:
+        # Move all tensors to the GPU first and combine into a single batch
+        # The structure is [anchor, p1, p2, p3, p4, n1, n2, n3, n4]
+        # where each is a batch of size BATCH_SIZE
+        batch_size = anchor.size(0)
+        num_pos = len(positives)
+        num_neg = len(negatives)
+
+        # Create a single large batch for augmentation
+        # The tensors from dataloader are on CPU, move them to GPU
+        all_images = torch.cat([anchor] + positives + negatives, dim=0).to(device)
+
+        # Apply GPU augmentations to the entire batch at once
+        all_images_aug = gpu_augmentations(all_images)
+        
         optimizer.zero_grad()
         
-        # Unpack and send to device
-        images = [img.to(device) for img in batch]
-        anchor_img, pos_imgs, neg_imgs = images[0], images[1:5], images[5:9]
+        # Get embeddings for the augmented batch
+        embeddings = model(all_images_aug)
+        
+        # Split embeddings back
+        anchor_emb, pos_embs, neg_embs = torch.split(
+            embeddings, 
+            [batch_size, batch_size * num_pos, batch_size * num_neg]
+        )
+        
+        # Reshape and average the embeddings for positives and negatives
+        pos_embs = pos_embs.view(num_pos, batch_size, -1).mean(dim=0)
+        neg_embs = neg_embs.view(num_neg, batch_size, -1).mean(dim=0)
 
-        # Get embeddings
-        all_imgs = torch.cat([anchor_img] + pos_imgs + neg_imgs, dim=0)
-        all_embs = model(all_imgs)
-        
-        anchor_emb, pos_embs, neg_embs = torch.split(all_embs, [Config.BATCH_SIZE, Config.BATCH_SIZE*4, Config.BATCH_SIZE*4])
-        pos_embs = pos_embs.view(Config.BATCH_SIZE, 4, -1)
-        neg_embs = neg_embs.view(Config.BATCH_SIZE, 4, -1)
-        
-        # Calculate triplet loss across all combinations
-        loss = 0
-        for i in range(4): # 4 positives
-            for j in range(4): # 4 negatives
-                loss += criterion(anchor_emb, pos_embs[:, i, :], neg_embs[:, j, :])
-        
-        loss /= 16.0 # Average over all pairs
+        loss = criterion(anchor_emb, pos_embs, neg_embs)
         loss.backward()
         optimizer.step()
-        
+
         total_loss += loss.item()
-        pbar.set_description(f"Epoch Loss: {total_loss / (pbar.n + 1):.4f}")
+        progress_bar.set_postfix(loss=f"{loss.item():.4f}")
 
     return total_loss / len(dataloader)
 
 
 @torch.no_grad()
 def evaluate(model, test_img_path, device, output_dir, epoch=None):
-    if not os.path.exists(test_img_path):
-        print(f"Test image not found at {test_img_path}. Skipping evaluation.")
-        return {}, {}
-
-    print("Running evaluation...")
     model.eval()
-    
-    test_img = Image.open(test_img_path).convert("RGB")
+    print("Running evaluation...")
+
+    # --- Load and prepare test image ---
+    try:
+        test_img = Image.open(test_img_path).convert('RGB')
+    except FileNotFoundError:
+        print(f"Evaluation test image not found at {test_img_path}. Skipping evaluation.")
+        # Return dummy values
+        return {f'R@{k}': 0 for k in Config.EVAL_RECALL_K}
+
     w, h = test_img.size
     
-    test_transforms = get_augmentations()
+    eval_transforms = get_eval_transforms()
     
     # Create gallery of database embeddings
     db_crops = []
@@ -357,12 +386,12 @@ def evaluate(model, test_img_path, device, output_dir, epoch=None):
         is_overlap = any(np.sqrt((x-cx)**2 + (y-cy)**2) < Config.CROP_SIZE_PIXELS for cx, cy in db_coords)
         if not is_overlap:
             crop = test_img.crop((x, y, x + Config.CROP_SIZE_PIXELS, y + Config.CROP_SIZE_PIXELS))
-            db_crops.append(test_transforms(crop))
+            db_crops.append(eval_transforms(crop))
             db_coords.append((x, y))
 
     if not db_crops:
         print("Could not generate any database crops for evaluation.")
-        return {}, {}
+        return {f'R@{k}': 0 for k in Config.EVAL_RECALL_K}
 
     db_embs = model(torch.stack(db_crops).to(device))
     
@@ -376,11 +405,11 @@ def evaluate(model, test_img_path, device, output_dir, epoch=None):
         px = max(0, min(px, w - Config.CROP_SIZE_PIXELS))
         py = max(0, min(py, h - Config.CROP_SIZE_PIXELS))
         crop = test_img.crop((px, py, px + Config.CROP_SIZE_PIXELS, py + Config.CROP_SIZE_PIXELS))
-        query_embs_list.append(test_transforms(crop))
+        query_embs_list.append(eval_transforms(crop))
     
     if not query_embs_list:
         print("Could not generate any query crops for evaluation.")
-        return {}, {}
+        return {f'R@{k}': 0 for k in Config.EVAL_RECALL_K}
         
     query_embs = model(torch.stack(query_embs_list).to(device))
 
@@ -431,145 +460,109 @@ def evaluate(model, test_img_path, device, output_dir, epoch=None):
     plt.savefig(os.path.join(output_dir, fname), dpi=150, bbox_inches='tight')
     plt.close()
     
-    return recalls, mAPs
+    return recalls
 
 
 def run_training_pipeline():
     # Create output directories
-    os.makedirs(Config.OUTPUT_DIR, exist_ok=True)
-    
-    augmentations = get_augmentations()
+    output_path = Path(Config.OUTPUT_DIR)
+    output_path.mkdir(exist_ok=True)
 
-    for backbone in Config.BACKBONES:
-        print(f"\n{'='*20} Training Backbone: {backbone.upper()} {'='*20}")
+    for backbone_name in Config.BACKBONES:
+        print(f"--- Starting Training for {backbone_name} ---")
         
-        backbone_dir = os.path.join(Config.OUTPUT_DIR, backbone)
-        os.makedirs(backbone_dir, exist_ok=True)
-        
-        # --- Model Initialization ---
-        model = SiameseNet(backbone_name=backbone).to(Config.DEVICE)
+        # --- Model Setup ---
+        model = SiameseNet(backbone_name).to(Config.DEVICE)
         optimizer = Config.OPTIMIZER(model.parameters(), lr=Config.LR)
-        criterion = TripletLoss(margin=Config.TRIPLET_MARGIN).to(Config.DEVICE)
+        criterion = TripletLoss(margin=Config.TRIPLET_MARGIN)
+        gpu_augmentations = get_gpu_augmentations(torch.device(Config.DEVICE))
         
-        for stage in [1, 2]:
-            print(f"\n--- Stage {stage}: {'Pre-training' if stage == 1 else 'Season Invariance'} ---")
-            stage_dir = os.path.join(backbone_dir, f"stage_{stage}")
-            os.makedirs(stage_dir, exist_ok=True)
+        # --- Checkpoint Loading ---
+        start_epoch = 0
+        checkpoint_dir = output_path / backbone_name / "checkpoints"
+        checkpoint_dir.mkdir(parents=True, exist_ok=True)
+        
+        latest_checkpoint_path = find_latest_checkpoint(checkpoint_dir)
+        if latest_checkpoint_path:
+            print(f"Resuming from checkpoint: {latest_checkpoint_path}")
+            checkpoint = torch.load(latest_checkpoint_path)
+            model.load_state_dict(checkpoint['model_state_dict'])
+            optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
+            start_epoch = checkpoint['epoch'] + 1
+        else:
+            print("No checkpoint found, starting from scratch.")
 
-            dataset = SatelliteDataset(
-                data_dir=Config.DATA_DIR,
-                stage=stage,
-                num_samples=Config.SAMPLES_PER_EPOCH,
-                augmentations=augmentations
-            )
-            # Use a persistent worker DataLoader to speed up
-            dataloader = DataLoader(
-                dataset,
-                batch_size=Config.BATCH_SIZE,
-                shuffle=True,
-                num_workers=4,
-                pin_memory=True,
-                persistent_workers=True,
-                drop_last=True
-            )
+        # --- Data Setup ---
+        cpu_augmentations = get_cpu_augmentations()
 
-            loss_history = []
-            recall_history = {k: [] for k in Config.EVAL_RECALL_K}
-            map_history = {k: [] for k in Config.EVAL_RECALL_K}
-            best_recall_at_1 = -1.0
+        # --- Training Loop ---
+        best_recall_at_1 = -1
+        
+        for epoch in range(start_epoch, Config.NUM_EPOCHS):
+            print(f"\nEpoch {epoch+1}/{Config.NUM_EPOCHS}")
             
-            for epoch in range(Config.NUM_EPOCHS):
-                print(f"\nEpoch {epoch+1}/{Config.NUM_EPOCHS}")
-                
-                epoch_loss = train_one_epoch(model, dataloader, criterion, optimizer, Config.DEVICE)
-                loss_history.append(epoch_loss)
-                
-                print(f"Epoch {epoch+1} Loss: {epoch_loss:.6f}")
-                
-                # --- Per-epoch evaluation ---
-                print("Running per-epoch evaluation...")
-                recalls, mAPs = evaluate(model, Config.TEST_IMG_PATH, Config.DEVICE, stage_dir, epoch=epoch+1)
-                
-                for k in Config.EVAL_RECALL_K:
-                    recall_history[k].append(recalls[k])
-                    map_history[k].append(mAPs[k])
+            # Determine current training stage
+            current_stage = 2 if epoch >= (Config.NUM_EPOCHS // 2) else 1
+            print(f"Current training stage: {current_stage}")
 
-                # Save best model based on Recall@1
-                current_recall_at_1 = recalls.get(1, -1.0)
-                if current_recall_at_1 > best_recall_at_1:
-                    best_recall_at_1 = current_recall_at_1
-                    best_model_path = os.path.join(stage_dir, f"{backbone}_stage{stage}_best_recall.pth")
-                    torch.save(model.state_dict(), best_model_path)
-                    print(f"New best model saved with Recall@1: {best_recall_at_1:.4f}")
-                
-                # Save periodic checkpoints
-                if (epoch + 1) % 50 == 0:
-                    checkpoint_path = os.path.join(stage_dir, f"{backbone}_stage{stage}_epoch{epoch+1}.pth")
-                    torch.save(model.state_dict(), checkpoint_path)
+            # Update dataset based on stage
+            if 'dataset' not in locals() or dataset.stage != current_stage:
+                 dataset = SatelliteDataset(
+                    data_dir=Config.DATA_DIR,
+                    stage=current_stage,
+                    num_samples=Config.SAMPLES_PER_EPOCH,
+                    augmentations=cpu_augmentations
+                )
+                 dataloader = DataLoader(
+                    dataset,
+                    batch_size=Config.BATCH_SIZE,
+                    shuffle=True, 
+                    num_workers=4, 
+                    pin_memory=True
+                )
+
+            epoch_loss = train_one_epoch(model, dataloader, criterion, optimizer, Config.DEVICE, gpu_augmentations)
+            print(f"Epoch {epoch+1} Average Loss: {epoch_loss:.4f}")
+
+            # --- Evaluation ---
+            recall_results = evaluate(
+                model=model, 
+                test_img_path=Config.TEST_IMG_PATH, 
+                device=Config.DEVICE,
+                output_dir=(output_path / backbone_name),
+                epoch=epoch + 1
+            )
             
-                # --- End of stage plotting ---
+            # --- Model Saving ---
+            current_recall_at_1 = recall_results['R@1']
+            
+            # Save checkpoint after every epoch
+            checkpoint_path = checkpoint_dir / f"checkpoint_epoch_{epoch+1}.pth"
+            torch.save({
+                'epoch': epoch,
+                'model_state_dict': model.state_dict(),
+                'optimizer_state_dict': optimizer.state_dict(),
+                'loss': epoch_loss,
+                'recall': recall_results
+            }, checkpoint_path)
+            print(f"Saved checkpoint to {checkpoint_path}")
 
-                # Save loss plot
-                plt.figure(figsize=(12, 6))
-                plt.plot(loss_history)
-                plt.title(f"{backbone} - Stage {stage} Training Loss")
-                plt.xlabel("Epoch")
-                plt.ylabel("Loss")
-                plt.grid(True, alpha=0.3)
-                plt.savefig(os.path.join(stage_dir, "loss_curve.png"), dpi=150, bbox_inches='tight')
-                plt.close()
-
-                # Save Recall and mAP history plots
-                plt.figure(figsize=(14, 8))
-                for k in Config.EVAL_RECALL_K:
-                    plt.plot(recall_history[k], label=f'Recall@{k}')
-                plt.title(f"{backbone} - Stage {stage} Recall@K vs. Epochs")
-                plt.xlabel("Epoch")
-                plt.ylabel("Recall")
-                plt.legend()
-                plt.grid(True, alpha=0.3)
-                plt.savefig(os.path.join(stage_dir, "recall_history.png"), dpi=150, bbox_inches='tight')
-                plt.close()
-
-                plt.figure(figsize=(14, 8))
-                for k in Config.EVAL_RECALL_K:
-                    plt.plot(map_history[k], label=f'mAP@{k}')
-                plt.title(f"{backbone} - Stage {stage} mAP@K vs. Epochs")
-                plt.xlabel("Epoch")
-                plt.ylabel("mAP (Precision)")
-                plt.legend()
-                plt.grid(True, alpha=0.3)
-                plt.savefig(os.path.join(stage_dir, "map_history.png"), dpi=150, bbox_inches='tight')
-                plt.close()
-                
-                # Save final model
-                final_model_path = os.path.join(stage_dir, f"{backbone}_stage{stage}_final.pth")
+            if current_recall_at_1 > best_recall_at_1:
+                best_recall_at_1 = current_recall_at_1
+                final_model_path = output_path / backbone_name / "final_model.pth"
                 torch.save(model.state_dict(), final_model_path)
-                print(f"Saved final model to {final_model_path}")
+                print(f"New best model saved to {final_model_path} with R@1: {best_recall_at_1:.4f}")
 
-                # Final Evaluation
-                final_recalls, final_mAPs = evaluate(model, Config.TEST_IMG_PATH, Config.DEVICE, stage_dir, epoch='final')
-                
-                # Save evaluation results
-                eval_results = {
-                    'backbone': backbone,
-                    'stage': stage,
-                    'final_loss': loss_history[-1] if loss_history else 0,
-                    'best_recall_at_1': best_recall_at_1,
-                    'final_recalls': final_recalls,
-                    'final_mAPs': final_mAPs
-                }
-                
-                import json
-                with open(os.path.join(stage_dir, "evaluation_results.json"), "w") as f:
-                    json.dump(eval_results, f)
+    print("--- Training complete for all backbones ---")
 
-    print("\nTraining complete for all backbones.")
+def find_latest_checkpoint(checkpoint_dir: Path):
+    """Finds the latest checkpoint file in a directory."""
+    checkpoints = list(checkpoint_dir.glob('checkpoint_epoch_*.pth'))
+    if not checkpoints:
+        return None
+    
+    latest_checkpoint = max(checkpoints, key=lambda p: int(p.stem.split('_')[-1]))
+    return latest_checkpoint
 
 if __name__ == '__main__':
-    # Add a check for data directory
-    if not os.path.exists(Config.DATA_DIR) or not os.listdir(Config.DATA_DIR):
-        print(f"Error: Data directory '{Config.DATA_DIR}' is empty or does not exist.")
-        print("Please ensure you have downloaded the satellite imagery into subfolders like 'data/earth_imagery/loc1/'.")
-    else:
-        run_training_pipeline()
+    run_training_pipeline()
