@@ -489,7 +489,16 @@ def run_training_pipeline():
         checkpoint_dir = output_path / backbone_name / "checkpoints"
         checkpoint_dir.mkdir(parents=True, exist_ok=True)
         
-        # Find the latest epoch to resume from
+        # LEGACY: Try to load from old 'stage_1' directory first
+        legacy_checkpoint_path = output_path / backbone_name / "stage_1" / "efficientnet_b0_stage1_best_recall.pth"
+        if legacy_checkpoint_path.exists():
+            print(f"Found legacy checkpoint at {legacy_checkpoint_path}. Loading weights...")
+            model.load_state_dict(torch.load(legacy_checkpoint_path))
+            # Since we don't know the epoch or optimizer state, we start fresh but with the right weights
+            start_epoch = 0 
+            print("Legacy weights loaded. New checkpoints will be saved to the new directory structure.")
+
+        # Find the latest epoch to resume from in the new checkpoint directory
         latest_checkpoint_path = find_latest_checkpoint(checkpoint_dir)
         if latest_checkpoint_path:
             print(f"Resuming from checkpoint: {latest_checkpoint_path}")
@@ -499,8 +508,8 @@ def run_training_pipeline():
             start_epoch = checkpoint['epoch'] + 1
             # Scan all previous checkpoints to find the true best recall
             best_recall_at_1 = find_best_recall_from_checkpoints(checkpoint_dir)
-        else:
-            print("No checkpoint found, starting from scratch.")
+        elif not legacy_checkpoint_path.exists():
+            print("No new or legacy checkpoints found, starting from scratch.")
 
         # --- Data Setup ---
         cpu_augmentations = get_cpu_augmentations()
