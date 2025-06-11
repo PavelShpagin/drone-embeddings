@@ -466,7 +466,8 @@ def evaluate(model, test_img_path, device, output_dir, epoch=None):
     plt.savefig(os.path.join(output_dir, fname), dpi=150, bbox_inches='tight')
     plt.close()
     
-    return recalls
+    # Return recalls with string keys like 'R@1' for consistency
+    return {f'R@{k}': v for k, v in recalls.items()}
 
 
 def run_training_pipeline():
@@ -537,7 +538,7 @@ def run_training_pipeline():
                     dataset,
                     batch_size=Config.BATCH_SIZE,
                     shuffle=True, 
-                    num_workers=24, 
+                    num_workers=26, 
                     pin_memory=True
                 )
 
