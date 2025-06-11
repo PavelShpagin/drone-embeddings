@@ -160,7 +160,9 @@ class SiameseNet(nn.Module):
         self.netvlad = NetVLAD(num_clusters=32, dim=self.projection_dim)
         
     def forward(self, x):
-        features = self.feature_extractor(x)
+        # When using features_only=True, the extractor returns a list of feature maps.
+        # We want the last one, which is the richest feature representation.
+        features = self.feature_extractor(x)[-1]
         projected_features = self.projection(features)
         embedding = self.netvlad(projected_features)
         return embedding
