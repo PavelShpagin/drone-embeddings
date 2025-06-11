@@ -537,7 +537,7 @@ def run_training_pipeline():
                     dataset,
                     batch_size=Config.BATCH_SIZE,
                     shuffle=True, 
-                    num_workers=4, 
+                    num_workers=24, 
                     pin_memory=True
                 )
 
