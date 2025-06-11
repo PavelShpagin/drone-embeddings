@@ -66,7 +66,7 @@ def get_gpu_augmentations(device: torch.device) -> nn.Module:
         K.RandomInvert(p=0.1),
         K.RandomGaussianBlur(kernel_size=(5, 9), sigma=(0.1, 5), p=0.3),
         K.RandomSharpness(sharpness=2, p=0.2),
-        K.RandomAutocontrast(p=0.2),
+        K.RandomAutoContrast(p=0.2),
         K.ColorJitter(brightness=0.3, contrast=0.3, saturation=0.3, hue=0.2, p=0.8),
         K.RandomRotation(degrees=180, p=0.5),
         K.RandomHorizontalFlip(p=0.5),
