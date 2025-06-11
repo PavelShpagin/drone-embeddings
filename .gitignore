@@ -5,25 +5,24 @@
 
 # Python
 __pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
+*.pyc
+*.pyo
+*.pyd
+/venv/
+
+# Environment
+.env*
+
+# Generated Output Files
+# This directory contains generated images and visualizations from scripts
+# in the 'examples' folder. These should not be tracked by Git.
+/output/
+
+# IDE / Editor specific
+.vscode/
+.idea/
+*.swp
+*.swo
 
 # Virtual Environment
 venv/
@@ -69,3 +68,4 @@ coverage.xml
 **/*.keystore
 
 secrets/
+
