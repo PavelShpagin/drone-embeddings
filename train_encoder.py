@@ -479,9 +479,11 @@ def run_training_pipeline():
         
         # --- Checkpoint Loading ---
         start_epoch = 0
+        best_recall_at_1 = -1.0
         checkpoint_dir = output_path / backbone_name / "checkpoints"
         checkpoint_dir.mkdir(parents=True, exist_ok=True)
         
+        # Find the latest epoch to resume from
         latest_checkpoint_path = find_latest_checkpoint(checkpoint_dir)
         if latest_checkpoint_path:
             print(f"Resuming from checkpoint: {latest_checkpoint_path}")
@@ -489,6 +491,8 @@ def run_training_pipeline():
             model.load_state_dict(checkpoint['model_state_dict'])
             optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
             start_epoch = checkpoint['epoch'] + 1
+            # Scan all previous checkpoints to find the true best recall
+            best_recall_at_1 = find_best_recall_from_checkpoints(checkpoint_dir)
         else:
             print("No checkpoint found, starting from scratch.")
 
@@ -496,8 +500,6 @@ def run_training_pipeline():
         cpu_augmentations = get_cpu_augmentations()
 
         # --- Training Loop ---
-        best_recall_at_1 = -1
-        
         for epoch in range(start_epoch, Config.NUM_EPOCHS):
             print(f"\nEpoch {epoch+1}/{Config.NUM_EPOCHS}")
             
@@ -563,6 +565,28 @@ def find_latest_checkpoint(checkpoint_dir: Path):
     
     latest_checkpoint = max(checkpoints, key=lambda p: int(p.stem.split('_')[-1]))
     return latest_checkpoint
+
+def find_best_recall_from_checkpoints(checkpoint_dir: Path) -> float:
+    """Scans all checkpoints in a directory and returns the highest R@1 found."""
+    best_recall = -1.0
+    checkpoints = list(checkpoint_dir.glob('checkpoint_epoch_*.pth'))
+    if not checkpoints:
+        return best_recall
+    
+    print("Scanning existing checkpoints to find best historical recall...")
+    for ckpt_path in checkpoints:
+        try:
+            # Load to CPU to avoid using GPU memory just for a number
+            ckpt = torch.load(ckpt_path, map_location='cpu')
+            # The recall dict is saved under the 'recall' key
+            recall_at_1 = ckpt.get('recall', {}).get('R@1', -1.0)
+            if recall_at_1 > best_recall:
+                best_recall = recall_at_1
+        except Exception as e:
+            print(f"Warning: Could not read recall from checkpoint {ckpt_path}: {e}")
+    
+    print(f"Found best historical Recall@1: {best_recall:.4f}")
+    return best_recall
 
 if __name__ == '__main__':
     run_training_pipeline()
