@@ -136,12 +136,11 @@ def get_backbone(backbone_name: str) -> (nn.Module, int):
     model = timm.create_model(
         backbone_name,
         pretrained=True,
-        num_classes=0,    # Remove classifier head
-        global_pool='',   # Remove final pooling layer
+        features_only=True,
     )
     
     # Get the number of output channels from the model's feature_info
-    feature_dim = model.feature_info.channels()
+    feature_dim = model.feature_info.channels()[-1]
     
     return model, feature_dim
 
