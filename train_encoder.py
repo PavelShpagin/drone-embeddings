@@ -319,7 +319,13 @@ def train_one_epoch(model, dataloader, criterion, optimizer, device, gpu_augment
     total_loss = 0.0
     progress_bar = tqdm(dataloader, desc="Training", leave=False)
     
-    for anchor, positives, negatives in progress_bar:
+    for batch_data in progress_bar:
+        # The dataloader returns a list of 9 tensors.
+        # We unpack them into anchor, a list of positives, and a list of negatives.
+        anchor = batch_data[0]
+        positives = list(batch_data[1:5])
+        negatives = list(batch_data[5:9])
+
         # Move all tensors to the GPU first and combine into a single batch
         # The structure is [anchor, p1, p2, p3, p4, n1, n2, n3, n4]
         # where each is a batch of size BATCH_SIZE
