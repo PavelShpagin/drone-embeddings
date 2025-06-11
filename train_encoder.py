@@ -493,7 +493,8 @@ def run_training_pipeline():
         legacy_checkpoint_path = output_path / backbone_name / "stage_1" / "efficientnet_b0_stage1_best_recall.pth"
         if legacy_checkpoint_path.exists():
             print(f"Found legacy checkpoint at {legacy_checkpoint_path}. Loading weights...")
-            model.load_state_dict(torch.load(legacy_checkpoint_path))
+            # Set weights_only=False to load older checkpoints saved with different pickle protocols.
+            model.load_state_dict(torch.load(legacy_checkpoint_path, weights_only=False))
             # Since we don't know the epoch or optimizer state, we start fresh but with the right weights
             start_epoch = 0 
             print("Legacy weights loaded. New checkpoints will be saved to the new directory structure.")
@@ -502,7 +503,8 @@ def run_training_pipeline():
         latest_checkpoint_path = find_latest_checkpoint(checkpoint_dir)
         if latest_checkpoint_path:
             print(f"Resuming from checkpoint: {latest_checkpoint_path}")
-            checkpoint = torch.load(latest_checkpoint_path)
+            # Set weights_only=False as we are loading a dictionary, not just weights.
+            checkpoint = torch.load(latest_checkpoint_path, weights_only=False)
             model.load_state_dict(checkpoint['model_state_dict'])
             optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
             start_epoch = checkpoint['epoch'] + 1
@@ -592,7 +594,8 @@ def find_best_recall_from_checkpoints(checkpoint_dir: Path) -> float:
     for ckpt_path in checkpoints:
         try:
             # Load to CPU to avoid using GPU memory just for a number
-            ckpt = torch.load(ckpt_path, map_location='cpu')
+            # Set weights_only=False as we are loading a dictionary, not just weights.
+            ckpt = torch.load(ckpt_path, map_location='cpu', weights_only=False)
             # The recall dict is saved under the 'recall' key
             recall_at_1 = ckpt.get('recall', {}).get('R@1', -1.0)
             if recall_at_1 > best_recall:
