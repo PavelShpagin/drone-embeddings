@@ -39,7 +39,6 @@ class Config:
     BATCH_SIZE = int(os.getenv("BATCH_SIZE", 16))
     LR = float(os.getenv("LEARNING_RATE", 1e-4))
     OPTIMIZER = torch.optim.Adam
-    TRIPLET_MARGIN = 0.2
 
     # Sampling and Augmentation
     CROP_SIZE_PIXELS = 100
@@ -82,18 +81,6 @@ def get_eval_transforms():
         transforms.ToTensor(),
         transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
     ])
-
-# --- LOSS FUNCTION ---
-class TripletLoss(nn.Module):
-    def __init__(self, margin):
-        super(TripletLoss, self).__init__()
-        self.margin = margin
-
-    def forward(self, anchor, positive, negative):
-        dist_ap = F.pairwise_distance(anchor, positive)
-        dist_an = F.pairwise_distance(anchor, negative)
-        loss = F.relu(dist_ap - dist_an + self.margin)
-        return loss.mean()
 
 # --- NetVLAD Implementation ---
 class NetVLAD(nn.Module):
@@ -318,7 +305,7 @@ class SatelliteDataset(Dataset):
 
 # --- TRAINING & EVALUATION ---
 
-def train_one_epoch(model, dataloader, criterion, optimizer, device, gpu_augmentations):
+def train_one_epoch(model, dataloader, optimizer, device, gpu_augmentations):
     model.train()
     total_loss = 0.0
     progress_bar = tqdm(dataloader, desc="Training", leave=False)
@@ -378,7 +365,6 @@ def train_one_epoch(model, dataloader, criterion, optimizer, device, gpu_augment
         dist_an = dist_an.unsqueeze(1)
 
         # Calculate loss for all triplets using a soft-margin formulation.
-        # This sums the loss over all 4x4=16 combinations of pos/neg samples.
         # The formula is log(1 + alpha * exp(d_pos - d_neg)), a variant of soft-margin loss.
         # Note: The TripletLoss class and its margin are not used in this formulation.
         alpha = 0.2
@@ -512,7 +498,6 @@ def run_training_pipeline():
         # --- Model Setup ---
         model = SiameseNet(backbone_name).to(Config.DEVICE)
         optimizer = Config.OPTIMIZER(model.parameters(), lr=Config.LR)
-        criterion = TripletLoss(margin=Config.TRIPLET_MARGIN)
         gpu_augmentations = get_gpu_augmentations(torch.device(Config.DEVICE))
         
         # --- Checkpoint Loading ---
@@ -573,7 +558,7 @@ def run_training_pipeline():
                     pin_memory=True
                 )
 
-            epoch_loss = train_one_epoch(model, dataloader, criterion, optimizer, Config.DEVICE, gpu_augmentations)
+            epoch_loss = train_one_epoch(model, dataloader, optimizer, Config.DEVICE, gpu_augmentations)
             print(f"Epoch {epoch+1} Average Loss: {epoch_loss:.4f}")
 
             # --- Evaluation ---
