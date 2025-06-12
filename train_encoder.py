@@ -37,7 +37,7 @@ class Config:
     NUM_EPOCHS = int(os.getenv("NUM_EPOCHS", 100))
     SAMPLES_PER_EPOCH = 20000  # Full scale
     BATCH_SIZE = int(os.getenv("BATCH_SIZE", 16))
-    LR = float(os.getenv("LEARNING_RATE", 1e-6))
+    LR = float(os.getenv("LEARNING_RATE", 1e-4))
     OPTIMIZER = torch.optim.Adam
     TRIPLET_MARGIN = 0.2
 
@@ -184,6 +184,10 @@ class SiameseNet(nn.Module):
         projected_features = self.projection(features)
         embedding = self.netvlad(projected_features)
         return embedding
+
+    def get_embedding(self, x):
+        """Explicit method for getting a single embedding, for clarity in inference."""
+        return self.forward(x)
 
 # --- DATASET ---
 class SatelliteDataset(Dataset):
@@ -351,11 +355,38 @@ def train_one_epoch(model, dataloader, criterion, optimizer, device, gpu_augment
             [batch_size, batch_size * num_pos, batch_size * num_neg]
         )
         
-        # Reshape and average the embeddings for positives and negatives
-        pos_embs = pos_embs.view(num_pos, batch_size, -1).mean(dim=0)
-        neg_embs = neg_embs.view(num_neg, batch_size, -1).mean(dim=0)
+        # Reshape embeddings
+        pos_embs = pos_embs.view(batch_size, num_pos, -1)
+        neg_embs = neg_embs.view(batch_size, num_neg, -1)
 
-        loss = criterion(anchor_emb, pos_embs, neg_embs)
+        # Expand anchor embedding to match dimensions for distance calculation
+        anchor_emb_expanded_pos = anchor_emb.unsqueeze(1).expand(-1, num_pos, -1)
+        anchor_emb_expanded_neg = anchor_emb.unsqueeze(1).expand(-1, num_neg, -1)
+        
+        # Calculate pairwise distances
+        # dist_ap: (batch_size, num_pos)
+        dist_ap = F.pairwise_distance(anchor_emb_expanded_pos.reshape(-1, embeddings.size(-1)), 
+                                      pos_embs.reshape(-1, embeddings.size(-1))).view(batch_size, num_pos)
+        # dist_an: (batch_size, num_neg)
+        dist_an = F.pairwise_distance(anchor_emb_expanded_neg.reshape(-1, embeddings.size(-1)), 
+                                      neg_embs.reshape(-1, embeddings.size(-1))).view(batch_size, num_neg)
+
+        # Expand distances to form all triplet combinations for the loss calculation
+        # dist_ap: (B, num_pos) -> (B, num_pos, 1)
+        # dist_an: (B, num_neg) -> (B, 1, num_neg)
+        dist_ap = dist_ap.unsqueeze(2)
+        dist_an = dist_an.unsqueeze(1)
+
+        # Calculate loss for all triplets using a soft-margin formulation.
+        # This sums the loss over all 4x4=16 combinations of pos/neg samples.
+        # The formula is log(1 + alpha * exp(d_pos - d_neg)), a variant of soft-margin loss.
+        # Note: The TripletLoss class and its margin are not used in this formulation.
+        alpha = 0.2
+        # The subtraction will broadcast to shape (B, num_pos, num_neg)
+        loss_matrix = torch.log(1 + alpha * torch.exp(dist_ap - dist_an))
+        
+        loss = loss_matrix.mean()
+
         loss.backward()
         optimizer.step()
 

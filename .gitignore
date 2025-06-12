@@ -69,3 +69,6 @@ coverage.xml
 
 secrets/
 
+simulation_results/*
+
+**/*.avi

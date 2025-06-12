@@ -40,7 +40,7 @@ def sign_url(input_url, secret):
 def get_static_map(lat, lng, zoom=19, size="1024x1024", scale=1, date=None):
     """Get static map image from Google Maps API"""
     base_url = "https://maps.googleapis.com/maps/api/staticmap"
-    
+
     params = {
         'center': f"{lat},{lng}",
         'zoom': int(zoom),
@@ -50,14 +50,14 @@ def get_static_map(lat, lng, zoom=19, size="1024x1024", scale=1, date=None):
         'format': 'png',
         'key': API_KEY
     }
-    
+
     # Add date parameter if provided (only works with Google Maps Dynamic API)
     if date:
         params["timestamp"] = int(datetime.strptime(date, '%Y-%m-%d').timestamp())
-    
+
     unsigned_url = base_url + '?' + urllib.parse.urlencode(params)
     signed_url = sign_url(unsigned_url, SECRET)
-    
+
     try:
         response = requests.get(signed_url, timeout=10)
         response.raise_for_status()
@@ -65,41 +65,41 @@ def get_static_map(lat, lng, zoom=19, size="1024x1024", scale=1, date=None):
         if response.content:
             # Get the image
             image = Image.open(BytesIO(response.content))
-            
+
             # Calculate the scale factor based on the difference between actual zoom and rounded zoom
             # This handles fractional zoom levels by scaling the image appropriately
             zoom_diff = zoom - int(zoom)
             scale_factor = 2 ** zoom_diff
-            
+
             if scale_factor != 1.0:
                 # Get current dimensions
                 width, height = image.size
-                
+
                 # Calculate new dimensions
                 new_width = int(width * scale_factor)
                 new_height = int(height * scale_factor)
-                
+
                 # Resize the image
                 image = image.resize((new_width, new_height), Image.Resampling.LANCZOS)
-                
+
                 # Calculate crop box to get center portion
                 left = (new_width - width) // 2
                 top = (new_height - height) // 2
                 right = left + width
                 bottom = top + height
-                
+
                 # Crop to original size
                 image = image.crop((left, top, right, bottom))
-            
+
             return image
         return Image.open(BytesIO(response.content))
     except Exception as e:
         print(f"Error fetching Google Maps image: {e}")
-        return None 
+        return None
 
 def calculate_google_zoom(altitude: float, lat: float, image_size: int = 256) -> int:
     """
-    Calculate appropriate zoom level for Google Maps based on altitude 
+    Calculate appropriate zoom level for Google Maps based on altitude
     to achieve a consistent ground resolution across different map providers.
 
     Args:
@@ -118,12 +118,12 @@ def calculate_google_zoom(altitude: float, lat: float, image_size: int = 256) ->
 
     # Target ground resolution (meters per pixel)
     # Simplified relation: scale proportional to altitude. Factor 2 kept from original.
-    target_resolution = (altitude * 2) / image_size 
-    
+    target_resolution = (altitude * 2) / image_size
+
     # Calculate required zoom level using the Mercator projection resolution formula:
     # Resolution = (Circumference * cos(lat)) / (BaseMapWidth * 2^zoom)
     # Solving for zoom: zoom = log2( (Circumference * cos(lat)) / (BaseMapWidth * TargetResolution) )
-    
+
     # Prevent division by zero or log of non-positive number if target_resolution is invalid
     if target_resolution <= 0:
         return 20
@@ -139,4 +139,4 @@ def calculate_google_zoom(altitude: float, lat: float, image_size: int = 256) ->
         zoom_float = 20 # Default to max zoom in case of calculation error
 
     # Clamp zoom level to Google's typical satellite imagery range
-    return max(0, min(zoom_float, 20)) 
+    return max(0, min(zoom_float, 20))
