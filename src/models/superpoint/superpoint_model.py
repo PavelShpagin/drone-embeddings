@@ -154,7 +154,19 @@ class SuperPoint(nn.Module):
                 state_dict = checkpoint['model_state_dict']
             else:
                 state_dict = checkpoint
-            self.net.load_state_dict(state_dict)
+                
+            # Try to load state dict as is first
+            try:
+                self.net.load_state_dict(state_dict)
+            except:
+                # If that fails, try removing 'net.' prefix if it exists
+                if all(k.startswith('net.') for k in state_dict.keys()):
+                    state_dict = {k[4:]: v for k, v in state_dict.items()}
+                    self.net.load_state_dict(state_dict)
+                # If that fails too, try adding 'net.' prefix
+                else:
+                    state_dict = {f'net.{k}': v for k, v in state_dict.items()}
+                    self.load_state_dict(state_dict)
             
     def train(self, mode=True):
         self.net.train(mode)

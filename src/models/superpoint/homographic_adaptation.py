@@ -143,10 +143,10 @@ if __name__ == "__main__":
     # Load model
     model = SuperPoint(pretrained_path=args.model_path)
     
-    # Get image paths
+    # Get image paths recursively
     image_paths = []
     for ext in ['*.png', '*.jpg', '*.jpeg']:
-        image_paths.extend(glob(os.path.join(args.image_dir, ext)))
+        image_paths.extend(glob(os.path.join(args.image_dir, '**', ext), recursive=True))
     
     # Generate pseudo labels
     generate_pseudo_labels(model, image_paths, args.output_dir, args.n_views, args.batch_size) 
