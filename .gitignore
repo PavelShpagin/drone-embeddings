@@ -71,4 +71,4 @@ secrets/
 
 simulation_results/*
 
-**/*.avi
+training_results_legacy/*

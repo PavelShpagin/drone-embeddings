@@ -35,3 +35,7 @@ dotenv
 
 # Computer vision library
 kornia>=0.6.0
+
+# For SuperPoint keypoint detection
+opencv-python>=4.5.0
+transformers>=4.38.0

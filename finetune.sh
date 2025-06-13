@@ -1,0 +1,1 @@
+python -m src.models.superpoint.finetune_superpoint --data_dir synthetic_shapes --output_dir superpoint_ckpts --epochs 50 --batch_size 64 --device cuda
