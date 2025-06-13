@@ -32,27 +32,60 @@ def train_superpoint(
     save_every=5
 ):
     os.makedirs(output_dir, exist_ok=True)
+    
+    # Initialize model and processor
     processor = AutoImageProcessor.from_pretrained("magic-leap-community/superpoint")
-    model = SuperPointForKeypointDetection.from_pretrained("magic-leap-community/superpoint").to(device)
+    model = SuperPointForKeypointDetection.from_pretrained("magic-leap-community/superpoint")
+    
+    # Ensure all parameters require gradients
+    for param in model.parameters():
+        param.requires_grad = True
+    
+    # Move to device and set to training mode
+    model = model.to(device)
+    model.train()
+    
+    # Setup data
     dataset = SyntheticShapesDataset(data_dir)
     loader = DataLoader(dataset, batch_size=batch_size, shuffle=True, num_workers=4, collate_fn=collate_fn)
+    
+    # Setup optimizer and scheduler
     optimizer = torch.optim.AdamW(model.parameters(), lr=lr)
     scheduler = get_linear_schedule_with_warmup(optimizer, num_warmup_steps=100, num_training_steps=epochs*len(loader))
-    model.train()
+    
+    # Training loop
     for epoch in range(epochs):
         pbar = tqdm(loader, desc=f"Epoch {epoch+1}/{epochs}")
+        epoch_loss = 0
         for batch in pbar:
+            # Process batch
             inputs = processor(batch, return_tensors="pt").to(device)
+            
+            # Forward pass
             outputs = model(**inputs)
-            loss = outputs.loss if hasattr(outputs, 'loss') and outputs.loss is not None else outputs[0]
+            loss = outputs.loss
+            
+            # Backward pass
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
             scheduler.step()
+            
+            # Update progress bar
+            epoch_loss += loss.item()
             pbar.set_postfix({'loss': loss.item()})
+        
+        # Log epoch metrics
+        print(f"\nEpoch {epoch+1} average loss: {epoch_loss/len(loader):.4f}")
+        
+        # Save checkpoint
         if (epoch+1) % save_every == 0:
             model.save_pretrained(os.path.join(output_dir, f"checkpoint_epoch{epoch+1}"))
+            print(f"Saved checkpoint at epoch {epoch+1}")
+    
+    # Save final model
     model.save_pretrained(os.path.join(output_dir, "final"))
+    print("Training complete!")
 
 if __name__ == "__main__":
     import argparse
