@@ -39,27 +39,34 @@ class SuperPointDataset(Dataset):
         # Load image
         img_path = self.image_files[idx]
         img = cv2.imread(str(img_path), cv2.IMREAD_GRAYSCALE)
+        
+        # Resize to 256x256 if not already
+        if img.shape != (256, 256):
+            img = cv2.resize(img, (256, 256), interpolation=cv2.INTER_LINEAR)
+        
         H, W = img.shape
         
         # Load or generate keypoint labels
         if self.stage == 'magicpoint':
             # Generate synthetic labels using corner detection
             corners = cv2.goodFeaturesToTrack(img, maxCorners=1000, qualityLevel=0.01, minDistance=8)
-            if corners is not None:
-                corners = corners.squeeze()
-            else:
-                corners = np.zeros((0, 2))
-                
+            
             # Convert to cell format
             keypoint_map = np.zeros((H//8, W//8), dtype=np.float32)
-            for corner in corners:
-                x, y = corner.astype(int)
-                cell_x, cell_y = x // 8, y // 8
-                if 0 <= cell_x < W//8 and 0 <= cell_y < H//8:
-                    keypoint_map[cell_y, cell_x] = 1.0
+            
+            if corners is not None:
+                corners = corners.squeeze()
+                for corner in corners:
+                    if corner.size == 2:  # Check if corner has x,y coordinates
+                        x, y = corner.astype(int)
+                        cell_x, cell_y = x // 8, y // 8
+                        if 0 <= cell_x < W//8 and 0 <= cell_y < H//8:
+                            keypoint_map[cell_y, cell_x] = 1.0
         else:
             # Load pre-computed pseudo ground truth
             keypoint_map = np.load(str(img_path).replace('_image.png', '_points.npy'))
+            if keypoint_map.shape != (32, 32):  # 256/8 = 32
+                keypoint_map = cv2.resize(keypoint_map, (32, 32), interpolation=cv2.INTER_LINEAR)
         
         # Convert image to tensor
         img_tensor = torch.from_numpy(img).float() / 255.0
