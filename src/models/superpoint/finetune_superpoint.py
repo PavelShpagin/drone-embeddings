@@ -98,17 +98,22 @@ class HomographicPairDataset(Dataset):
         # Load image
         img_path = self.image_files[idx]
         img = cv2.imread(str(img_path), cv2.IMREAD_GRAYSCALE)
-        H, W = img.shape
+        
+        # Resize to 256x256 if not already
+        if img.shape != (256, 256):
+            img = cv2.resize(img, (256, 256), interpolation=cv2.INTER_LINEAR)
         
         # Load keypoint map
         keypoint_map = np.load(str(img_path).replace('_image.png', '_points.npy'))
+        if keypoint_map.shape != (32, 32):  # 256/8 = 32
+            keypoint_map = cv2.resize(keypoint_map, (32, 32), interpolation=cv2.INTER_LINEAR)
         
         # Generate random homography
-        H_mat = generate_homography((H, W))
+        H_mat = generate_homography((256, 256))
         
         # Warp image and keypoint map
-        warped_img = cv2.warpPerspective(img, H_mat, (W, H), flags=cv2.INTER_LINEAR)
-        warped_kp = cv2.warpPerspective(keypoint_map, H_mat, (W//8, H//8), flags=cv2.INTER_LINEAR)
+        warped_img = cv2.warpPerspective(img, H_mat, (256, 256), flags=cv2.INTER_LINEAR)
+        warped_kp = cv2.warpPerspective(keypoint_map, H_mat, (32, 32), flags=cv2.INTER_LINEAR)
         
         # Convert to tensors
         img_tensor = torch.from_numpy(img).float() / 255.0
