@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Fine-tune SuperPoint on UAV data using homographic adaptation.
+Fixed SuperPoint fine-tuning on UAV data using homographic adaptation.
 """
 
 import torch
@@ -62,31 +62,40 @@ class UAVDataset(Dataset):
         }
     
     def _apply_homography(self, img):
-        """Apply random homography to image."""
+        """Apply random homography to image with better validation."""
         h, w = img.shape
         
         # Define corners
         corners = np.array([[0, 0], [w-1, 0], [w-1, h-1], [0, h-1]], dtype=np.float32)
         
-        # Random perturbation
-        perturbation = np.random.uniform(-32, 32, (4, 2)).astype(np.float32)
+        # FIXED: Use smaller, more reasonable perturbations
+        max_perturbation = min(w, h) * 0.1  # 10% of image size
+        perturbation = np.random.uniform(-max_perturbation, max_perturbation, (4, 2)).astype(np.float32)
         perturbed_corners = corners + perturbation
         
-        # Ensure corners are within bounds
-        perturbed_corners[:, 0] = np.clip(perturbed_corners[:, 0], 0, w-1)
-        perturbed_corners[:, 1] = np.clip(perturbed_corners[:, 1], 0, h-1)
+        # FIXED: Ensure corners stay within reasonable bounds (with margin)
+        margin = 10
+        perturbed_corners[:, 0] = np.clip(perturbed_corners[:, 0], margin, w - margin - 1)
+        perturbed_corners[:, 1] = np.clip(perturbed_corners[:, 1], margin, h - margin - 1)
         
         # Compute homography
         H = cv2.getPerspectiveTransform(corners, perturbed_corners)
         
-        # Warp image
-        warped = cv2.warpPerspective(img, H, (w, h))
+        # FIXED: Validate homography is not degenerate
+        det = np.linalg.det(H[:2, :2])
+        if abs(det) < 1e-6:  # Degenerate homography
+            # Return identity transformation
+            H = np.eye(3, dtype=np.float32)
+            warped = img.copy()
+        else:
+            # Warp image
+            warped = cv2.warpPerspective(img, H, (w, h))
         
         return warped, H
 
-def descriptor_loss(desc1, desc2, kpts1, kpts2, H, margin=1.0):
+def descriptor_loss_fixed(desc1, desc2, kpts1, kpts2, H, margin=1.0):
     """
-    Compute descriptor loss for corresponding keypoints.
+    FIXED: Compute descriptor loss for corresponding keypoints.
     """
     if len(kpts1) == 0 or len(kpts2) == 0:
         return torch.tensor(0.0, device=desc1.device)
@@ -96,7 +105,7 @@ def descriptor_loss(desc1, desc2, kpts1, kpts2, H, margin=1.0):
     
     # Warp keypoints from image1 to image2
     kpts1_warped = (H @ kpts1_h.T).T
-    kpts1_warped = kpts1_warped[:, :2] / kpts1_warped[:, 2:3]
+    kpts1_warped = kpts1_warped[:, :2] / (kpts1_warped[:, 2:3] + 1e-8)  # Add epsilon
     
     # Find correspondences (within 3 pixels)
     dists = np.linalg.norm(kpts1_warped[:, None, :] - kpts2[None, :, :], axis=2)
@@ -109,29 +118,110 @@ def descriptor_loss(desc1, desc2, kpts1, kpts2, H, margin=1.0):
     desc1_matched = desc1[matches[0]]
     desc2_matched = desc2[matches[1]]
     
-    # Compute positive loss (matched descriptors should be similar)
+    # FIXED: Positive loss - minimize distance for matches
     pos_dists = torch.norm(desc1_matched - desc2_matched, dim=1)
-    pos_loss = torch.mean(torch.clamp(pos_dists - 0.2, min=0))
+    pos_loss = torch.mean(pos_dists)  # Want to minimize this
     
-    # Compute negative loss (non-matched descriptors should be different)
-    # Sample some random non-matches
+    # FIXED: Better negative sampling - ensure true negatives
     if len(desc1) > len(matches[0]) and len(desc2) > len(matches[1]):
-        n_neg = min(len(matches[0]), 100)  # Limit negative samples
-        neg_idx1 = np.random.choice(len(desc1), n_neg, replace=False)
-        neg_idx2 = np.random.choice(len(desc2), n_neg, replace=False)
+        # Create mask of matched pairs
+        matched_pairs = set(zip(matches[0], matches[1]))
         
-        desc1_neg = desc1[neg_idx1]
-        desc2_neg = desc2[neg_idx2]
+        # Sample negatives that are NOT in matched pairs
+        n_neg = min(len(matches[0]) * 2, 200)  # More negatives
+        neg_pairs = []
         
-        neg_dists = torch.norm(desc1_neg - desc2_neg, dim=1)
-        neg_loss = torch.mean(torch.clamp(margin - neg_dists, min=0))
+        for _ in range(n_neg):
+            idx1 = np.random.randint(0, len(desc1))
+            idx2 = np.random.randint(0, len(desc2))
+            
+            # Ensure this is not a matched pair
+            if (idx1, idx2) not in matched_pairs:
+                neg_pairs.append((idx1, idx2))
+        
+        if neg_pairs:
+            neg_idx1, neg_idx2 = zip(*neg_pairs)
+            desc1_neg = desc1[list(neg_idx1)]
+            desc2_neg = desc2[list(neg_idx2)]
+            
+            neg_dists = torch.norm(desc1_neg - desc2_neg, dim=1)
+            neg_loss = torch.mean(torch.clamp(margin - neg_dists, min=0))  # Want to maximize distance
+        else:
+            neg_loss = torch.tensor(0.0, device=desc1.device)
     else:
         neg_loss = torch.tensor(0.0, device=desc1.device)
     
     return pos_loss + neg_loss
 
+def get_keypoints_from_heatmap(semi, conf_thresh=0.015, nms_dist=4, cell=8):
+    """Extract keypoints from detector output efficiently."""
+    # Convert to numpy
+    semi_np = semi.detach().cpu().numpy()  # [B, 65, H/8, W/8]
+    
+    batch_keypoints = []
+    
+    for b in range(semi_np.shape[0]):
+        # Extract keypoints for this batch item
+        dense = np.exp(semi_np[b])  # Softmax
+        dense = dense / (np.sum(dense, axis=0) + 1e-6)  # Normalize
+        
+        # Remove dustbin (no-keypoint class)
+        nodust = dense[:-1, :, :]  # [64, H/8, W/8]
+        
+        # Reshape to get keypoint probabilities per cell
+        Hc, Wc = nodust.shape[1], nodust.shape[2]
+        nodust = nodust.transpose(1, 2, 0)  # [H/8, W/8, 64]
+        heatmap = np.reshape(nodust, [Hc, Wc, cell, cell])
+        heatmap = np.transpose(heatmap, [0, 2, 1, 3])
+        heatmap = np.reshape(heatmap, [Hc * cell, Wc * cell])  # [H, W]
+        
+        # Find keypoints above threshold
+        xs, ys = np.where(heatmap >= conf_thresh)
+        if len(xs) == 0:
+            batch_keypoints.append(np.zeros((0, 2)))
+            continue
+            
+        pts = np.zeros((len(xs), 2))
+        pts[:, 0] = ys  # x coordinates
+        pts[:, 1] = xs  # y coordinates
+        scores = heatmap[xs, ys]
+        
+        # Apply NMS
+        if nms_dist > 0 and len(pts) > 1:
+            keep = nms_fast(pts, scores, nms_dist)
+            pts = pts[keep]
+        
+        batch_keypoints.append(pts)
+    
+    return batch_keypoints
+
+def nms_fast(pts, scores, nms_dist):
+    """Fast NMS implementation."""
+    if len(pts) == 0:
+        return []
+        
+    # Sort by score (descending)
+    order = np.argsort(scores)[::-1]
+    keep = []
+    
+    while len(order) > 0:
+        i = order[0]
+        keep.append(i)
+        
+        if len(order) == 1:
+            break
+            
+        # Compute distances to remaining points
+        dists = np.sqrt(np.sum((pts[order[1:]] - pts[i]) ** 2, axis=1))
+        
+        # Keep points that are far enough
+        inds = np.where(dists >= nms_dist)[0]
+        order = order[inds + 1]
+        
+    return keep
+
 def train_superpoint(data_dir, pretrained_weights, output_dir, epochs=20, batch_size=4, lr=1e-4):
-    """Train SuperPoint on UAV data."""
+    """FIXED: Train SuperPoint on UAV data."""
     
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     print(f"Using device: {device}")
@@ -143,7 +233,7 @@ def train_superpoint(data_dir, pretrained_weights, output_dir, epochs=20, batch_
     
     # Setup dataset and dataloader
     dataset = UAVDataset(data_dir)
-    dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True, num_workers=4)
+    dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True, num_workers=2)  # Reduced workers
     
     # Setup optimizer (only train descriptor head)
     # Freeze encoder and detector, only train descriptor head
@@ -179,27 +269,26 @@ def train_superpoint(data_dir, pretrained_weights, output_dir, epochs=20, batch_
             semi1, desc1 = model(img1)
             semi2, desc2 = model(img2)
             
+            # FIXED: More efficient keypoint extraction
+            with torch.no_grad():
+                kpts1_batch = get_keypoints_from_heatmap(semi1)
+                kpts2_batch = get_keypoints_from_heatmap(semi2)
+            
             batch_loss = 0.0
             valid_samples = 0
             
             # Process each sample in the batch
             for i in range(len(img1)):
-                # Get keypoints for this sample
-                with torch.no_grad():
-                    # Use the SuperPoint wrapper to get keypoints
-                    img1_np = (img1[i, 0].cpu().numpy() * 255).astype(np.uint8)
-                    img2_np = (img2[i, 0].cpu().numpy() * 255).astype(np.uint8)
-                    
-                    kpts1, _, _ = superpoint.detect(img1_np)
-                    kpts2, _, _ = superpoint.detect(img2_np)
+                kpts1 = kpts1_batch[i]
+                kpts2 = kpts2_batch[i]
                 
                 if len(kpts1) > 0 and len(kpts2) > 0:
                     # Sample descriptors at keypoint locations
                     desc1_sample = sample_descriptors(desc1[i], kpts1)
                     desc2_sample = sample_descriptors(desc2[i], kpts2)
                     
-                    # Compute descriptor loss
-                    loss = descriptor_loss(desc1_sample, desc2_sample, kpts1, kpts2, H_batch[i])
+                    # FIXED: Use corrected descriptor loss
+                    loss = descriptor_loss_fixed(desc1_sample, desc2_sample, kpts1, kpts2, H_batch[i])
                     batch_loss += loss
                     valid_samples += 1
             

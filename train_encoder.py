@@ -43,7 +43,7 @@ class Config:
     # Sampling and Augmentation
     CROP_SIZE_PIXELS = 100
     M_PER_PIXEL = 1.0  # Assuming 1 meter per pixel
-    POS_RADIUS_M = 100
+    POS_RADIUS_M = 50   # Fixed: Half crop size ensures overlap
     NEG_RADIUS_M = 400
     
     # Evaluation
@@ -218,7 +218,8 @@ class SatelliteDataset(Dataset):
         if center_x is not None:
             # Positive sampling
             angle = random.uniform(0, 2 * np.pi)
-            radius = random.uniform(0, self.pos_radius_px)
+            # Ensure radius is at least 1.0 to avoid identical crops due to int() casting.
+            radius = random.uniform(1.0, self.pos_radius_px)
             x = int(center_x + radius * np.cos(angle))
             y = int(center_y + radius * np.sin(angle))
         else:
@@ -232,14 +233,25 @@ class SatelliteDataset(Dataset):
         return x, y
 
     def __getitem__(self, index):
-        loc_name = random.choice(list(self.locations.keys()))
-        loc_seasons = self.locations[loc_name]
+        try:
+            loc_name = random.choice(list(self.locations.keys()))
+            loc_seasons = self.locations[loc_name]
+        except IndexError:
+            # This can happen if the dataset is empty after filtering.
+            # It's better to raise a clear error than crash with an IndexError.
+            raise RuntimeError("The dataset appears to be empty or contains no valid locations.")
 
+        # Stage 1: All crops from one random image
         if self.stage == 1:
-            # All crops from one random image
-            season = random.choice(list(loc_seasons.keys()))
-            img_path = loc_seasons[season]
-            large_img = Image.open(img_path).convert('RGB')
+            try:
+                season = random.choice(list(loc_seasons.keys()))
+                img_path = loc_seasons[season]
+                large_img = Image.open(img_path).convert('RGB')
+            except Exception as e:
+                # If an image is corrupt or unreadable, try again with a different sample.
+                # This makes the loader robust to bad data.
+                return self.__getitem__(random.randint(0, len(self) - 1))
+            
             w, h = large_img.size
 
             # Get anchor
@@ -249,30 +261,67 @@ class SatelliteDataset(Dataset):
             # Get positives
             pos_crops = []
             for _ in range(4):
-                px, py = self._get_random_crop_coords(w, h, center_x=ax, center_y=ay)
-                pos_crops.append(self.augmentations(large_img.crop((px, py, px + self.crop_size_px, py + self.crop_size_px))))
+                # Foolproof check to prevent identical anchor/positive pairs
+                while True:
+                    px, py = self._get_random_crop_coords(w, h, center_x=ax, center_y=ay)
+                    pos_crop = self.augmentations(large_img.crop((px, py, px + self.crop_size_px, py + self.crop_size_px)))
+                    if not torch.equal(anchor_crop, pos_crop):
+                        pos_crops.append(pos_crop)
+                        break
 
             # Get negatives
             neg_crops = []
             for _ in range(4):
-                while True:
-                    nx, ny = self._get_random_crop_coords(w, h)
-                    if np.sqrt((nx-ax)**2 + (ny-ay)**2) > self.neg_radius_px:
-                        neg_crops.append(self.augmentations(large_img.crop((nx, ny, nx + self.crop_size_px, ny + self.crop_size_px))))
-                        break
-            
+                nx, ny = self._get_random_crop_coords(w, h)
+                # A negative must be outside the positive radius.
+                if np.sqrt((nx-ax)**2 + (ny-ay)**2) > self.pos_radius_px:
+                    neg_crops.append(self.augmentations(large_img.crop((nx, ny, nx + self.crop_size_px, ny + self.crop_size_px))))
+
             large_img.close()
             return anchor_crop, *pos_crops, *neg_crops
 
         elif self.stage == 2:
             # Crops can come from different seasons of the same location
             if len(loc_seasons) < 2: # Need at least 2 seasons to learn invariance
-                # Fallback to stage 1 logic for this sample
-                return self.__getitem__(index) # This is a simplification
+                # Fallback to stage 1 logic for this sample, using the single available season.
+                season = list(loc_seasons.keys())[0]
+                img_path = loc_seasons[season]
+                large_img = Image.open(img_path).convert('RGB')
+                w, h = large_img.size
+
+                # Get anchor
+                ax, ay = self._get_random_crop_coords(w, h)
+                anchor_crop = self.augmentations(large_img.crop((ax, ay, ax + self.crop_size_px, ay + self.crop_size_px)))
+
+                # Get positives from the same image
+                pos_crops = []
+                for _ in range(4):
+                    # Foolproof check to prevent identical anchor/positive pairs
+                    while True:
+                        px, py = self._get_random_crop_coords(w, h, center_x=ax, center_y=ay)
+                        pos_crop = self.augmentations(large_img.crop((px, py, px + self.crop_size_px, py + self.crop_size_px)))
+                        if not torch.equal(anchor_crop, pos_crop):
+                            pos_crops.append(pos_crop)
+                            break
+                
+                # Get negatives from the same image
+                neg_crops = []
+                for _ in range(4):
+                    nx, ny = self._get_random_crop_coords(w, h)
+                    if np.sqrt((nx-ax)**2 + (ny-ay)**2) > self.pos_radius_px:
+                        neg_crops.append(self.augmentations(large_img.crop((nx, ny, nx + self.crop_size_px, ny + self.crop_size_px))))
+                
+                large_img.close()
+                return anchor_crop, *pos_crops, *neg_crops
             
             # Anchor
-            anchor_season = random.choice(list(loc_seasons.keys()))
-            anchor_img = Image.open(loc_seasons[anchor_season]).convert('RGB')
+            try:
+                anchor_season = random.choice(list(loc_seasons.keys()))
+                anchor_img = Image.open(loc_seasons[anchor_season]).convert('RGB')
+            except Exception as e:
+                # If an image is corrupt or unreadable, try again.
+                return self.__getitem__(random.randint(0, len(self) - 1))
+
             w, h = anchor_img.size
             ax, ay = self._get_random_crop_coords(w, h)
             anchor_crop = self.augmentations(anchor_img.crop((ax, ay, ax + self.crop_size_px, ay + self.crop_size_px)))
@@ -281,12 +330,22 @@ class SatelliteDataset(Dataset):
             # Positives
             pos_crops = []
             for _ in range(4):
-                pos_season = random.choice(list(loc_seasons.keys()))
-                pos_img = Image.open(loc_seasons[pos_season]).convert('RGB')
-                w, h = pos_img.size
-                px, py = self._get_random_crop_coords(w, h, center_x=ax, center_y=ay)
-                pos_crops.append(self.augmentations(pos_img.crop((px, py, px + self.crop_size_px, py + self.crop_size_px))))
-                pos_img.close()
+                # Foolproof check to prevent identical anchor/positive pairs
+                while True:
+                    try:
+                        pos_season = random.choice(list(loc_seasons.keys()))
+                        pos_img = Image.open(loc_seasons[pos_season]).convert('RGB')
+                    except Exception as e:
+                        # This positive failed, but we can try another season/image.
+                        continue
+                    
+                    w_pos, h_pos = pos_img.size
+                    px, py = self._get_random_crop_coords(w_pos, h_pos, center_x=ax, center_y=ay)
+                    pos_crop = self.augmentations(pos_img.crop((px, py, px + self.crop_size_px, py + self.crop_size_px)))
+                    pos_img.close()
+                    if not torch.equal(anchor_crop, pos_crop):
+                        pos_crops.append(pos_crop)
+                        break
 
             # Negatives
             neg_crops = []
@@ -296,7 +355,8 @@ class SatelliteDataset(Dataset):
                 w, h = neg_img.size
                 while True:
                     nx, ny = self._get_random_crop_coords(w, h)
-                    if np.sqrt((nx-ax)**2 + (ny-ay)**2) > self.neg_radius_px:
+                    # A negative must be outside the positive radius.
+                    if np.sqrt((nx-ax)**2 + (ny-ay)**2) > self.pos_radius_px:
                         neg_crops.append(self.augmentations(neg_img.crop((nx, ny, nx + self.crop_size_px, ny + self.crop_size_px))))
                         break
                 neg_img.close()

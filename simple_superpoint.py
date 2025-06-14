@@ -68,9 +68,8 @@ class SuperPointNet(nn.Module):
         cDa = self.relu(self.convDa(x))
         desc = self.convDb(cDa)  # [B, 256, H/8, W/8]
         
-        # Normalize descriptors
-        dn = torch.norm(desc, p=2, dim=1)  # Compute the norm
-        desc = desc.div(torch.unsqueeze(dn, 1))  # Divide by norm to normalize
+        # FIXED: Proper descriptor normalization using F.normalize
+        desc = F.normalize(desc, p=2, dim=1)  # L2 normalize along channel dimension
         
         return semi, desc
 
