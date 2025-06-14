@@ -226,8 +226,25 @@ def train_superpoint(data_dir, pretrained_weights, output_dir, epochs=20, batch_
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     print(f"Using device: {device}")
     
-    # Load pretrained SuperPoint
-    superpoint = SuperPoint(pretrained_weights, device)
+    # Check for existing trained weights first
+    output_dir = Path(output_dir)
+    trained_weights = None
+    if output_dir.exists():
+        trained_weight_files = list(output_dir.glob("*.pth"))
+        if trained_weight_files:
+            # Use the final model if it exists, otherwise use the latest checkpoint
+            final_model = output_dir / "superpoint_uav_final.pth"
+            if final_model.exists():
+                trained_weights = str(final_model)
+            else:
+                trained_weights = str(sorted(trained_weight_files)[-1])
+    
+    # Load weights (prefer trained weights if they exist)
+    weights_to_use = trained_weights if trained_weights else pretrained_weights
+    print(f"Loading weights from: {weights_to_use}")
+    
+    # Load SuperPoint
+    superpoint = SuperPoint(weights_to_use, device)
     model = superpoint.net
     model.train()
     
