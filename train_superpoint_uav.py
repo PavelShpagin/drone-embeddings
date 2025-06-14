@@ -228,19 +228,23 @@ def train_superpoint(data_dir, pretrained_weights, output_dir, epochs=20, batch_
     
     # Check for existing trained weights first
     output_dir = Path(output_dir)
-    trained_weights = None
-    if output_dir.exists():
-        trained_weight_files = list(output_dir.glob("*.pth"))
-        if trained_weight_files:
-            # Use the final model if it exists, otherwise use the latest checkpoint
-            final_model = output_dir / "superpoint_uav_final.pth"
-            if final_model.exists():
-                trained_weights = str(final_model)
-            else:
-                trained_weights = str(sorted(trained_weight_files)[-1])
+    output_dir.mkdir(parents=True, exist_ok=True)
+    
+    # Initialize training state
+    start_epoch = 0
+    best_loss = float('inf')
+    
+    # Check for existing checkpoint
+    checkpoint_path = output_dir / "training_checkpoint.pth"
+    if checkpoint_path.exists():
+        print(f"Found existing checkpoint at {checkpoint_path}")
+        checkpoint = torch.load(checkpoint_path, map_location=device)
+        start_epoch = checkpoint['epoch'] + 1
+        best_loss = checkpoint['best_loss']
+        print(f"Resuming training from epoch {start_epoch}")
     
     # Load weights (prefer trained weights if they exist)
-    weights_to_use = trained_weights if trained_weights else pretrained_weights
+    weights_to_use = str(checkpoint_path) if checkpoint_path.exists() else pretrained_weights
     print(f"Loading weights from: {weights_to_use}")
     
     # Load SuperPoint
@@ -250,7 +254,7 @@ def train_superpoint(data_dir, pretrained_weights, output_dir, epochs=20, batch_
     
     # Setup dataset and dataloader
     dataset = UAVDataset(data_dir)
-    dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True, num_workers=2)  # Reduced workers
+    dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True, num_workers=2)
     
     # Setup optimizer (only train descriptor head)
     # Freeze encoder and detector, only train descriptor head
@@ -265,11 +269,13 @@ def train_superpoint(data_dir, pretrained_weights, output_dir, epochs=20, batch_
     
     optimizer = optim.Adam([p for p in model.parameters() if p.requires_grad], lr=lr)
     
-    # Training loop
-    output_dir = Path(output_dir)
-    output_dir.mkdir(parents=True, exist_ok=True)
+    # Load optimizer state if resuming
+    if checkpoint_path.exists():
+        optimizer.load_state_dict(checkpoint['optimizer_state'])
+        print("Loaded optimizer state from checkpoint")
     
-    for epoch in range(epochs):
+    # Training loop
+    for epoch in range(start_epoch, epochs):
         epoch_loss = 0.0
         num_batches = 0
         
@@ -323,14 +329,22 @@ def train_superpoint(data_dir, pretrained_weights, output_dir, epochs=20, batch_
         print(f"Epoch {epoch+1} average loss: {avg_loss:.4f}")
         
         # Save checkpoint
-        if (epoch + 1) % 5 == 0:
-            checkpoint_path = output_dir / f"superpoint_uav_epoch_{epoch+1}.pth"
-            torch.save(model.state_dict(), checkpoint_path)
-            print(f"Saved checkpoint: {checkpoint_path}")
+        checkpoint = {
+            'epoch': epoch,
+            'model_state_dict': model.state_dict(),
+            'optimizer_state': optimizer.state_dict(),
+            'best_loss': min(best_loss, avg_loss),
+            'loss': avg_loss
+        }
+        torch.save(checkpoint, checkpoint_path)
+        
+        # Save final model if this is the best so far
+        if avg_loss < best_loss:
+            best_loss = avg_loss
+            final_path = output_dir / "superpoint_uav_final.pth"
+            torch.save(model.state_dict(), final_path)
+            print(f"New best model saved: {final_path}")
     
-    # Save final model
-    final_path = output_dir / "superpoint_uav_final.pth"
-    torch.save(model.state_dict(), final_path)
     print(f"Training complete! Final model saved: {final_path}")
 
 def sample_descriptors(desc_map, keypoints):
