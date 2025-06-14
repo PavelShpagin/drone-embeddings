@@ -166,33 +166,53 @@ def descriptor_loss(desc1, desc2, H, keypoints1, keypoints2, positive_margin=1, 
     """
     B = desc1.shape[0]
     loss = 0
+    valid_batches = 0
     
     for b in range(B):
         # Get valid keypoints
-        kp1 = keypoints1[b].nonzero(as_tuple=False).float()  # (N1,2)
-        kp2 = keypoints2[b].nonzero(as_tuple=False).float()  # (N2,2)
+        kp1 = keypoints1[b].nonzero(as_tuple=False).float()  # (N1,2) in feature map coords
+        kp2 = keypoints2[b].nonzero(as_tuple=False).float()  # (N2,2) in feature map coords
         
         if len(kp1) == 0 or len(kp2) == 0:
             continue
             
-        # Scale keypoints to original image space
-        kp1 = kp1 * 8
-        kp2 = kp2 * 8
+        # Scale keypoints to original image space (feature map is 8x downsampled)
+        kp1_img = kp1 * 8  # Convert to image coordinates
+        kp2_img = kp2 * 8  # Convert to image coordinates
         
-        # Warp keypoints1 to image2
-        kp1_warped = warp_points(kp1.cpu().numpy(), H[b].cpu().numpy())
+        # Warp keypoints1 to image2 space
+        kp1_warped = warp_points(kp1_img.cpu().numpy(), H[b].cpu().numpy())
         kp1_warped = torch.from_numpy(kp1_warped).to(kp1.device)
         
-        # Find matching keypoints (within 3 pixels)
-        dists = torch.cdist(kp1_warped, kp2)  # (N1,N2)
-        matches = dists < 3  # (N1,N2) boolean mask
+        # Convert back to feature map coordinates
+        kp1_warped_feat = kp1_warped / 8
+        
+        # Find matching keypoints (within 3 pixels in image space, so 3/8 in feature space)
+        dists = torch.cdist(kp1_warped_feat, kp2)  # (N1,N2)
+        matches = dists < (3.0 / 8.0)  # (N1,N2) boolean mask
         
         if not matches.any():
             continue
             
-        # Get descriptors for keypoints
-        d1 = F.grid_sample(desc1[b:b+1], kp1.view(1,-1,1,2) / 8, align_corners=True)  # (1,256,1,N1)
-        d2 = F.grid_sample(desc2[b:b+1], kp2.view(1,-1,1,2) / 8, align_corners=True)  # (1,256,1,N2)
+        # Normalize coordinates for grid_sample (from [0, H/8] to [-1, 1])
+        H_feat, W_feat = desc1.shape[2], desc1.shape[3]
+        
+        # Convert keypoint coordinates to grid_sample format [-1, 1]
+        kp1_norm = kp1.clone()
+        kp1_norm[:, 0] = 2.0 * kp1[:, 0] / (W_feat - 1) - 1.0  # x coordinate
+        kp1_norm[:, 1] = 2.0 * kp1[:, 1] / (H_feat - 1) - 1.0  # y coordinate
+        
+        kp2_norm = kp2.clone()
+        kp2_norm[:, 0] = 2.0 * kp2[:, 0] / (W_feat - 1) - 1.0  # x coordinate
+        kp2_norm[:, 1] = 2.0 * kp2[:, 1] / (H_feat - 1) - 1.0  # y coordinate
+        
+        # Sample descriptors at keypoint locations
+        # Note: grid_sample expects (x,y) format, but our keypoints are (y,x) from nonzero()
+        kp1_grid = kp1_norm[:, [1, 0]].view(1, -1, 1, 2)  # Swap to (x,y) and reshape
+        kp2_grid = kp2_norm[:, [1, 0]].view(1, -1, 1, 2)  # Swap to (x,y) and reshape
+        
+        d1 = F.grid_sample(desc1[b:b+1], kp1_grid, align_corners=True, mode='bilinear')  # (1,256,1,N1)
+        d2 = F.grid_sample(desc2[b:b+1], kp2_grid, align_corners=True, mode='bilinear')  # (1,256,1,N2)
         
         d1 = d1.squeeze().t()  # (N1,256)
         d2 = d2.squeeze().t()  # (N2,256)
@@ -200,22 +220,43 @@ def descriptor_loss(desc1, desc2, H, keypoints1, keypoints2, positive_margin=1, 
         # Skip if d1 or d2 is not 2D or has zero rows
         if d1.ndim != 2 or d2.ndim != 2 or d1.size(0) == 0 or d2.size(0) == 0:
             continue
+            
+        # Ensure descriptors are L2 normalized
+        d1 = F.normalize(d1, p=2, dim=1)
+        d2 = F.normalize(d2, p=2, dim=1)
         
         # Compute positive and negative pairs
         sim = torch.mm(d1, d2.t())  # (N1,N2) cosine similarity
         
-        # Positive loss
-        pos_loss = F.relu(positive_margin - sim[matches]).mean()
+        # Positive loss - encourage high similarity for matching keypoints
+        pos_sim = sim[matches]
+        if len(pos_sim) > 0:
+            pos_loss = F.relu(positive_margin - pos_sim).mean()
+        else:
+            pos_loss = torch.tensor(0.0, device=desc1.device)
         
-        # Negative loss (hardest negative mining)
-        sim_neg = sim.clone()
-        sim_neg[matches] = -1  # Exclude positive pairs
-        hardest_neg = sim_neg.max(dim=1)[0]  # Hardest negative for each keypoint in image1
-        neg_loss = F.relu(hardest_neg - negative_margin).mean()
+        # Negative loss - encourage low similarity for non-matching keypoints
+        neg_mask = ~matches
+        if neg_mask.any():
+            neg_sim = sim[neg_mask]
+            neg_loss = F.relu(neg_sim - negative_margin).mean()
+        else:
+            neg_loss = torch.tensor(0.0, device=desc1.device)
         
-        loss += pos_loss + neg_loss
+        batch_loss = pos_loss + neg_loss
+        loss += batch_loss
+        valid_batches += 1
         
-    return loss / B if B > 0 else torch.tensor(0.0).to(desc1.device)
+        # Debug print for first batch
+        if b == 0:
+            print(f"  Descriptor loss debug - Batch {b}:")
+            print(f"    Keypoints: {len(kp1)} vs {len(kp2)}")
+            print(f"    Matches: {matches.sum().item()}")
+            print(f"    Descriptor norms: d1={d1.norm(dim=1).mean():.3f}, d2={d2.norm(dim=1).mean():.3f}")
+            print(f"    Similarity range: [{sim.min():.3f}, {sim.max():.3f}]")
+            print(f"    Pos loss: {pos_loss:.3f}, Neg loss: {neg_loss:.3f}")
+        
+    return loss / valid_batches if valid_batches > 0 else torch.tensor(0.0, device=desc1.device)
 
 def train_superpoint(
     data_dir,

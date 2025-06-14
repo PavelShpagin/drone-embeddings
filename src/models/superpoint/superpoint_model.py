@@ -65,7 +65,9 @@ class SuperPointNet(nn.Module):
         
         # Descriptor head
         descriptors = self.descriptor(features)  # (B,256,H/8,W/8)
-        descriptors = F.normalize(descriptors, p=2, dim=1)  # L2 normalize descriptors
+        # L2 normalize descriptors, but avoid normalizing zero vectors
+        descriptor_norms = torch.norm(descriptors, p=2, dim=1, keepdim=True)
+        descriptors = descriptors / (descriptor_norms + 1e-8)  # Add small epsilon to avoid division by zero
         
         outputs = {
             'keypoint_scores': keypoint_scores,
@@ -216,9 +218,19 @@ class SuperPoint(nn.Module):
                 
                 # Sample descriptors at keypoint locations
                 kp_scaled = kp / 8  # Scale to feature map resolution
+                H_feat, W_feat = desc_map.shape[1], desc_map.shape[2]
+                
+                # Normalize coordinates for grid_sample (from [0, H/8] to [-1, 1])
+                kp_norm = kp_scaled.clone()
+                kp_norm[:, 0] = 2.0 * kp_scaled[:, 0] / (W_feat - 1) - 1.0  # x coordinate
+                kp_norm[:, 1] = 2.0 * kp_scaled[:, 1] / (H_feat - 1) - 1.0  # y coordinate
+                
+                # grid_sample expects (x,y) format
+                kp_grid = kp_norm[:, [0, 1]].view(1, -1, 1, 2)  # (1, N, 1, 2)
+                
                 descriptors = F.grid_sample(
                     desc_map.unsqueeze(0),
-                    kp_scaled.view(1,-1,1,2),
+                    kp_grid,
                     mode='bilinear',
                     align_corners=True
                 )

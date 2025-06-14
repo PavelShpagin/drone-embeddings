@@ -45,7 +45,7 @@ PYTHONPATH=. python3 -m src.models.superpoint.finetune_superpoint \
     --output_dir "$OUTPUT_DIR/superpoint" \
     --stage superpoint \
     --epochs 50 \
-    --batch_size 32  # Can be increased on H100 if memory allows
+    --batch_size 32 \
     --lr 0.001
 
 echo "Training pipeline complete!" 
