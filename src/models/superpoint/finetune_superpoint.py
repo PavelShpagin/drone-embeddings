@@ -197,6 +197,10 @@ def descriptor_loss(desc1, desc2, H, keypoints1, keypoints2, positive_margin=1, 
         d1 = d1.squeeze().t()  # (N1,256)
         d2 = d2.squeeze().t()  # (N2,256)
         
+        # Skip if d1 or d2 is not 2D or has zero rows
+        if d1.ndim != 2 or d2.ndim != 2 or d1.size(0) == 0 or d2.size(0) == 0:
+            continue
+        
         # Compute positive and negative pairs
         sim = torch.mm(d1, d2.t())  # (N1,N2) cosine similarity
         
