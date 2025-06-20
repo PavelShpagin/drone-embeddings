@@ -1,0 +1,5150 @@
+[
+    {
+        "crop_filename": "test_unseen_crop_0000.jpg",
+        "crop_center_lat": 50.42478644358645,
+        "crop_center_lon": 30.875041141086655,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0001.jpg",
+        "crop_center_lat": 50.41757923637924,
+        "crop_center_lon": 30.916042201572274,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0002.jpg",
+        "crop_center_lat": 50.420281939081946,
+        "crop_center_lon": 30.894834756493506,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0003.jpg",
+        "crop_center_lat": 50.41037202917203,
+        "crop_center_lon": 30.86373050371131,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0004.jpg",
+        "crop_center_lat": 50.41037202917203,
+        "crop_center_lon": 30.916042201572274,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0005.jpg",
+        "crop_center_lat": 50.408570227370234,
+        "crop_center_lon": 30.904731564196933,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0006.jpg",
+        "crop_center_lat": 50.41127293007293,
+        "crop_center_lon": 30.883524119118164,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0007.jpg",
+        "crop_center_lat": 50.408570227370234,
+        "crop_center_lon": 30.917456031244193,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0008.jpg",
+        "crop_center_lat": 50.419381038181044,
+        "crop_center_lon": 30.907559223540765,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0009.jpg",
+        "crop_center_lat": 50.41127293007293,
+        "crop_center_lon": 30.865144333383228,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0010.jpg",
+        "crop_center_lat": 50.415777434577436,
+        "crop_center_lon": 30.87928263010241,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0011.jpg",
+        "crop_center_lat": 50.414876533676534,
+        "crop_center_lon": 30.887765608133915,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0012.jpg",
+        "crop_center_lat": 50.40766932646933,
+        "crop_center_lon": 30.900490075181178,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0013.jpg",
+        "crop_center_lat": 50.41667833547834,
+        "crop_center_lon": 30.910386882884602,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0014.jpg",
+        "crop_center_lat": 50.41037202917203,
+        "crop_center_lon": 30.910386882884602,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0015.jpg",
+        "crop_center_lat": 50.420281939081946,
+        "crop_center_lon": 30.869385822398982,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0016.jpg",
+        "crop_center_lat": 50.42568734448735,
+        "crop_center_lon": 30.900490075181178,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0017.jpg",
+        "crop_center_lat": 50.40947112827113,
+        "crop_center_lon": 30.904731564196933,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0018.jpg",
+        "crop_center_lat": 50.422984641784645,
+        "crop_center_lon": 30.903317734525015,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0019.jpg",
+        "crop_center_lat": 50.42388554268555,
+        "crop_center_lon": 30.887765608133915,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0020.jpg",
+        "crop_center_lat": 50.41757923637924,
+        "crop_center_lon": 30.87928263010241,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0021.jpg",
+        "crop_center_lat": 50.40676842556843,
+        "crop_center_lon": 30.87221348174282,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0022.jpg",
+        "crop_center_lat": 50.415777434577436,
+        "crop_center_lon": 30.886351778461997,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0023.jpg",
+        "crop_center_lat": 50.41037202917203,
+        "crop_center_lon": 30.886351778461997,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0024.jpg",
+        "crop_center_lat": 50.42118283998284,
+        "crop_center_lon": 30.903317734525015,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0025.jpg",
+        "crop_center_lat": 50.42208374088374,
+        "crop_center_lon": 30.882110289446246,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0026.jpg",
+        "crop_center_lat": 50.41848013728014,
+        "crop_center_lon": 30.913214542228438,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0027.jpg",
+        "crop_center_lat": 50.41307473187474,
+        "crop_center_lon": 30.886351778461997,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0028.jpg",
+        "crop_center_lat": 50.408570227370234,
+        "crop_center_lon": 30.87221348174282,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0029.jpg",
+        "crop_center_lat": 50.419381038181044,
+        "crop_center_lon": 30.866558163055146,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0030.jpg",
+        "crop_center_lat": 50.42478644358645,
+        "crop_center_lon": 30.903317734525015,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0031.jpg",
+        "crop_center_lat": 50.42478644358645,
+        "crop_center_lon": 30.866558163055146,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0032.jpg",
+        "crop_center_lat": 50.41127293007293,
+        "crop_center_lon": 30.89200709714967,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0033.jpg",
+        "crop_center_lat": 50.422984641784645,
+        "crop_center_lon": 30.904731564196933,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0034.jpg",
+        "crop_center_lat": 50.408570227370234,
+        "crop_center_lon": 30.884937948790082,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0035.jpg",
+        "crop_center_lat": 50.42568734448735,
+        "crop_center_lon": 30.90614539386885,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0036.jpg",
+        "crop_center_lat": 50.41397563277564,
+        "crop_center_lon": 30.867971992727064,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0037.jpg",
+        "crop_center_lat": 50.408570227370234,
+        "crop_center_lon": 30.869385822398982,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0038.jpg",
+        "crop_center_lat": 50.414876533676534,
+        "crop_center_lon": 30.904731564196933,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0039.jpg",
+        "crop_center_lat": 50.41667833547834,
+        "crop_center_lon": 30.882110289446246,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0040.jpg",
+        "crop_center_lat": 50.414876533676534,
+        "crop_center_lon": 30.893420926821587,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0041.jpg",
+        "crop_center_lat": 50.41307473187474,
+        "crop_center_lon": 30.908973053212684,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0042.jpg",
+        "crop_center_lat": 50.42208374088374,
+        "crop_center_lon": 30.865144333383228,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0043.jpg",
+        "crop_center_lat": 50.41848013728014,
+        "crop_center_lon": 30.90614539386885,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0044.jpg",
+        "crop_center_lat": 50.422984641784645,
+        "crop_center_lon": 30.876454970758573,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0045.jpg",
+        "crop_center_lat": 50.41127293007293,
+        "crop_center_lon": 30.907559223540765,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0046.jpg",
+        "crop_center_lat": 50.415777434577436,
+        "crop_center_lon": 30.86373050371131,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0047.jpg",
+        "crop_center_lat": 50.42118283998284,
+        "crop_center_lon": 30.889179437805833,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0048.jpg",
+        "crop_center_lat": 50.42388554268555,
+        "crop_center_lon": 30.904731564196933,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0049.jpg",
+        "crop_center_lat": 50.420281939081946,
+        "crop_center_lon": 30.904731564196933,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0050.jpg",
+        "crop_center_lat": 50.420281939081946,
+        "crop_center_lon": 30.880696459774327,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0051.jpg",
+        "crop_center_lat": 50.41757923637924,
+        "crop_center_lon": 30.904731564196933,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0052.jpg",
+        "crop_center_lat": 50.420281939081946,
+        "crop_center_lon": 30.914628371900356,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0053.jpg",
+        "crop_center_lat": 50.415777434577436,
+        "crop_center_lon": 30.883524119118164,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0054.jpg",
+        "crop_center_lat": 50.414876533676534,
+        "crop_center_lon": 30.875041141086655,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0055.jpg",
+        "crop_center_lat": 50.41757923637924,
+        "crop_center_lon": 30.866558163055146,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0056.jpg",
+        "crop_center_lat": 50.41667833547834,
+        "crop_center_lon": 30.869385822398982,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0057.jpg",
+        "crop_center_lat": 50.415777434577436,
+        "crop_center_lon": 30.907559223540765,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0058.jpg",
+        "crop_center_lat": 50.408570227370234,
+        "crop_center_lon": 30.889179437805833,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0059.jpg",
+        "crop_center_lat": 50.41307473187474,
+        "crop_center_lon": 30.867971992727064,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0060.jpg",
+        "crop_center_lat": 50.412173830973835,
+        "crop_center_lon": 30.89907624550926,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0061.jpg",
+        "crop_center_lat": 50.412173830973835,
+        "crop_center_lon": 30.867971992727064,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0062.jpg",
+        "crop_center_lat": 50.42478644358645,
+        "crop_center_lon": 30.87928263010241,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0063.jpg",
+        "crop_center_lat": 50.41667833547834,
+        "crop_center_lon": 30.87221348174282,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0064.jpg",
+        "crop_center_lat": 50.415777434577436,
+        "crop_center_lon": 30.889179437805833,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0065.jpg",
+        "crop_center_lat": 50.420281939081946,
+        "crop_center_lon": 30.897662415837342,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0066.jpg",
+        "crop_center_lat": 50.41397563277564,
+        "crop_center_lon": 30.875041141086655,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0067.jpg",
+        "crop_center_lat": 50.42388554268555,
+        "crop_center_lon": 30.875041141086655,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0068.jpg",
+        "crop_center_lat": 50.415777434577436,
+        "crop_center_lon": 30.90614539386885,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0069.jpg",
+        "crop_center_lat": 50.42208374088374,
+        "crop_center_lon": 30.90614539386885,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0070.jpg",
+        "crop_center_lat": 50.41037202917203,
+        "crop_center_lon": 30.865144333383228,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0071.jpg",
+        "crop_center_lat": 50.412173830973835,
+        "crop_center_lon": 30.87221348174282,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0072.jpg",
+        "crop_center_lat": 50.42118283998284,
+        "crop_center_lon": 30.867971992727064,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0073.jpg",
+        "crop_center_lat": 50.42478644358645,
+        "crop_center_lon": 30.89200709714967,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0074.jpg",
+        "crop_center_lat": 50.415777434577436,
+        "crop_center_lon": 30.867971992727064,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0075.jpg",
+        "crop_center_lat": 50.40947112827113,
+        "crop_center_lon": 30.882110289446246,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0076.jpg",
+        "crop_center_lat": 50.40766932646933,
+        "crop_center_lon": 30.865144333383228,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0077.jpg",
+        "crop_center_lat": 50.41757923637924,
+        "crop_center_lon": 30.896248586165424,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0078.jpg",
+        "crop_center_lat": 50.414876533676534,
+        "crop_center_lon": 30.869385822398982,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0079.jpg",
+        "crop_center_lat": 50.40766932646933,
+        "crop_center_lon": 30.904731564196933,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0080.jpg",
+        "crop_center_lat": 50.415777434577436,
+        "crop_center_lon": 30.89059326747775,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0081.jpg",
+        "crop_center_lat": 50.414876533676534,
+        "crop_center_lon": 30.876454970758573,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0082.jpg",
+        "crop_center_lat": 50.40766932646933,
+        "crop_center_lon": 30.87221348174282,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0083.jpg",
+        "crop_center_lat": 50.415777434577436,
+        "crop_center_lon": 30.893420926821587,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0084.jpg",
+        "crop_center_lat": 50.422984641784645,
+        "crop_center_lon": 30.90614539386885,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0085.jpg",
+        "crop_center_lat": 50.42388554268555,
+        "crop_center_lon": 30.893420926821587,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0086.jpg",
+        "crop_center_lat": 50.41848013728014,
+        "crop_center_lon": 30.917456031244193,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0087.jpg",
+        "crop_center_lat": 50.42568734448735,
+        "crop_center_lon": 30.887765608133915,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0088.jpg",
+        "crop_center_lat": 50.42478644358645,
+        "crop_center_lon": 30.89059326747775,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0089.jpg",
+        "crop_center_lat": 50.422984641784645,
+        "crop_center_lon": 30.894834756493506,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0090.jpg",
+        "crop_center_lat": 50.40766932646933,
+        "crop_center_lon": 30.903317734525015,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0091.jpg",
+        "crop_center_lat": 50.41307473187474,
+        "crop_center_lon": 30.866558163055146,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0092.jpg",
+        "crop_center_lat": 50.42118283998284,
+        "crop_center_lon": 30.897662415837342,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0093.jpg",
+        "crop_center_lat": 50.420281939081946,
+        "crop_center_lon": 30.889179437805833,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0094.jpg",
+        "crop_center_lat": 50.42208374088374,
+        "crop_center_lon": 30.87221348174282,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0095.jpg",
+        "crop_center_lat": 50.412173830973835,
+        "crop_center_lon": 30.91180071255652,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0096.jpg",
+        "crop_center_lat": 50.414876533676534,
+        "crop_center_lon": 30.903317734525015,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0097.jpg",
+        "crop_center_lat": 50.42118283998284,
+        "crop_center_lon": 30.91180071255652,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0098.jpg",
+        "crop_center_lat": 50.40676842556843,
+        "crop_center_lon": 30.90614539386885,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0099.jpg",
+        "crop_center_lat": 50.41397563277564,
+        "crop_center_lon": 30.917456031244193,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0100.jpg",
+        "crop_center_lat": 50.422984641784645,
+        "crop_center_lon": 30.900490075181178,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0101.jpg",
+        "crop_center_lat": 50.42478644358645,
+        "crop_center_lon": 30.901903904853096,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0102.jpg",
+        "crop_center_lat": 50.414876533676534,
+        "crop_center_lon": 30.913214542228438,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0103.jpg",
+        "crop_center_lat": 50.41667833547834,
+        "crop_center_lon": 30.86373050371131,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0104.jpg",
+        "crop_center_lat": 50.408570227370234,
+        "crop_center_lon": 30.887765608133915,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0105.jpg",
+        "crop_center_lat": 50.42118283998284,
+        "crop_center_lon": 30.882110289446246,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0106.jpg",
+        "crop_center_lat": 50.42568734448735,
+        "crop_center_lon": 30.86373050371131,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0107.jpg",
+        "crop_center_lat": 50.419381038181044,
+        "crop_center_lon": 30.90614539386885,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0108.jpg",
+        "crop_center_lat": 50.41848013728014,
+        "crop_center_lon": 30.910386882884602,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0109.jpg",
+        "crop_center_lat": 50.408570227370234,
+        "crop_center_lon": 30.913214542228438,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0110.jpg",
+        "crop_center_lat": 50.40947112827113,
+        "crop_center_lon": 30.916042201572274,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0111.jpg",
+        "crop_center_lat": 50.40947112827113,
+        "crop_center_lon": 30.875041141086655,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0112.jpg",
+        "crop_center_lat": 50.40676842556843,
+        "crop_center_lon": 30.87928263010241,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0113.jpg",
+        "crop_center_lat": 50.415777434577436,
+        "crop_center_lon": 30.869385822398982,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0114.jpg",
+        "crop_center_lat": 50.419381038181044,
+        "crop_center_lon": 30.894834756493506,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0115.jpg",
+        "crop_center_lat": 50.42118283998284,
+        "crop_center_lon": 30.880696459774327,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0116.jpg",
+        "crop_center_lat": 50.41667833547834,
+        "crop_center_lon": 30.873627311414737,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0117.jpg",
+        "crop_center_lat": 50.41757923637924,
+        "crop_center_lon": 30.894834756493506,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0118.jpg",
+        "crop_center_lat": 50.415777434577436,
+        "crop_center_lon": 30.87786880043049,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0119.jpg",
+        "crop_center_lat": 50.42388554268555,
+        "crop_center_lon": 30.91180071255652,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0120.jpg",
+        "crop_center_lat": 50.41307473187474,
+        "crop_center_lon": 30.903317734525015,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0121.jpg",
+        "crop_center_lat": 50.41307473187474,
+        "crop_center_lon": 30.893420926821587,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0122.jpg",
+        "crop_center_lat": 50.420281939081946,
+        "crop_center_lon": 30.865144333383228,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0123.jpg",
+        "crop_center_lat": 50.42208374088374,
+        "crop_center_lon": 30.89059326747775,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0124.jpg",
+        "crop_center_lat": 50.41127293007293,
+        "crop_center_lon": 30.886351778461997,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0125.jpg",
+        "crop_center_lat": 50.422984641784645,
+        "crop_center_lon": 30.87221348174282,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0126.jpg",
+        "crop_center_lat": 50.422984641784645,
+        "crop_center_lon": 30.882110289446246,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0127.jpg",
+        "crop_center_lat": 50.419381038181044,
+        "crop_center_lon": 30.880696459774327,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0128.jpg",
+        "crop_center_lat": 50.412173830973835,
+        "crop_center_lon": 30.87786880043049,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0129.jpg",
+        "crop_center_lat": 50.42208374088374,
+        "crop_center_lon": 30.907559223540765,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0130.jpg",
+        "crop_center_lat": 50.42568734448735,
+        "crop_center_lon": 30.907559223540765,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0131.jpg",
+        "crop_center_lat": 50.420281939081946,
+        "crop_center_lon": 30.89059326747775,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0132.jpg",
+        "crop_center_lat": 50.40947112827113,
+        "crop_center_lon": 30.897662415837342,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0133.jpg",
+        "crop_center_lat": 50.41667833547834,
+        "crop_center_lon": 30.887765608133915,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0134.jpg",
+        "crop_center_lat": 50.42208374088374,
+        "crop_center_lon": 30.900490075181178,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0135.jpg",
+        "crop_center_lat": 50.41848013728014,
+        "crop_center_lon": 30.880696459774327,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0136.jpg",
+        "crop_center_lat": 50.42388554268555,
+        "crop_center_lon": 30.8707996520709,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0137.jpg",
+        "crop_center_lat": 50.422984641784645,
+        "crop_center_lon": 30.866558163055146,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0138.jpg",
+        "crop_center_lat": 50.41307473187474,
+        "crop_center_lon": 30.89059326747775,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0139.jpg",
+        "crop_center_lat": 50.41307473187474,
+        "crop_center_lon": 30.907559223540765,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0140.jpg",
+        "crop_center_lat": 50.42118283998284,
+        "crop_center_lon": 30.893420926821587,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0141.jpg",
+        "crop_center_lat": 50.412173830973835,
+        "crop_center_lon": 30.86373050371131,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0142.jpg",
+        "crop_center_lat": 50.408570227370234,
+        "crop_center_lon": 30.897662415837342,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0143.jpg",
+        "crop_center_lat": 50.415777434577436,
+        "crop_center_lon": 30.901903904853096,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0144.jpg",
+        "crop_center_lat": 50.40766932646933,
+        "crop_center_lon": 30.901903904853096,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0145.jpg",
+        "crop_center_lat": 50.42208374088374,
+        "crop_center_lon": 30.87928263010241,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0146.jpg",
+        "crop_center_lat": 50.42568734448735,
+        "crop_center_lon": 30.913214542228438,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0147.jpg",
+        "crop_center_lat": 50.42388554268555,
+        "crop_center_lon": 30.916042201572274,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0148.jpg",
+        "crop_center_lat": 50.40676842556843,
+        "crop_center_lon": 30.884937948790082,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0149.jpg",
+        "crop_center_lat": 50.412173830973835,
+        "crop_center_lon": 30.897662415837342,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0150.jpg",
+        "crop_center_lat": 50.40947112827113,
+        "crop_center_lon": 30.880696459774327,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0151.jpg",
+        "crop_center_lat": 50.41397563277564,
+        "crop_center_lon": 30.880696459774327,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0152.jpg",
+        "crop_center_lat": 50.41397563277564,
+        "crop_center_lon": 30.887765608133915,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0153.jpg",
+        "crop_center_lat": 50.41848013728014,
+        "crop_center_lon": 30.876454970758573,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0154.jpg",
+        "crop_center_lat": 50.40676842556843,
+        "crop_center_lon": 30.903317734525015,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0155.jpg",
+        "crop_center_lat": 50.408570227370234,
+        "crop_center_lon": 30.87928263010241,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0156.jpg",
+        "crop_center_lat": 50.41127293007293,
+        "crop_center_lon": 30.914628371900356,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0157.jpg",
+        "crop_center_lat": 50.419381038181044,
+        "crop_center_lon": 30.87786880043049,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0158.jpg",
+        "crop_center_lat": 50.41397563277564,
+        "crop_center_lon": 30.882110289446246,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0159.jpg",
+        "crop_center_lat": 50.419381038181044,
+        "crop_center_lon": 30.908973053212684,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0160.jpg",
+        "crop_center_lat": 50.408570227370234,
+        "crop_center_lon": 30.876454970758573,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0161.jpg",
+        "crop_center_lat": 50.42388554268555,
+        "crop_center_lon": 30.89200709714967,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0162.jpg",
+        "crop_center_lat": 50.420281939081946,
+        "crop_center_lon": 30.907559223540765,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0163.jpg",
+        "crop_center_lat": 50.41037202917203,
+        "crop_center_lon": 30.8707996520709,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0164.jpg",
+        "crop_center_lat": 50.42388554268555,
+        "crop_center_lon": 30.876454970758573,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0165.jpg",
+        "crop_center_lat": 50.41307473187474,
+        "crop_center_lon": 30.883524119118164,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0166.jpg",
+        "crop_center_lat": 50.419381038181044,
+        "crop_center_lon": 30.869385822398982,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0167.jpg",
+        "crop_center_lat": 50.40676842556843,
+        "crop_center_lon": 30.889179437805833,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0168.jpg",
+        "crop_center_lat": 50.422984641784645,
+        "crop_center_lon": 30.914628371900356,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0169.jpg",
+        "crop_center_lat": 50.42478644358645,
+        "crop_center_lon": 30.90614539386885,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0170.jpg",
+        "crop_center_lat": 50.412173830973835,
+        "crop_center_lon": 30.865144333383228,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0171.jpg",
+        "crop_center_lat": 50.42478644358645,
+        "crop_center_lon": 30.910386882884602,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0172.jpg",
+        "crop_center_lat": 50.412173830973835,
+        "crop_center_lon": 30.869385822398982,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0173.jpg",
+        "crop_center_lat": 50.41757923637924,
+        "crop_center_lon": 30.867971992727064,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0174.jpg",
+        "crop_center_lat": 50.419381038181044,
+        "crop_center_lon": 30.896248586165424,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0175.jpg",
+        "crop_center_lat": 50.40766932646933,
+        "crop_center_lon": 30.86373050371131,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0176.jpg",
+        "crop_center_lat": 50.414876533676534,
+        "crop_center_lon": 30.900490075181178,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0177.jpg",
+        "crop_center_lat": 50.42208374088374,
+        "crop_center_lon": 30.884937948790082,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0178.jpg",
+        "crop_center_lat": 50.42118283998284,
+        "crop_center_lon": 30.908973053212684,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0179.jpg",
+        "crop_center_lat": 50.42208374088374,
+        "crop_center_lon": 30.908973053212684,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0180.jpg",
+        "crop_center_lat": 50.40676842556843,
+        "crop_center_lon": 30.873627311414737,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0181.jpg",
+        "crop_center_lat": 50.415777434577436,
+        "crop_center_lon": 30.916042201572274,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0182.jpg",
+        "crop_center_lat": 50.415777434577436,
+        "crop_center_lon": 30.875041141086655,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0183.jpg",
+        "crop_center_lat": 50.415777434577436,
+        "crop_center_lon": 30.8707996520709,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0184.jpg",
+        "crop_center_lat": 50.41848013728014,
+        "crop_center_lon": 30.893420926821587,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0185.jpg",
+        "crop_center_lat": 50.41848013728014,
+        "crop_center_lon": 30.8707996520709,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0186.jpg",
+        "crop_center_lat": 50.42118283998284,
+        "crop_center_lon": 30.875041141086655,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0187.jpg",
+        "crop_center_lat": 50.41397563277564,
+        "crop_center_lon": 30.908973053212684,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0188.jpg",
+        "crop_center_lat": 50.41848013728014,
+        "crop_center_lon": 30.914628371900356,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0189.jpg",
+        "crop_center_lat": 50.41397563277564,
+        "crop_center_lon": 30.904731564196933,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0190.jpg",
+        "crop_center_lat": 50.41127293007293,
+        "crop_center_lon": 30.913214542228438,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0191.jpg",
+        "crop_center_lat": 50.41848013728014,
+        "crop_center_lon": 30.91180071255652,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0192.jpg",
+        "crop_center_lat": 50.419381038181044,
+        "crop_center_lon": 30.8707996520709,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0193.jpg",
+        "crop_center_lat": 50.41037202917203,
+        "crop_center_lon": 30.875041141086655,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0194.jpg",
+        "crop_center_lat": 50.419381038181044,
+        "crop_center_lon": 30.89907624550926,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0195.jpg",
+        "crop_center_lat": 50.40676842556843,
+        "crop_center_lon": 30.896248586165424,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0196.jpg",
+        "crop_center_lat": 50.41397563277564,
+        "crop_center_lon": 30.910386882884602,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0197.jpg",
+        "crop_center_lat": 50.419381038181044,
+        "crop_center_lon": 30.86373050371131,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0198.jpg",
+        "crop_center_lat": 50.41037202917203,
+        "crop_center_lon": 30.873627311414737,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0199.jpg",
+        "crop_center_lat": 50.42478644358645,
+        "crop_center_lon": 30.865144333383228,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0200.jpg",
+        "crop_center_lat": 50.412173830973835,
+        "crop_center_lon": 30.87928263010241,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0201.jpg",
+        "crop_center_lat": 50.42568734448735,
+        "crop_center_lon": 30.897662415837342,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0202.jpg",
+        "crop_center_lat": 50.419381038181044,
+        "crop_center_lon": 30.900490075181178,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0203.jpg",
+        "crop_center_lat": 50.40947112827113,
+        "crop_center_lon": 30.893420926821587,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0204.jpg",
+        "crop_center_lat": 50.42118283998284,
+        "crop_center_lon": 30.883524119118164,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0205.jpg",
+        "crop_center_lat": 50.41757923637924,
+        "crop_center_lon": 30.907559223540765,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0206.jpg",
+        "crop_center_lat": 50.414876533676534,
+        "crop_center_lon": 30.894834756493506,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0207.jpg",
+        "crop_center_lat": 50.40676842556843,
+        "crop_center_lon": 30.904731564196933,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0208.jpg",
+        "crop_center_lat": 50.42478644358645,
+        "crop_center_lon": 30.867971992727064,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0209.jpg",
+        "crop_center_lat": 50.420281939081946,
+        "crop_center_lon": 30.91180071255652,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0210.jpg",
+        "crop_center_lat": 50.41307473187474,
+        "crop_center_lon": 30.880696459774327,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0211.jpg",
+        "crop_center_lat": 50.41037202917203,
+        "crop_center_lon": 30.908973053212684,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0212.jpg",
+        "crop_center_lat": 50.42118283998284,
+        "crop_center_lon": 30.894834756493506,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0213.jpg",
+        "crop_center_lat": 50.422984641784645,
+        "crop_center_lon": 30.887765608133915,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0214.jpg",
+        "crop_center_lat": 50.40766932646933,
+        "crop_center_lon": 30.89200709714967,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0215.jpg",
+        "crop_center_lat": 50.41397563277564,
+        "crop_center_lon": 30.866558163055146,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0216.jpg",
+        "crop_center_lat": 50.41307473187474,
+        "crop_center_lon": 30.873627311414737,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0217.jpg",
+        "crop_center_lat": 50.40676842556843,
+        "crop_center_lon": 30.913214542228438,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0218.jpg",
+        "crop_center_lat": 50.40766932646933,
+        "crop_center_lon": 30.873627311414737,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0219.jpg",
+        "crop_center_lat": 50.42388554268555,
+        "crop_center_lon": 30.873627311414737,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0220.jpg",
+        "crop_center_lat": 50.41667833547834,
+        "crop_center_lon": 30.886351778461997,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0221.jpg",
+        "crop_center_lat": 50.420281939081946,
+        "crop_center_lon": 30.873627311414737,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0222.jpg",
+        "crop_center_lat": 50.40676842556843,
+        "crop_center_lon": 30.907559223540765,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0223.jpg",
+        "crop_center_lat": 50.41757923637924,
+        "crop_center_lon": 30.884937948790082,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0224.jpg",
+        "crop_center_lat": 50.42118283998284,
+        "crop_center_lon": 30.87786880043049,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0225.jpg",
+        "crop_center_lat": 50.41667833547834,
+        "crop_center_lon": 30.876454970758573,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0226.jpg",
+        "crop_center_lat": 50.422984641784645,
+        "crop_center_lon": 30.865144333383228,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0227.jpg",
+        "crop_center_lat": 50.40766932646933,
+        "crop_center_lon": 30.880696459774327,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0228.jpg",
+        "crop_center_lat": 50.41757923637924,
+        "crop_center_lon": 30.869385822398982,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0229.jpg",
+        "crop_center_lat": 50.40676842556843,
+        "crop_center_lon": 30.910386882884602,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0230.jpg",
+        "crop_center_lat": 50.41307473187474,
+        "crop_center_lon": 30.86373050371131,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0231.jpg",
+        "crop_center_lat": 50.40676842556843,
+        "crop_center_lon": 30.916042201572274,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0232.jpg",
+        "crop_center_lat": 50.41307473187474,
+        "crop_center_lon": 30.87786880043049,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0233.jpg",
+        "crop_center_lat": 50.412173830973835,
+        "crop_center_lon": 30.900490075181178,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0234.jpg",
+        "crop_center_lat": 50.40676842556843,
+        "crop_center_lon": 30.893420926821587,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0235.jpg",
+        "crop_center_lat": 50.40947112827113,
+        "crop_center_lon": 30.910386882884602,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0236.jpg",
+        "crop_center_lat": 50.42208374088374,
+        "crop_center_lon": 30.887765608133915,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0237.jpg",
+        "crop_center_lat": 50.420281939081946,
+        "crop_center_lon": 30.87928263010241,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0238.jpg",
+        "crop_center_lat": 50.419381038181044,
+        "crop_center_lon": 30.865144333383228,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0239.jpg",
+        "crop_center_lat": 50.415777434577436,
+        "crop_center_lon": 30.91180071255652,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0240.jpg",
+        "crop_center_lat": 50.42568734448735,
+        "crop_center_lon": 30.8707996520709,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0241.jpg",
+        "crop_center_lat": 50.40766932646933,
+        "crop_center_lon": 30.91180071255652,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0242.jpg",
+        "crop_center_lat": 50.42118283998284,
+        "crop_center_lon": 30.887765608133915,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0243.jpg",
+        "crop_center_lat": 50.42478644358645,
+        "crop_center_lon": 30.908973053212684,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0244.jpg",
+        "crop_center_lat": 50.42568734448735,
+        "crop_center_lon": 30.901903904853096,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0245.jpg",
+        "crop_center_lat": 50.41307473187474,
+        "crop_center_lon": 30.8707996520709,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0246.jpg",
+        "crop_center_lat": 50.408570227370234,
+        "crop_center_lon": 30.89059326747775,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0247.jpg",
+        "crop_center_lat": 50.41667833547834,
+        "crop_center_lon": 30.884937948790082,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0248.jpg",
+        "crop_center_lat": 50.41037202917203,
+        "crop_center_lon": 30.883524119118164,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0249.jpg",
+        "crop_center_lat": 50.41127293007293,
+        "crop_center_lon": 30.908973053212684,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0250.jpg",
+        "crop_center_lat": 50.40766932646933,
+        "crop_center_lon": 30.914628371900356,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0251.jpg",
+        "crop_center_lat": 50.41667833547834,
+        "crop_center_lon": 30.91180071255652,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0252.jpg",
+        "crop_center_lat": 50.41667833547834,
+        "crop_center_lon": 30.904731564196933,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0253.jpg",
+        "crop_center_lat": 50.40947112827113,
+        "crop_center_lon": 30.886351778461997,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0254.jpg",
+        "crop_center_lat": 50.408570227370234,
+        "crop_center_lon": 30.873627311414737,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0255.jpg",
+        "crop_center_lat": 50.412173830973835,
+        "crop_center_lon": 30.917456031244193,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0256.jpg",
+        "crop_center_lat": 50.422984641784645,
+        "crop_center_lon": 30.89059326747775,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0257.jpg",
+        "crop_center_lat": 50.412173830973835,
+        "crop_center_lon": 30.914628371900356,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0258.jpg",
+        "crop_center_lat": 50.415777434577436,
+        "crop_center_lon": 30.903317734525015,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0259.jpg",
+        "crop_center_lat": 50.42118283998284,
+        "crop_center_lon": 30.916042201572274,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0260.jpg",
+        "crop_center_lat": 50.42118283998284,
+        "crop_center_lon": 30.884937948790082,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0261.jpg",
+        "crop_center_lat": 50.41848013728014,
+        "crop_center_lon": 30.886351778461997,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0262.jpg",
+        "crop_center_lat": 50.408570227370234,
+        "crop_center_lon": 30.908973053212684,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0263.jpg",
+        "crop_center_lat": 50.415777434577436,
+        "crop_center_lon": 30.897662415837342,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0264.jpg",
+        "crop_center_lat": 50.412173830973835,
+        "crop_center_lon": 30.903317734525015,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0265.jpg",
+        "crop_center_lat": 50.419381038181044,
+        "crop_center_lon": 30.904731564196933,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0266.jpg",
+        "crop_center_lat": 50.42568734448735,
+        "crop_center_lon": 30.910386882884602,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0267.jpg",
+        "crop_center_lat": 50.420281939081946,
+        "crop_center_lon": 30.900490075181178,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0268.jpg",
+        "crop_center_lat": 50.41127293007293,
+        "crop_center_lon": 30.903317734525015,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0269.jpg",
+        "crop_center_lat": 50.40766932646933,
+        "crop_center_lon": 30.910386882884602,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0270.jpg",
+        "crop_center_lat": 50.41307473187474,
+        "crop_center_lon": 30.901903904853096,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0271.jpg",
+        "crop_center_lat": 50.41127293007293,
+        "crop_center_lon": 30.86373050371131,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0272.jpg",
+        "crop_center_lat": 50.41307473187474,
+        "crop_center_lon": 30.904731564196933,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0273.jpg",
+        "crop_center_lat": 50.41757923637924,
+        "crop_center_lon": 30.873627311414737,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0274.jpg",
+        "crop_center_lat": 50.42478644358645,
+        "crop_center_lon": 30.91180071255652,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0275.jpg",
+        "crop_center_lat": 50.41757923637924,
+        "crop_center_lon": 30.886351778461997,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0276.jpg",
+        "crop_center_lat": 50.41667833547834,
+        "crop_center_lon": 30.89200709714967,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0277.jpg",
+        "crop_center_lat": 50.408570227370234,
+        "crop_center_lon": 30.900490075181178,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0278.jpg",
+        "crop_center_lat": 50.41397563277564,
+        "crop_center_lon": 30.907559223540765,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0279.jpg",
+        "crop_center_lat": 50.42208374088374,
+        "crop_center_lon": 30.901903904853096,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0280.jpg",
+        "crop_center_lat": 50.42568734448735,
+        "crop_center_lon": 30.883524119118164,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0281.jpg",
+        "crop_center_lat": 50.41397563277564,
+        "crop_center_lon": 30.8707996520709,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0282.jpg",
+        "crop_center_lat": 50.41848013728014,
+        "crop_center_lon": 30.87221348174282,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0283.jpg",
+        "crop_center_lat": 50.41667833547834,
+        "crop_center_lon": 30.875041141086655,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0284.jpg",
+        "crop_center_lat": 50.422984641784645,
+        "crop_center_lon": 30.913214542228438,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0285.jpg",
+        "crop_center_lat": 50.420281939081946,
+        "crop_center_lon": 30.867971992727064,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0286.jpg",
+        "crop_center_lat": 50.420281939081946,
+        "crop_center_lon": 30.89200709714967,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0287.jpg",
+        "crop_center_lat": 50.41397563277564,
+        "crop_center_lon": 30.89907624550926,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0288.jpg",
+        "crop_center_lat": 50.415777434577436,
+        "crop_center_lon": 30.884937948790082,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0289.jpg",
+        "crop_center_lat": 50.42388554268555,
+        "crop_center_lon": 30.87928263010241,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0290.jpg",
+        "crop_center_lat": 50.41757923637924,
+        "crop_center_lon": 30.887765608133915,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0291.jpg",
+        "crop_center_lat": 50.41037202917203,
+        "crop_center_lon": 30.903317734525015,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0292.jpg",
+        "crop_center_lat": 50.41037202917203,
+        "crop_center_lon": 30.876454970758573,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0293.jpg",
+        "crop_center_lat": 50.42568734448735,
+        "crop_center_lon": 30.886351778461997,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0294.jpg",
+        "crop_center_lat": 50.42118283998284,
+        "crop_center_lon": 30.907559223540765,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0295.jpg",
+        "crop_center_lat": 50.42478644358645,
+        "crop_center_lon": 30.882110289446246,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0296.jpg",
+        "crop_center_lat": 50.41307473187474,
+        "crop_center_lon": 30.894834756493506,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0297.jpg",
+        "crop_center_lat": 50.40766932646933,
+        "crop_center_lon": 30.90614539386885,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0298.jpg",
+        "crop_center_lat": 50.419381038181044,
+        "crop_center_lon": 30.91180071255652,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0299.jpg",
+        "crop_center_lat": 50.40947112827113,
+        "crop_center_lon": 30.914628371900356,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0300.jpg",
+        "crop_center_lat": 50.41757923637924,
+        "crop_center_lon": 30.90614539386885,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0301.jpg",
+        "crop_center_lat": 50.41037202917203,
+        "crop_center_lon": 30.913214542228438,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0302.jpg",
+        "crop_center_lat": 50.42118283998284,
+        "crop_center_lon": 30.8707996520709,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0303.jpg",
+        "crop_center_lat": 50.41667833547834,
+        "crop_center_lon": 30.87928263010241,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0304.jpg",
+        "crop_center_lat": 50.420281939081946,
+        "crop_center_lon": 30.901903904853096,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0305.jpg",
+        "crop_center_lat": 50.41397563277564,
+        "crop_center_lon": 30.894834756493506,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0306.jpg",
+        "crop_center_lat": 50.412173830973835,
+        "crop_center_lon": 30.876454970758573,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0307.jpg",
+        "crop_center_lat": 50.42118283998284,
+        "crop_center_lon": 30.86373050371131,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0308.jpg",
+        "crop_center_lat": 50.42208374088374,
+        "crop_center_lon": 30.914628371900356,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0309.jpg",
+        "crop_center_lat": 50.408570227370234,
+        "crop_center_lon": 30.894834756493506,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0310.jpg",
+        "crop_center_lat": 50.40766932646933,
+        "crop_center_lon": 30.893420926821587,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0311.jpg",
+        "crop_center_lat": 50.41307473187474,
+        "crop_center_lon": 30.91180071255652,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0312.jpg",
+        "crop_center_lat": 50.420281939081946,
+        "crop_center_lon": 30.908973053212684,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0313.jpg",
+        "crop_center_lat": 50.408570227370234,
+        "crop_center_lon": 30.86373050371131,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0314.jpg",
+        "crop_center_lat": 50.420281939081946,
+        "crop_center_lon": 30.884937948790082,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0315.jpg",
+        "crop_center_lat": 50.41037202917203,
+        "crop_center_lon": 30.887765608133915,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0316.jpg",
+        "crop_center_lat": 50.41127293007293,
+        "crop_center_lon": 30.896248586165424,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0317.jpg",
+        "crop_center_lat": 50.412173830973835,
+        "crop_center_lon": 30.894834756493506,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0318.jpg",
+        "crop_center_lat": 50.41127293007293,
+        "crop_center_lon": 30.873627311414737,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0319.jpg",
+        "crop_center_lat": 50.41127293007293,
+        "crop_center_lon": 30.90614539386885,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0320.jpg",
+        "crop_center_lat": 50.40947112827113,
+        "crop_center_lon": 30.87928263010241,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0321.jpg",
+        "crop_center_lat": 50.419381038181044,
+        "crop_center_lon": 30.87221348174282,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0322.jpg",
+        "crop_center_lat": 50.414876533676534,
+        "crop_center_lon": 30.910386882884602,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0323.jpg",
+        "crop_center_lat": 50.412173830973835,
+        "crop_center_lon": 30.893420926821587,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0324.jpg",
+        "crop_center_lat": 50.42478644358645,
+        "crop_center_lon": 30.873627311414737,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0325.jpg",
+        "crop_center_lat": 50.41757923637924,
+        "crop_center_lon": 30.91180071255652,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0326.jpg",
+        "crop_center_lat": 50.41667833547834,
+        "crop_center_lon": 30.907559223540765,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0327.jpg",
+        "crop_center_lat": 50.408570227370234,
+        "crop_center_lon": 30.882110289446246,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0328.jpg",
+        "crop_center_lat": 50.40676842556843,
+        "crop_center_lon": 30.8707996520709,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0329.jpg",
+        "crop_center_lat": 50.415777434577436,
+        "crop_center_lon": 30.866558163055146,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0330.jpg",
+        "crop_center_lat": 50.41848013728014,
+        "crop_center_lon": 30.901903904853096,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0331.jpg",
+        "crop_center_lat": 50.42478644358645,
+        "crop_center_lon": 30.907559223540765,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0332.jpg",
+        "crop_center_lat": 50.415777434577436,
+        "crop_center_lon": 30.900490075181178,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0333.jpg",
+        "crop_center_lat": 50.41307473187474,
+        "crop_center_lon": 30.889179437805833,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0334.jpg",
+        "crop_center_lat": 50.40676842556843,
+        "crop_center_lon": 30.887765608133915,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0335.jpg",
+        "crop_center_lat": 50.41848013728014,
+        "crop_center_lon": 30.866558163055146,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0336.jpg",
+        "crop_center_lat": 50.42388554268555,
+        "crop_center_lon": 30.903317734525015,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0337.jpg",
+        "crop_center_lat": 50.408570227370234,
+        "crop_center_lon": 30.875041141086655,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0338.jpg",
+        "crop_center_lat": 50.41037202917203,
+        "crop_center_lon": 30.89200709714967,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0339.jpg",
+        "crop_center_lat": 50.40766932646933,
+        "crop_center_lon": 30.917456031244193,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0340.jpg",
+        "crop_center_lat": 50.420281939081946,
+        "crop_center_lon": 30.917456031244193,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0341.jpg",
+        "crop_center_lat": 50.414876533676534,
+        "crop_center_lon": 30.87928263010241,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0342.jpg",
+        "crop_center_lat": 50.42118283998284,
+        "crop_center_lon": 30.89200709714967,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0343.jpg",
+        "crop_center_lat": 50.419381038181044,
+        "crop_center_lon": 30.910386882884602,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0344.jpg",
+        "crop_center_lat": 50.41127293007293,
+        "crop_center_lon": 30.917456031244193,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0345.jpg",
+        "crop_center_lat": 50.42568734448735,
+        "crop_center_lon": 30.876454970758573,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0346.jpg",
+        "crop_center_lat": 50.414876533676534,
+        "crop_center_lon": 30.89200709714967,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0347.jpg",
+        "crop_center_lat": 50.41397563277564,
+        "crop_center_lon": 30.87928263010241,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0348.jpg",
+        "crop_center_lat": 50.41848013728014,
+        "crop_center_lon": 30.873627311414737,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0349.jpg",
+        "crop_center_lat": 50.41127293007293,
+        "crop_center_lon": 30.894834756493506,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0350.jpg",
+        "crop_center_lat": 50.414876533676534,
+        "crop_center_lon": 30.896248586165424,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0351.jpg",
+        "crop_center_lat": 50.41307473187474,
+        "crop_center_lon": 30.914628371900356,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0352.jpg",
+        "crop_center_lat": 50.41757923637924,
+        "crop_center_lon": 30.875041141086655,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0353.jpg",
+        "crop_center_lat": 50.40676842556843,
+        "crop_center_lon": 30.865144333383228,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0354.jpg",
+        "crop_center_lat": 50.42478644358645,
+        "crop_center_lon": 30.87221348174282,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0355.jpg",
+        "crop_center_lat": 50.42208374088374,
+        "crop_center_lon": 30.875041141086655,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0356.jpg",
+        "crop_center_lat": 50.414876533676534,
+        "crop_center_lon": 30.897662415837342,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0357.jpg",
+        "crop_center_lat": 50.41127293007293,
+        "crop_center_lon": 30.87786880043049,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0358.jpg",
+        "crop_center_lat": 50.41397563277564,
+        "crop_center_lon": 30.89059326747775,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0359.jpg",
+        "crop_center_lat": 50.42388554268555,
+        "crop_center_lon": 30.87786880043049,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0360.jpg",
+        "crop_center_lat": 50.42208374088374,
+        "crop_center_lon": 30.917456031244193,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0361.jpg",
+        "crop_center_lat": 50.40947112827113,
+        "crop_center_lon": 30.900490075181178,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0362.jpg",
+        "crop_center_lat": 50.420281939081946,
+        "crop_center_lon": 30.87221348174282,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0363.jpg",
+        "crop_center_lat": 50.408570227370234,
+        "crop_center_lon": 30.866558163055146,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0364.jpg",
+        "crop_center_lat": 50.42478644358645,
+        "crop_center_lon": 30.8707996520709,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0365.jpg",
+        "crop_center_lat": 50.42208374088374,
+        "crop_center_lon": 30.897662415837342,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0366.jpg",
+        "crop_center_lat": 50.40766932646933,
+        "crop_center_lon": 30.875041141086655,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0367.jpg",
+        "crop_center_lat": 50.41848013728014,
+        "crop_center_lon": 30.908973053212684,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0368.jpg",
+        "crop_center_lat": 50.412173830973835,
+        "crop_center_lon": 30.875041141086655,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0369.jpg",
+        "crop_center_lat": 50.408570227370234,
+        "crop_center_lon": 30.89200709714967,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0370.jpg",
+        "crop_center_lat": 50.40947112827113,
+        "crop_center_lon": 30.907559223540765,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0371.jpg",
+        "crop_center_lat": 50.419381038181044,
+        "crop_center_lon": 30.887765608133915,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0372.jpg",
+        "crop_center_lat": 50.408570227370234,
+        "crop_center_lon": 30.910386882884602,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0373.jpg",
+        "crop_center_lat": 50.42568734448735,
+        "crop_center_lon": 30.914628371900356,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0374.jpg",
+        "crop_center_lat": 50.42388554268555,
+        "crop_center_lon": 30.882110289446246,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0375.jpg",
+        "crop_center_lat": 50.41667833547834,
+        "crop_center_lon": 30.889179437805833,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0376.jpg",
+        "crop_center_lat": 50.41127293007293,
+        "crop_center_lon": 30.866558163055146,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0377.jpg",
+        "crop_center_lat": 50.42478644358645,
+        "crop_center_lon": 30.904731564196933,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0378.jpg",
+        "crop_center_lat": 50.40947112827113,
+        "crop_center_lon": 30.901903904853096,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0379.jpg",
+        "crop_center_lat": 50.40947112827113,
+        "crop_center_lon": 30.894834756493506,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0380.jpg",
+        "crop_center_lat": 50.42388554268555,
+        "crop_center_lon": 30.896248586165424,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0381.jpg",
+        "crop_center_lat": 50.42478644358645,
+        "crop_center_lon": 30.913214542228438,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0382.jpg",
+        "crop_center_lat": 50.42208374088374,
+        "crop_center_lon": 30.903317734525015,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0383.jpg",
+        "crop_center_lat": 50.42388554268555,
+        "crop_center_lon": 30.87221348174282,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0384.jpg",
+        "crop_center_lat": 50.419381038181044,
+        "crop_center_lon": 30.884937948790082,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0385.jpg",
+        "crop_center_lat": 50.42478644358645,
+        "crop_center_lon": 30.87786880043049,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0386.jpg",
+        "crop_center_lat": 50.408570227370234,
+        "crop_center_lon": 30.867971992727064,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0387.jpg",
+        "crop_center_lat": 50.41667833547834,
+        "crop_center_lon": 30.90614539386885,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0388.jpg",
+        "crop_center_lat": 50.42478644358645,
+        "crop_center_lon": 30.876454970758573,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0389.jpg",
+        "crop_center_lat": 50.420281939081946,
+        "crop_center_lon": 30.896248586165424,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0390.jpg",
+        "crop_center_lat": 50.42478644358645,
+        "crop_center_lon": 30.896248586165424,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0391.jpg",
+        "crop_center_lat": 50.40766932646933,
+        "crop_center_lon": 30.884937948790082,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0392.jpg",
+        "crop_center_lat": 50.414876533676534,
+        "crop_center_lon": 30.917456031244193,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0393.jpg",
+        "crop_center_lat": 50.41037202917203,
+        "crop_center_lon": 30.882110289446246,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0394.jpg",
+        "crop_center_lat": 50.42118283998284,
+        "crop_center_lon": 30.913214542228438,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0395.jpg",
+        "crop_center_lat": 50.42568734448735,
+        "crop_center_lon": 30.880696459774327,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0396.jpg",
+        "crop_center_lat": 50.41397563277564,
+        "crop_center_lon": 30.903317734525015,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0397.jpg",
+        "crop_center_lat": 50.42478644358645,
+        "crop_center_lon": 30.869385822398982,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0398.jpg",
+        "crop_center_lat": 50.41127293007293,
+        "crop_center_lon": 30.8707996520709,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0399.jpg",
+        "crop_center_lat": 50.42208374088374,
+        "crop_center_lon": 30.867971992727064,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0400.jpg",
+        "crop_center_lat": 50.422984641784645,
+        "crop_center_lon": 30.916042201572274,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0401.jpg",
+        "crop_center_lat": 50.42388554268555,
+        "crop_center_lon": 30.883524119118164,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0402.jpg",
+        "crop_center_lat": 50.41667833547834,
+        "crop_center_lon": 30.867971992727064,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0403.jpg",
+        "crop_center_lat": 50.42568734448735,
+        "crop_center_lon": 30.903317734525015,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0404.jpg",
+        "crop_center_lat": 50.408570227370234,
+        "crop_center_lon": 30.903317734525015,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0405.jpg",
+        "crop_center_lat": 50.42568734448735,
+        "crop_center_lon": 30.894834756493506,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0406.jpg",
+        "crop_center_lat": 50.412173830973835,
+        "crop_center_lon": 30.883524119118164,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0407.jpg",
+        "crop_center_lat": 50.419381038181044,
+        "crop_center_lon": 30.87928263010241,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0408.jpg",
+        "crop_center_lat": 50.41307473187474,
+        "crop_center_lon": 30.90614539386885,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0409.jpg",
+        "crop_center_lat": 50.414876533676534,
+        "crop_center_lon": 30.91180071255652,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0410.jpg",
+        "crop_center_lat": 50.414876533676534,
+        "crop_center_lon": 30.89059326747775,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0411.jpg",
+        "crop_center_lat": 50.412173830973835,
+        "crop_center_lon": 30.886351778461997,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0412.jpg",
+        "crop_center_lat": 50.41757923637924,
+        "crop_center_lon": 30.876454970758573,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0413.jpg",
+        "crop_center_lat": 50.41037202917203,
+        "crop_center_lon": 30.880696459774327,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0414.jpg",
+        "crop_center_lat": 50.40947112827113,
+        "crop_center_lon": 30.90614539386885,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0415.jpg",
+        "crop_center_lat": 50.42568734448735,
+        "crop_center_lon": 30.882110289446246,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0416.jpg",
+        "crop_center_lat": 50.422984641784645,
+        "crop_center_lon": 30.908973053212684,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0417.jpg",
+        "crop_center_lat": 50.41127293007293,
+        "crop_center_lon": 30.875041141086655,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0418.jpg",
+        "crop_center_lat": 50.41667833547834,
+        "crop_center_lon": 30.89059326747775,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0419.jpg",
+        "crop_center_lat": 50.41397563277564,
+        "crop_center_lon": 30.916042201572274,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0420.jpg",
+        "crop_center_lat": 50.40676842556843,
+        "crop_center_lon": 30.908973053212684,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0421.jpg",
+        "crop_center_lat": 50.41307473187474,
+        "crop_center_lon": 30.875041141086655,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0422.jpg",
+        "crop_center_lat": 50.41397563277564,
+        "crop_center_lon": 30.86373050371131,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0423.jpg",
+        "crop_center_lat": 50.40766932646933,
+        "crop_center_lon": 30.887765608133915,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0424.jpg",
+        "crop_center_lat": 50.42208374088374,
+        "crop_center_lon": 30.894834756493506,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0425.jpg",
+        "crop_center_lat": 50.419381038181044,
+        "crop_center_lon": 30.886351778461997,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0426.jpg",
+        "crop_center_lat": 50.412173830973835,
+        "crop_center_lon": 30.908973053212684,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0427.jpg",
+        "crop_center_lat": 50.41757923637924,
+        "crop_center_lon": 30.893420926821587,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0428.jpg",
+        "crop_center_lat": 50.414876533676534,
+        "crop_center_lon": 30.882110289446246,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0429.jpg",
+        "crop_center_lat": 50.40766932646933,
+        "crop_center_lon": 30.896248586165424,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0430.jpg",
+        "crop_center_lat": 50.41848013728014,
+        "crop_center_lon": 30.89059326747775,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0431.jpg",
+        "crop_center_lat": 50.408570227370234,
+        "crop_center_lon": 30.90614539386885,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0432.jpg",
+        "crop_center_lat": 50.42208374088374,
+        "crop_center_lon": 30.893420926821587,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0433.jpg",
+        "crop_center_lat": 50.42388554268555,
+        "crop_center_lon": 30.897662415837342,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0434.jpg",
+        "crop_center_lat": 50.40947112827113,
+        "crop_center_lon": 30.887765608133915,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0435.jpg",
+        "crop_center_lat": 50.41397563277564,
+        "crop_center_lon": 30.896248586165424,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0436.jpg",
+        "crop_center_lat": 50.422984641784645,
+        "crop_center_lon": 30.87928263010241,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0437.jpg",
+        "crop_center_lat": 50.40947112827113,
+        "crop_center_lon": 30.908973053212684,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0438.jpg",
+        "crop_center_lat": 50.42478644358645,
+        "crop_center_lon": 30.89907624550926,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0439.jpg",
+        "crop_center_lat": 50.40947112827113,
+        "crop_center_lon": 30.867971992727064,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0440.jpg",
+        "crop_center_lat": 50.41667833547834,
+        "crop_center_lon": 30.916042201572274,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0441.jpg",
+        "crop_center_lat": 50.42388554268555,
+        "crop_center_lon": 30.889179437805833,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0442.jpg",
+        "crop_center_lat": 50.41307473187474,
+        "crop_center_lon": 30.884937948790082,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0443.jpg",
+        "crop_center_lat": 50.41307473187474,
+        "crop_center_lon": 30.876454970758573,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0444.jpg",
+        "crop_center_lat": 50.42388554268555,
+        "crop_center_lon": 30.90614539386885,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0445.jpg",
+        "crop_center_lat": 50.41848013728014,
+        "crop_center_lon": 30.889179437805833,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0446.jpg",
+        "crop_center_lat": 50.41667833547834,
+        "crop_center_lon": 30.914628371900356,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0447.jpg",
+        "crop_center_lat": 50.41127293007293,
+        "crop_center_lon": 30.89059326747775,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0448.jpg",
+        "crop_center_lat": 50.42568734448735,
+        "crop_center_lon": 30.884937948790082,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0449.jpg",
+        "crop_center_lat": 50.41397563277564,
+        "crop_center_lon": 30.897662415837342,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0450.jpg",
+        "crop_center_lat": 50.408570227370234,
+        "crop_center_lon": 30.87786880043049,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0451.jpg",
+        "crop_center_lat": 50.40947112827113,
+        "crop_center_lon": 30.917456031244193,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0452.jpg",
+        "crop_center_lat": 50.42388554268555,
+        "crop_center_lon": 30.901903904853096,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0453.jpg",
+        "crop_center_lat": 50.408570227370234,
+        "crop_center_lon": 30.893420926821587,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0454.jpg",
+        "crop_center_lat": 50.41037202917203,
+        "crop_center_lon": 30.901903904853096,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0455.jpg",
+        "crop_center_lat": 50.41127293007293,
+        "crop_center_lon": 30.91180071255652,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0456.jpg",
+        "crop_center_lat": 50.41307473187474,
+        "crop_center_lon": 30.917456031244193,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0457.jpg",
+        "crop_center_lat": 50.40676842556843,
+        "crop_center_lon": 30.900490075181178,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0458.jpg",
+        "crop_center_lat": 50.414876533676534,
+        "crop_center_lon": 30.914628371900356,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0459.jpg",
+        "crop_center_lat": 50.42388554268555,
+        "crop_center_lon": 30.900490075181178,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0460.jpg",
+        "crop_center_lat": 50.41307473187474,
+        "crop_center_lon": 30.87928263010241,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0461.jpg",
+        "crop_center_lat": 50.41848013728014,
+        "crop_center_lon": 30.883524119118164,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0462.jpg",
+        "crop_center_lat": 50.419381038181044,
+        "crop_center_lon": 30.876454970758573,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0463.jpg",
+        "crop_center_lat": 50.42478644358645,
+        "crop_center_lon": 30.914628371900356,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0464.jpg",
+        "crop_center_lat": 50.42568734448735,
+        "crop_center_lon": 30.867971992727064,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0465.jpg",
+        "crop_center_lat": 50.415777434577436,
+        "crop_center_lon": 30.913214542228438,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0466.jpg",
+        "crop_center_lat": 50.422984641784645,
+        "crop_center_lon": 30.884937948790082,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0467.jpg",
+        "crop_center_lat": 50.42208374088374,
+        "crop_center_lon": 30.886351778461997,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0468.jpg",
+        "crop_center_lat": 50.41037202917203,
+        "crop_center_lon": 30.900490075181178,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0469.jpg",
+        "crop_center_lat": 50.415777434577436,
+        "crop_center_lon": 30.865144333383228,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0470.jpg",
+        "crop_center_lat": 50.41127293007293,
+        "crop_center_lon": 30.87928263010241,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0471.jpg",
+        "crop_center_lat": 50.41757923637924,
+        "crop_center_lon": 30.901903904853096,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0472.jpg",
+        "crop_center_lat": 50.40676842556843,
+        "crop_center_lon": 30.866558163055146,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0473.jpg",
+        "crop_center_lat": 50.415777434577436,
+        "crop_center_lon": 30.896248586165424,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0474.jpg",
+        "crop_center_lat": 50.40766932646933,
+        "crop_center_lon": 30.916042201572274,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0475.jpg",
+        "crop_center_lat": 50.422984641784645,
+        "crop_center_lon": 30.907559223540765,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0476.jpg",
+        "crop_center_lat": 50.419381038181044,
+        "crop_center_lon": 30.867971992727064,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0477.jpg",
+        "crop_center_lat": 50.41757923637924,
+        "crop_center_lon": 30.897662415837342,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0478.jpg",
+        "crop_center_lat": 50.414876533676534,
+        "crop_center_lon": 30.908973053212684,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0479.jpg",
+        "crop_center_lat": 50.42388554268555,
+        "crop_center_lon": 30.865144333383228,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0480.jpg",
+        "crop_center_lat": 50.41127293007293,
+        "crop_center_lon": 30.900490075181178,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0481.jpg",
+        "crop_center_lat": 50.414876533676534,
+        "crop_center_lon": 30.880696459774327,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0482.jpg",
+        "crop_center_lat": 50.414876533676534,
+        "crop_center_lon": 30.884937948790082,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0483.jpg",
+        "crop_center_lat": 50.414876533676534,
+        "crop_center_lon": 30.865144333383228,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0484.jpg",
+        "crop_center_lat": 50.42208374088374,
+        "crop_center_lon": 30.869385822398982,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0485.jpg",
+        "crop_center_lat": 50.420281939081946,
+        "crop_center_lon": 30.89907624550926,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0486.jpg",
+        "crop_center_lat": 50.40766932646933,
+        "crop_center_lon": 30.889179437805833,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0487.jpg",
+        "crop_center_lat": 50.40766932646933,
+        "crop_center_lon": 30.883524119118164,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0488.jpg",
+        "crop_center_lat": 50.419381038181044,
+        "crop_center_lon": 30.882110289446246,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0489.jpg",
+        "crop_center_lat": 50.41127293007293,
+        "crop_center_lon": 30.867971992727064,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0490.jpg",
+        "crop_center_lat": 50.412173830973835,
+        "crop_center_lon": 30.901903904853096,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0491.jpg",
+        "crop_center_lat": 50.42568734448735,
+        "crop_center_lon": 30.916042201572274,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0492.jpg",
+        "crop_center_lat": 50.42478644358645,
+        "crop_center_lon": 30.86373050371131,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0493.jpg",
+        "crop_center_lat": 50.42118283998284,
+        "crop_center_lon": 30.87221348174282,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0494.jpg",
+        "crop_center_lat": 50.412173830973835,
+        "crop_center_lon": 30.882110289446246,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0495.jpg",
+        "crop_center_lat": 50.420281939081946,
+        "crop_center_lon": 30.882110289446246,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0496.jpg",
+        "crop_center_lat": 50.42118283998284,
+        "crop_center_lon": 30.865144333383228,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0497.jpg",
+        "crop_center_lat": 50.41757923637924,
+        "crop_center_lon": 30.87221348174282,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0498.jpg",
+        "crop_center_lat": 50.408570227370234,
+        "crop_center_lon": 30.886351778461997,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0499.jpg",
+        "crop_center_lat": 50.41757923637924,
+        "crop_center_lon": 30.89059326747775,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0500.jpg",
+        "crop_center_lat": 50.41757923637924,
+        "crop_center_lon": 30.917456031244193,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0501.jpg",
+        "crop_center_lat": 50.419381038181044,
+        "crop_center_lon": 30.873627311414737,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0502.jpg",
+        "crop_center_lat": 50.412173830973835,
+        "crop_center_lon": 30.884937948790082,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0503.jpg",
+        "crop_center_lat": 50.42568734448735,
+        "crop_center_lon": 30.873627311414737,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0504.jpg",
+        "crop_center_lat": 50.419381038181044,
+        "crop_center_lon": 30.901903904853096,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0505.jpg",
+        "crop_center_lat": 50.40766932646933,
+        "crop_center_lon": 30.87786880043049,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0506.jpg",
+        "crop_center_lat": 50.41127293007293,
+        "crop_center_lon": 30.916042201572274,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0507.jpg",
+        "crop_center_lat": 50.41397563277564,
+        "crop_center_lon": 30.91180071255652,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0508.jpg",
+        "crop_center_lat": 50.420281939081946,
+        "crop_center_lon": 30.903317734525015,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0509.jpg",
+        "crop_center_lat": 50.42208374088374,
+        "crop_center_lon": 30.876454970758573,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0510.jpg",
+        "crop_center_lat": 50.422984641784645,
+        "crop_center_lon": 30.893420926821587,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0511.jpg",
+        "crop_center_lat": 50.419381038181044,
+        "crop_center_lon": 30.89200709714967,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0512.jpg",
+        "crop_center_lat": 50.42478644358645,
+        "crop_center_lon": 30.893420926821587,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0513.jpg",
+        "crop_center_lat": 50.414876533676534,
+        "crop_center_lon": 30.883524119118164,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0514.jpg",
+        "crop_center_lat": 50.40676842556843,
+        "crop_center_lon": 30.894834756493506,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0515.jpg",
+        "crop_center_lat": 50.42478644358645,
+        "crop_center_lon": 30.889179437805833,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0516.jpg",
+        "crop_center_lat": 50.42568734448735,
+        "crop_center_lon": 30.917456031244193,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0517.jpg",
+        "crop_center_lat": 50.42388554268555,
+        "crop_center_lon": 30.867971992727064,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0518.jpg",
+        "crop_center_lat": 50.41037202917203,
+        "crop_center_lon": 30.87786880043049,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0519.jpg",
+        "crop_center_lat": 50.41667833547834,
+        "crop_center_lon": 30.917456031244193,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0520.jpg",
+        "crop_center_lat": 50.414876533676534,
+        "crop_center_lon": 30.901903904853096,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0521.jpg",
+        "crop_center_lat": 50.41757923637924,
+        "crop_center_lon": 30.914628371900356,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0522.jpg",
+        "crop_center_lat": 50.420281939081946,
+        "crop_center_lon": 30.910386882884602,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0523.jpg",
+        "crop_center_lat": 50.420281939081946,
+        "crop_center_lon": 30.866558163055146,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0524.jpg",
+        "crop_center_lat": 50.41397563277564,
+        "crop_center_lon": 30.893420926821587,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0525.jpg",
+        "crop_center_lat": 50.41757923637924,
+        "crop_center_lon": 30.903317734525015,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0526.jpg",
+        "crop_center_lat": 50.42118283998284,
+        "crop_center_lon": 30.900490075181178,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0527.jpg",
+        "crop_center_lat": 50.40947112827113,
+        "crop_center_lon": 30.913214542228438,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0528.jpg",
+        "crop_center_lat": 50.412173830973835,
+        "crop_center_lon": 30.907559223540765,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0529.jpg",
+        "crop_center_lat": 50.41307473187474,
+        "crop_center_lon": 30.87221348174282,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0530.jpg",
+        "crop_center_lat": 50.40947112827113,
+        "crop_center_lon": 30.869385822398982,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0531.jpg",
+        "crop_center_lat": 50.415777434577436,
+        "crop_center_lon": 30.894834756493506,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0532.jpg",
+        "crop_center_lat": 50.40766932646933,
+        "crop_center_lon": 30.886351778461997,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0533.jpg",
+        "crop_center_lat": 50.414876533676534,
+        "crop_center_lon": 30.86373050371131,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0534.jpg",
+        "crop_center_lat": 50.41037202917203,
+        "crop_center_lon": 30.889179437805833,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0535.jpg",
+        "crop_center_lat": 50.41667833547834,
+        "crop_center_lon": 30.883524119118164,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0536.jpg",
+        "crop_center_lat": 50.41667833547834,
+        "crop_center_lon": 30.897662415837342,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0537.jpg",
+        "crop_center_lat": 50.41397563277564,
+        "crop_center_lon": 30.876454970758573,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0538.jpg",
+        "crop_center_lat": 50.412173830973835,
+        "crop_center_lon": 30.889179437805833,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0539.jpg",
+        "crop_center_lat": 50.408570227370234,
+        "crop_center_lon": 30.916042201572274,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0540.jpg",
+        "crop_center_lat": 50.42568734448735,
+        "crop_center_lon": 30.889179437805833,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0541.jpg",
+        "crop_center_lat": 50.412173830973835,
+        "crop_center_lon": 30.89059326747775,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0542.jpg",
+        "crop_center_lat": 50.41397563277564,
+        "crop_center_lon": 30.914628371900356,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0543.jpg",
+        "crop_center_lat": 50.412173830973835,
+        "crop_center_lon": 30.913214542228438,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0544.jpg",
+        "crop_center_lat": 50.41127293007293,
+        "crop_center_lon": 30.89907624550926,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0545.jpg",
+        "crop_center_lat": 50.41667833547834,
+        "crop_center_lon": 30.893420926821587,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0546.jpg",
+        "crop_center_lat": 50.41667833547834,
+        "crop_center_lon": 30.913214542228438,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0547.jpg",
+        "crop_center_lat": 50.41757923637924,
+        "crop_center_lon": 30.913214542228438,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0548.jpg",
+        "crop_center_lat": 50.422984641784645,
+        "crop_center_lon": 30.883524119118164,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0549.jpg",
+        "crop_center_lat": 50.41397563277564,
+        "crop_center_lon": 30.873627311414737,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0550.jpg",
+        "crop_center_lat": 50.40947112827113,
+        "crop_center_lon": 30.866558163055146,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0551.jpg",
+        "crop_center_lat": 50.41848013728014,
+        "crop_center_lon": 30.907559223540765,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0552.jpg",
+        "crop_center_lat": 50.40947112827113,
+        "crop_center_lon": 30.876454970758573,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0553.jpg",
+        "crop_center_lat": 50.40947112827113,
+        "crop_center_lon": 30.87786880043049,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0554.jpg",
+        "crop_center_lat": 50.42478644358645,
+        "crop_center_lon": 30.880696459774327,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0555.jpg",
+        "crop_center_lat": 50.42388554268555,
+        "crop_center_lon": 30.89907624550926,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0556.jpg",
+        "crop_center_lat": 50.40766932646933,
+        "crop_center_lon": 30.89059326747775,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0557.jpg",
+        "crop_center_lat": 50.42568734448735,
+        "crop_center_lon": 30.89200709714967,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0558.jpg",
+        "crop_center_lat": 50.41307473187474,
+        "crop_center_lon": 30.896248586165424,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0559.jpg",
+        "crop_center_lat": 50.40947112827113,
+        "crop_center_lon": 30.903317734525015,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0560.jpg",
+        "crop_center_lat": 50.42388554268555,
+        "crop_center_lon": 30.886351778461997,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0561.jpg",
+        "crop_center_lat": 50.420281939081946,
+        "crop_center_lon": 30.916042201572274,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0562.jpg",
+        "crop_center_lat": 50.41037202917203,
+        "crop_center_lon": 30.91180071255652,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0563.jpg",
+        "crop_center_lat": 50.42118283998284,
+        "crop_center_lon": 30.886351778461997,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0564.jpg",
+        "crop_center_lat": 50.41127293007293,
+        "crop_center_lon": 30.910386882884602,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0565.jpg",
+        "crop_center_lat": 50.41307473187474,
+        "crop_center_lon": 30.887765608133915,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0566.jpg",
+        "crop_center_lat": 50.41037202917203,
+        "crop_center_lon": 30.907559223540765,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0567.jpg",
+        "crop_center_lat": 50.41848013728014,
+        "crop_center_lon": 30.900490075181178,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0568.jpg",
+        "crop_center_lat": 50.40947112827113,
+        "crop_center_lon": 30.873627311414737,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0569.jpg",
+        "crop_center_lat": 50.414876533676534,
+        "crop_center_lon": 30.89907624550926,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0570.jpg",
+        "crop_center_lat": 50.415777434577436,
+        "crop_center_lon": 30.876454970758573,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0571.jpg",
+        "crop_center_lat": 50.40676842556843,
+        "crop_center_lon": 30.869385822398982,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0572.jpg",
+        "crop_center_lat": 50.42118283998284,
+        "crop_center_lon": 30.896248586165424,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0573.jpg",
+        "crop_center_lat": 50.40676842556843,
+        "crop_center_lon": 30.876454970758573,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0574.jpg",
+        "crop_center_lat": 50.415777434577436,
+        "crop_center_lon": 30.873627311414737,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0575.jpg",
+        "crop_center_lat": 50.42478644358645,
+        "crop_center_lon": 30.900490075181178,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0576.jpg",
+        "crop_center_lat": 50.42568734448735,
+        "crop_center_lon": 30.87221348174282,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0577.jpg",
+        "crop_center_lat": 50.41667833547834,
+        "crop_center_lon": 30.8707996520709,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0578.jpg",
+        "crop_center_lat": 50.422984641784645,
+        "crop_center_lon": 30.917456031244193,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0579.jpg",
+        "crop_center_lat": 50.408570227370234,
+        "crop_center_lon": 30.901903904853096,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0580.jpg",
+        "crop_center_lat": 50.40947112827113,
+        "crop_center_lon": 30.87221348174282,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0581.jpg",
+        "crop_center_lat": 50.41667833547834,
+        "crop_center_lon": 30.903317734525015,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0582.jpg",
+        "crop_center_lat": 50.40676842556843,
+        "crop_center_lon": 30.86373050371131,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0583.jpg",
+        "crop_center_lat": 50.42118283998284,
+        "crop_center_lon": 30.910386882884602,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0584.jpg",
+        "crop_center_lat": 50.420281939081946,
+        "crop_center_lon": 30.876454970758573,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0585.jpg",
+        "crop_center_lat": 50.42118283998284,
+        "crop_center_lon": 30.89907624550926,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0586.jpg",
+        "crop_center_lat": 50.40676842556843,
+        "crop_center_lon": 30.867971992727064,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0587.jpg",
+        "crop_center_lat": 50.419381038181044,
+        "crop_center_lon": 30.917456031244193,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0588.jpg",
+        "crop_center_lat": 50.41037202917203,
+        "crop_center_lon": 30.904731564196933,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0589.jpg",
+        "crop_center_lat": 50.41757923637924,
+        "crop_center_lon": 30.89200709714967,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0590.jpg",
+        "crop_center_lat": 50.41397563277564,
+        "crop_center_lon": 30.883524119118164,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0591.jpg",
+        "crop_center_lat": 50.422984641784645,
+        "crop_center_lon": 30.89200709714967,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0592.jpg",
+        "crop_center_lat": 50.422984641784645,
+        "crop_center_lon": 30.910386882884602,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0593.jpg",
+        "crop_center_lat": 50.41307473187474,
+        "crop_center_lon": 30.897662415837342,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0594.jpg",
+        "crop_center_lat": 50.40766932646933,
+        "crop_center_lon": 30.876454970758573,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0595.jpg",
+        "crop_center_lat": 50.420281939081946,
+        "crop_center_lon": 30.875041141086655,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0596.jpg",
+        "crop_center_lat": 50.41307473187474,
+        "crop_center_lon": 30.910386882884602,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0597.jpg",
+        "crop_center_lat": 50.41037202917203,
+        "crop_center_lon": 30.884937948790082,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0598.jpg",
+        "crop_center_lat": 50.41848013728014,
+        "crop_center_lon": 30.87928263010241,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0599.jpg",
+        "crop_center_lat": 50.422984641784645,
+        "crop_center_lon": 30.867971992727064,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0600.jpg",
+        "crop_center_lat": 50.42208374088374,
+        "crop_center_lon": 30.91180071255652,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0601.jpg",
+        "crop_center_lat": 50.414876533676534,
+        "crop_center_lon": 30.916042201572274,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0602.jpg",
+        "crop_center_lat": 50.42118283998284,
+        "crop_center_lon": 30.87928263010241,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0603.jpg",
+        "crop_center_lat": 50.40676842556843,
+        "crop_center_lon": 30.883524119118164,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0604.jpg",
+        "crop_center_lat": 50.42568734448735,
+        "crop_center_lon": 30.91180071255652,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0605.jpg",
+        "crop_center_lat": 50.420281939081946,
+        "crop_center_lon": 30.87786880043049,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0606.jpg",
+        "crop_center_lat": 50.41667833547834,
+        "crop_center_lon": 30.89907624550926,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0607.jpg",
+        "crop_center_lat": 50.41037202917203,
+        "crop_center_lon": 30.897662415837342,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0608.jpg",
+        "crop_center_lat": 50.41848013728014,
+        "crop_center_lon": 30.867971992727064,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0609.jpg",
+        "crop_center_lat": 50.420281939081946,
+        "crop_center_lon": 30.893420926821587,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0610.jpg",
+        "crop_center_lat": 50.414876533676534,
+        "crop_center_lon": 30.907559223540765,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0611.jpg",
+        "crop_center_lat": 50.42118283998284,
+        "crop_center_lon": 30.89059326747775,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0612.jpg",
+        "crop_center_lat": 50.412173830973835,
+        "crop_center_lon": 30.8707996520709,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0613.jpg",
+        "crop_center_lat": 50.42388554268555,
+        "crop_center_lon": 30.869385822398982,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0614.jpg",
+        "crop_center_lat": 50.40676842556843,
+        "crop_center_lon": 30.89907624550926,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0615.jpg",
+        "crop_center_lat": 50.408570227370234,
+        "crop_center_lon": 30.896248586165424,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0616.jpg",
+        "crop_center_lat": 50.422984641784645,
+        "crop_center_lon": 30.86373050371131,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0617.jpg",
+        "crop_center_lat": 50.41848013728014,
+        "crop_center_lon": 30.916042201572274,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0618.jpg",
+        "crop_center_lat": 50.40947112827113,
+        "crop_center_lon": 30.91180071255652,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0619.jpg",
+        "crop_center_lat": 50.40947112827113,
+        "crop_center_lon": 30.889179437805833,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0620.jpg",
+        "crop_center_lat": 50.42208374088374,
+        "crop_center_lon": 30.916042201572274,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0621.jpg",
+        "crop_center_lat": 50.40766932646933,
+        "crop_center_lon": 30.894834756493506,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0622.jpg",
+        "crop_center_lat": 50.41307473187474,
+        "crop_center_lon": 30.913214542228438,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0623.jpg",
+        "crop_center_lat": 50.40947112827113,
+        "crop_center_lon": 30.884937948790082,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0624.jpg",
+        "crop_center_lat": 50.42568734448735,
+        "crop_center_lon": 30.87786880043049,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0625.jpg",
+        "crop_center_lat": 50.419381038181044,
+        "crop_center_lon": 30.89059326747775,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0626.jpg",
+        "crop_center_lat": 50.41307473187474,
+        "crop_center_lon": 30.916042201572274,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0627.jpg",
+        "crop_center_lat": 50.40766932646933,
+        "crop_center_lon": 30.867971992727064,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0628.jpg",
+        "crop_center_lat": 50.42118283998284,
+        "crop_center_lon": 30.876454970758573,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0629.jpg",
+        "crop_center_lat": 50.41127293007293,
+        "crop_center_lon": 30.876454970758573,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0630.jpg",
+        "crop_center_lat": 50.42118283998284,
+        "crop_center_lon": 30.917456031244193,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0631.jpg",
+        "crop_center_lat": 50.40947112827113,
+        "crop_center_lon": 30.8707996520709,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0632.jpg",
+        "crop_center_lat": 50.420281939081946,
+        "crop_center_lon": 30.886351778461997,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0633.jpg",
+        "crop_center_lat": 50.41757923637924,
+        "crop_center_lon": 30.889179437805833,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0634.jpg",
+        "crop_center_lat": 50.422984641784645,
+        "crop_center_lon": 30.869385822398982,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0635.jpg",
+        "crop_center_lat": 50.41037202917203,
+        "crop_center_lon": 30.87221348174282,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0636.jpg",
+        "crop_center_lat": 50.422984641784645,
+        "crop_center_lon": 30.901903904853096,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0637.jpg",
+        "crop_center_lat": 50.419381038181044,
+        "crop_center_lon": 30.897662415837342,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0638.jpg",
+        "crop_center_lat": 50.40766932646933,
+        "crop_center_lon": 30.908973053212684,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0639.jpg",
+        "crop_center_lat": 50.419381038181044,
+        "crop_center_lon": 30.913214542228438,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0640.jpg",
+        "crop_center_lat": 50.41848013728014,
+        "crop_center_lon": 30.89907624550926,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0641.jpg",
+        "crop_center_lat": 50.42388554268555,
+        "crop_center_lon": 30.89059326747775,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0642.jpg",
+        "crop_center_lat": 50.40766932646933,
+        "crop_center_lon": 30.89907624550926,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0643.jpg",
+        "crop_center_lat": 50.422984641784645,
+        "crop_center_lon": 30.87786880043049,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0644.jpg",
+        "crop_center_lat": 50.408570227370234,
+        "crop_center_lon": 30.914628371900356,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0645.jpg",
+        "crop_center_lat": 50.408570227370234,
+        "crop_center_lon": 30.8707996520709,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0646.jpg",
+        "crop_center_lat": 50.41757923637924,
+        "crop_center_lon": 30.883524119118164,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0647.jpg",
+        "crop_center_lat": 50.40676842556843,
+        "crop_center_lon": 30.87786880043049,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0648.jpg",
+        "crop_center_lat": 50.42478644358645,
+        "crop_center_lon": 30.916042201572274,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0649.jpg",
+        "crop_center_lat": 50.41037202917203,
+        "crop_center_lon": 30.869385822398982,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0650.jpg",
+        "crop_center_lat": 50.42208374088374,
+        "crop_center_lon": 30.896248586165424,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0651.jpg",
+        "crop_center_lat": 50.41397563277564,
+        "crop_center_lon": 30.87786880043049,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0652.jpg",
+        "crop_center_lat": 50.41848013728014,
+        "crop_center_lon": 30.887765608133915,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0653.jpg",
+        "crop_center_lat": 50.40947112827113,
+        "crop_center_lon": 30.896248586165424,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0654.jpg",
+        "crop_center_lat": 50.42118283998284,
+        "crop_center_lon": 30.866558163055146,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0655.jpg",
+        "crop_center_lat": 50.42388554268555,
+        "crop_center_lon": 30.908973053212684,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0656.jpg",
+        "crop_center_lat": 50.40766932646933,
+        "crop_center_lon": 30.8707996520709,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0657.jpg",
+        "crop_center_lat": 50.40947112827113,
+        "crop_center_lon": 30.89059326747775,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0658.jpg",
+        "crop_center_lat": 50.415777434577436,
+        "crop_center_lon": 30.917456031244193,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0659.jpg",
+        "crop_center_lat": 50.42208374088374,
+        "crop_center_lon": 30.87786880043049,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0660.jpg",
+        "crop_center_lat": 50.42478644358645,
+        "crop_center_lon": 30.884937948790082,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0661.jpg",
+        "crop_center_lat": 50.42478644358645,
+        "crop_center_lon": 30.883524119118164,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0662.jpg",
+        "crop_center_lat": 50.422984641784645,
+        "crop_center_lon": 30.889179437805833,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0663.jpg",
+        "crop_center_lat": 50.42118283998284,
+        "crop_center_lon": 30.90614539386885,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0664.jpg",
+        "crop_center_lat": 50.422984641784645,
+        "crop_center_lon": 30.880696459774327,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0665.jpg",
+        "crop_center_lat": 50.412173830973835,
+        "crop_center_lon": 30.887765608133915,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0666.jpg",
+        "crop_center_lat": 50.41037202917203,
+        "crop_center_lon": 30.90614539386885,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0667.jpg",
+        "crop_center_lat": 50.42208374088374,
+        "crop_center_lon": 30.8707996520709,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0668.jpg",
+        "crop_center_lat": 50.414876533676534,
+        "crop_center_lon": 30.90614539386885,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0669.jpg",
+        "crop_center_lat": 50.408570227370234,
+        "crop_center_lon": 30.880696459774327,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0670.jpg",
+        "crop_center_lat": 50.41397563277564,
+        "crop_center_lon": 30.90614539386885,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0671.jpg",
+        "crop_center_lat": 50.412173830973835,
+        "crop_center_lon": 30.896248586165424,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0672.jpg",
+        "crop_center_lat": 50.41037202917203,
+        "crop_center_lon": 30.866558163055146,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0673.jpg",
+        "crop_center_lat": 50.41307473187474,
+        "crop_center_lon": 30.865144333383228,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0674.jpg",
+        "crop_center_lat": 50.42118283998284,
+        "crop_center_lon": 30.904731564196933,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0675.jpg",
+        "crop_center_lat": 50.41848013728014,
+        "crop_center_lon": 30.903317734525015,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0676.jpg",
+        "crop_center_lat": 50.422984641784645,
+        "crop_center_lon": 30.91180071255652,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0677.jpg",
+        "crop_center_lat": 50.42208374088374,
+        "crop_center_lon": 30.913214542228438,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0678.jpg",
+        "crop_center_lat": 50.42118283998284,
+        "crop_center_lon": 30.869385822398982,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0679.jpg",
+        "crop_center_lat": 50.40766932646933,
+        "crop_center_lon": 30.866558163055146,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0680.jpg",
+        "crop_center_lat": 50.42478644358645,
+        "crop_center_lon": 30.887765608133915,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0681.jpg",
+        "crop_center_lat": 50.42118283998284,
+        "crop_center_lon": 30.914628371900356,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0682.jpg",
+        "crop_center_lat": 50.42388554268555,
+        "crop_center_lon": 30.914628371900356,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0683.jpg",
+        "crop_center_lat": 50.414876533676534,
+        "crop_center_lon": 30.87786880043049,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0684.jpg",
+        "crop_center_lat": 50.41127293007293,
+        "crop_center_lon": 30.884937948790082,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0685.jpg",
+        "crop_center_lat": 50.414876533676534,
+        "crop_center_lon": 30.886351778461997,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0686.jpg",
+        "crop_center_lat": 50.420281939081946,
+        "crop_center_lon": 30.887765608133915,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0687.jpg",
+        "crop_center_lat": 50.41757923637924,
+        "crop_center_lon": 30.86373050371131,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0688.jpg",
+        "crop_center_lat": 50.419381038181044,
+        "crop_center_lon": 30.883524119118164,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0689.jpg",
+        "crop_center_lat": 50.42388554268555,
+        "crop_center_lon": 30.884937948790082,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0690.jpg",
+        "crop_center_lat": 50.42568734448735,
+        "crop_center_lon": 30.869385822398982,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0691.jpg",
+        "crop_center_lat": 50.41848013728014,
+        "crop_center_lon": 30.89200709714967,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0692.jpg",
+        "crop_center_lat": 50.415777434577436,
+        "crop_center_lon": 30.89200709714967,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0693.jpg",
+        "crop_center_lat": 50.42208374088374,
+        "crop_center_lon": 30.889179437805833,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0694.jpg",
+        "crop_center_lat": 50.41037202917203,
+        "crop_center_lon": 30.917456031244193,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0695.jpg",
+        "crop_center_lat": 50.40676842556843,
+        "crop_center_lon": 30.901903904853096,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0696.jpg",
+        "crop_center_lat": 50.41848013728014,
+        "crop_center_lon": 30.897662415837342,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0697.jpg",
+        "crop_center_lat": 50.41848013728014,
+        "crop_center_lon": 30.865144333383228,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0698.jpg",
+        "crop_center_lat": 50.42568734448735,
+        "crop_center_lon": 30.866558163055146,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0699.jpg",
+        "crop_center_lat": 50.422984641784645,
+        "crop_center_lon": 30.89907624550926,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0700.jpg",
+        "crop_center_lat": 50.42388554268555,
+        "crop_center_lon": 30.86373050371131,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0701.jpg",
+        "crop_center_lat": 50.415777434577436,
+        "crop_center_lon": 30.910386882884602,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0702.jpg",
+        "crop_center_lat": 50.415777434577436,
+        "crop_center_lon": 30.87221348174282,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0703.jpg",
+        "crop_center_lat": 50.41397563277564,
+        "crop_center_lon": 30.865144333383228,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0704.jpg",
+        "crop_center_lat": 50.415777434577436,
+        "crop_center_lon": 30.908973053212684,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0705.jpg",
+        "crop_center_lat": 50.419381038181044,
+        "crop_center_lon": 30.875041141086655,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0706.jpg",
+        "crop_center_lat": 50.408570227370234,
+        "crop_center_lon": 30.883524119118164,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0707.jpg",
+        "crop_center_lat": 50.40766932646933,
+        "crop_center_lon": 30.882110289446246,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0708.jpg",
+        "crop_center_lat": 50.42568734448735,
+        "crop_center_lon": 30.865144333383228,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0709.jpg",
+        "crop_center_lat": 50.42568734448735,
+        "crop_center_lon": 30.908973053212684,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0710.jpg",
+        "crop_center_lat": 50.42208374088374,
+        "crop_center_lon": 30.89200709714967,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0711.jpg",
+        "crop_center_lat": 50.41127293007293,
+        "crop_center_lon": 30.901903904853096,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0712.jpg",
+        "crop_center_lat": 50.40676842556843,
+        "crop_center_lon": 30.886351778461997,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0713.jpg",
+        "crop_center_lat": 50.40766932646933,
+        "crop_center_lon": 30.869385822398982,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0714.jpg",
+        "crop_center_lat": 50.422984641784645,
+        "crop_center_lon": 30.886351778461997,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0715.jpg",
+        "crop_center_lat": 50.415777434577436,
+        "crop_center_lon": 30.882110289446246,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0716.jpg",
+        "crop_center_lat": 50.408570227370234,
+        "crop_center_lon": 30.865144333383228,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0717.jpg",
+        "crop_center_lat": 50.41667833547834,
+        "crop_center_lon": 30.880696459774327,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0718.jpg",
+        "crop_center_lat": 50.42208374088374,
+        "crop_center_lon": 30.86373050371131,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0719.jpg",
+        "crop_center_lat": 50.420281939081946,
+        "crop_center_lon": 30.90614539386885,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0720.jpg",
+        "crop_center_lat": 50.422984641784645,
+        "crop_center_lon": 30.897662415837342,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0721.jpg",
+        "crop_center_lat": 50.41667833547834,
+        "crop_center_lon": 30.908973053212684,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0722.jpg",
+        "crop_center_lat": 50.415777434577436,
+        "crop_center_lon": 30.887765608133915,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0723.jpg",
+        "crop_center_lat": 50.41397563277564,
+        "crop_center_lon": 30.901903904853096,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0724.jpg",
+        "crop_center_lat": 50.41307473187474,
+        "crop_center_lon": 30.89200709714967,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0725.jpg",
+        "crop_center_lat": 50.41397563277564,
+        "crop_center_lon": 30.889179437805833,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0726.jpg",
+        "crop_center_lat": 50.42208374088374,
+        "crop_center_lon": 30.910386882884602,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0727.jpg",
+        "crop_center_lat": 50.41127293007293,
+        "crop_center_lon": 30.893420926821587,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0728.jpg",
+        "crop_center_lat": 50.42208374088374,
+        "crop_center_lon": 30.883524119118164,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0729.jpg",
+        "crop_center_lat": 50.41037202917203,
+        "crop_center_lon": 30.867971992727064,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0730.jpg",
+        "crop_center_lat": 50.42478644358645,
+        "crop_center_lon": 30.917456031244193,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0731.jpg",
+        "crop_center_lat": 50.41757923637924,
+        "crop_center_lon": 30.8707996520709,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0732.jpg",
+        "crop_center_lat": 50.42568734448735,
+        "crop_center_lon": 30.893420926821587,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0733.jpg",
+        "crop_center_lat": 50.40947112827113,
+        "crop_center_lon": 30.89907624550926,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0734.jpg",
+        "crop_center_lat": 50.41307473187474,
+        "crop_center_lon": 30.89907624550926,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0735.jpg",
+        "crop_center_lat": 50.42208374088374,
+        "crop_center_lon": 30.873627311414737,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0736.jpg",
+        "crop_center_lat": 50.414876533676534,
+        "crop_center_lon": 30.8707996520709,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0737.jpg",
+        "crop_center_lat": 50.42208374088374,
+        "crop_center_lon": 30.880696459774327,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0738.jpg",
+        "crop_center_lat": 50.41127293007293,
+        "crop_center_lon": 30.882110289446246,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0739.jpg",
+        "crop_center_lat": 50.41848013728014,
+        "crop_center_lon": 30.882110289446246,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0740.jpg",
+        "crop_center_lat": 50.412173830973835,
+        "crop_center_lon": 30.880696459774327,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0741.jpg",
+        "crop_center_lat": 50.414876533676534,
+        "crop_center_lon": 30.867971992727064,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0742.jpg",
+        "crop_center_lat": 50.41037202917203,
+        "crop_center_lon": 30.896248586165424,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0743.jpg",
+        "crop_center_lat": 50.40676842556843,
+        "crop_center_lon": 30.917456031244193,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0744.jpg",
+        "crop_center_lat": 50.42568734448735,
+        "crop_center_lon": 30.89059326747775,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0745.jpg",
+        "crop_center_lat": 50.41037202917203,
+        "crop_center_lon": 30.914628371900356,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0746.jpg",
+        "crop_center_lat": 50.412173830973835,
+        "crop_center_lon": 30.90614539386885,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0747.jpg",
+        "crop_center_lat": 50.422984641784645,
+        "crop_center_lon": 30.8707996520709,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0748.jpg",
+        "crop_center_lat": 50.41757923637924,
+        "crop_center_lon": 30.89907624550926,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0749.jpg",
+        "crop_center_lat": 50.41397563277564,
+        "crop_center_lon": 30.89200709714967,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0750.jpg",
+        "crop_center_lat": 50.40676842556843,
+        "crop_center_lon": 30.89200709714967,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0751.jpg",
+        "crop_center_lat": 50.422984641784645,
+        "crop_center_lon": 30.896248586165424,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0752.jpg",
+        "crop_center_lat": 50.41667833547834,
+        "crop_center_lon": 30.865144333383228,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0753.jpg",
+        "crop_center_lat": 50.40676842556843,
+        "crop_center_lon": 30.897662415837342,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0754.jpg",
+        "crop_center_lat": 50.41307473187474,
+        "crop_center_lon": 30.900490075181178,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0755.jpg",
+        "crop_center_lat": 50.41397563277564,
+        "crop_center_lon": 30.87221348174282,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0756.jpg",
+        "crop_center_lat": 50.419381038181044,
+        "crop_center_lon": 30.889179437805833,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0757.jpg",
+        "crop_center_lat": 50.41848013728014,
+        "crop_center_lon": 30.86373050371131,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0758.jpg",
+        "crop_center_lat": 50.40766932646933,
+        "crop_center_lon": 30.87928263010241,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0759.jpg",
+        "crop_center_lat": 50.40766932646933,
+        "crop_center_lon": 30.897662415837342,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0760.jpg",
+        "crop_center_lat": 50.408570227370234,
+        "crop_center_lon": 30.907559223540765,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0761.jpg",
+        "crop_center_lat": 50.41127293007293,
+        "crop_center_lon": 30.889179437805833,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0762.jpg",
+        "crop_center_lat": 50.41848013728014,
+        "crop_center_lon": 30.884937948790082,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0763.jpg",
+        "crop_center_lat": 50.408570227370234,
+        "crop_center_lon": 30.91180071255652,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0764.jpg",
+        "crop_center_lat": 50.41397563277564,
+        "crop_center_lon": 30.913214542228438,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0765.jpg",
+        "crop_center_lat": 50.40676842556843,
+        "crop_center_lon": 30.89059326747775,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0766.jpg",
+        "crop_center_lat": 50.41397563277564,
+        "crop_center_lon": 30.884937948790082,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0767.jpg",
+        "crop_center_lat": 50.408570227370234,
+        "crop_center_lon": 30.89907624550926,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0768.jpg",
+        "crop_center_lat": 50.415777434577436,
+        "crop_center_lon": 30.880696459774327,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0769.jpg",
+        "crop_center_lat": 50.412173830973835,
+        "crop_center_lon": 30.873627311414737,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0770.jpg",
+        "crop_center_lat": 50.422984641784645,
+        "crop_center_lon": 30.873627311414737,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0771.jpg",
+        "crop_center_lat": 50.42388554268555,
+        "crop_center_lon": 30.917456031244193,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0772.jpg",
+        "crop_center_lat": 50.40947112827113,
+        "crop_center_lon": 30.89200709714967,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0773.jpg",
+        "crop_center_lat": 50.42388554268555,
+        "crop_center_lon": 30.910386882884602,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0774.jpg",
+        "crop_center_lat": 50.419381038181044,
+        "crop_center_lon": 30.903317734525015,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0775.jpg",
+        "crop_center_lat": 50.41307473187474,
+        "crop_center_lon": 30.882110289446246,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0776.jpg",
+        "crop_center_lat": 50.414876533676534,
+        "crop_center_lon": 30.866558163055146,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0777.jpg",
+        "crop_center_lat": 50.412173830973835,
+        "crop_center_lon": 30.904731564196933,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0778.jpg",
+        "crop_center_lat": 50.41757923637924,
+        "crop_center_lon": 30.908973053212684,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0779.jpg",
+        "crop_center_lat": 50.41848013728014,
+        "crop_center_lon": 30.875041141086655,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0780.jpg",
+        "crop_center_lat": 50.41307473187474,
+        "crop_center_lon": 30.869385822398982,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0781.jpg",
+        "crop_center_lat": 50.420281939081946,
+        "crop_center_lon": 30.883524119118164,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0782.jpg",
+        "crop_center_lat": 50.40676842556843,
+        "crop_center_lon": 30.880696459774327,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0783.jpg",
+        "crop_center_lat": 50.42568734448735,
+        "crop_center_lon": 30.896248586165424,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0784.jpg",
+        "crop_center_lat": 50.42568734448735,
+        "crop_center_lon": 30.89907624550926,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0785.jpg",
+        "crop_center_lat": 50.41127293007293,
+        "crop_center_lon": 30.869385822398982,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0786.jpg",
+        "crop_center_lat": 50.41667833547834,
+        "crop_center_lon": 30.894834756493506,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0787.jpg",
+        "crop_center_lat": 50.415777434577436,
+        "crop_center_lon": 30.89907624550926,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0788.jpg",
+        "crop_center_lat": 50.41397563277564,
+        "crop_center_lon": 30.869385822398982,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0789.jpg",
+        "crop_center_lat": 50.40947112827113,
+        "crop_center_lon": 30.86373050371131,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0790.jpg",
+        "crop_center_lat": 50.41848013728014,
+        "crop_center_lon": 30.904731564196933,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0791.jpg",
+        "crop_center_lat": 50.40766932646933,
+        "crop_center_lon": 30.907559223540765,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0792.jpg",
+        "crop_center_lat": 50.419381038181044,
+        "crop_center_lon": 30.893420926821587,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0793.jpg",
+        "crop_center_lat": 50.41848013728014,
+        "crop_center_lon": 30.894834756493506,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0794.jpg",
+        "crop_center_lat": 50.412173830973835,
+        "crop_center_lon": 30.89200709714967,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0795.jpg",
+        "crop_center_lat": 50.40676842556843,
+        "crop_center_lon": 30.882110289446246,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0796.jpg",
+        "crop_center_lat": 50.42478644358645,
+        "crop_center_lon": 30.897662415837342,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0797.jpg",
+        "crop_center_lat": 50.42118283998284,
+        "crop_center_lon": 30.901903904853096,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0798.jpg",
+        "crop_center_lat": 50.41757923637924,
+        "crop_center_lon": 30.882110289446246,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0799.jpg",
+        "crop_center_lat": 50.41037202917203,
+        "crop_center_lon": 30.89907624550926,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0800.jpg",
+        "crop_center_lat": 50.41757923637924,
+        "crop_center_lon": 30.87786880043049,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0801.jpg",
+        "crop_center_lat": 50.40676842556843,
+        "crop_center_lon": 30.91180071255652,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0802.jpg",
+        "crop_center_lat": 50.415777434577436,
+        "crop_center_lon": 30.904731564196933,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0803.jpg",
+        "crop_center_lat": 50.42118283998284,
+        "crop_center_lon": 30.873627311414737,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0804.jpg",
+        "crop_center_lat": 50.422984641784645,
+        "crop_center_lon": 30.875041141086655,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0805.jpg",
+        "crop_center_lat": 50.41037202917203,
+        "crop_center_lon": 30.87928263010241,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0806.jpg",
+        "crop_center_lat": 50.419381038181044,
+        "crop_center_lon": 30.914628371900356,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0807.jpg",
+        "crop_center_lat": 50.41757923637924,
+        "crop_center_lon": 30.910386882884602,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0808.jpg",
+        "crop_center_lat": 50.42388554268555,
+        "crop_center_lon": 30.913214542228438,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0809.jpg",
+        "crop_center_lat": 50.414876533676534,
+        "crop_center_lon": 30.873627311414737,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0810.jpg",
+        "crop_center_lat": 50.42478644358645,
+        "crop_center_lon": 30.886351778461997,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0811.jpg",
+        "crop_center_lat": 50.419381038181044,
+        "crop_center_lon": 30.916042201572274,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0812.jpg",
+        "crop_center_lat": 50.41397563277564,
+        "crop_center_lon": 30.900490075181178,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0813.jpg",
+        "crop_center_lat": 50.41037202917203,
+        "crop_center_lon": 30.89059326747775,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0814.jpg",
+        "crop_center_lat": 50.42208374088374,
+        "crop_center_lon": 30.866558163055146,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0815.jpg",
+        "crop_center_lat": 50.41667833547834,
+        "crop_center_lon": 30.87786880043049,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0816.jpg",
+        "crop_center_lat": 50.42388554268555,
+        "crop_center_lon": 30.880696459774327,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0817.jpg",
+        "crop_center_lat": 50.42208374088374,
+        "crop_center_lon": 30.904731564196933,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0818.jpg",
+        "crop_center_lat": 50.42478644358645,
+        "crop_center_lon": 30.894834756493506,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0819.jpg",
+        "crop_center_lat": 50.41848013728014,
+        "crop_center_lon": 30.87786880043049,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0820.jpg",
+        "crop_center_lat": 50.41127293007293,
+        "crop_center_lon": 30.880696459774327,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0821.jpg",
+        "crop_center_lat": 50.41757923637924,
+        "crop_center_lon": 30.900490075181178,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0822.jpg",
+        "crop_center_lat": 50.41127293007293,
+        "crop_center_lon": 30.897662415837342,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0823.jpg",
+        "crop_center_lat": 50.412173830973835,
+        "crop_center_lon": 30.916042201572274,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0824.jpg",
+        "crop_center_lat": 50.414876533676534,
+        "crop_center_lon": 30.889179437805833,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0825.jpg",
+        "crop_center_lat": 50.41667833547834,
+        "crop_center_lon": 30.866558163055146,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0826.jpg",
+        "crop_center_lat": 50.42568734448735,
+        "crop_center_lon": 30.904731564196933,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0827.jpg",
+        "crop_center_lat": 50.42568734448735,
+        "crop_center_lon": 30.87928263010241,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0828.jpg",
+        "crop_center_lat": 50.40766932646933,
+        "crop_center_lon": 30.913214542228438,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0829.jpg",
+        "crop_center_lat": 50.42388554268555,
+        "crop_center_lon": 30.894834756493506,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0830.jpg",
+        "crop_center_lat": 50.41127293007293,
+        "crop_center_lon": 30.87221348174282,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0831.jpg",
+        "crop_center_lat": 50.40947112827113,
+        "crop_center_lon": 30.865144333383228,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0832.jpg",
+        "crop_center_lat": 50.420281939081946,
+        "crop_center_lon": 30.913214542228438,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0833.jpg",
+        "crop_center_lat": 50.42208374088374,
+        "crop_center_lon": 30.89907624550926,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0834.jpg",
+        "crop_center_lat": 50.412173830973835,
+        "crop_center_lon": 30.910386882884602,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0835.jpg",
+        "crop_center_lat": 50.41848013728014,
+        "crop_center_lon": 30.869385822398982,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0836.jpg",
+        "crop_center_lat": 50.40676842556843,
+        "crop_center_lon": 30.875041141086655,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0837.jpg",
+        "crop_center_lat": 50.41848013728014,
+        "crop_center_lon": 30.896248586165424,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0838.jpg",
+        "crop_center_lat": 50.40676842556843,
+        "crop_center_lon": 30.914628371900356,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0839.jpg",
+        "crop_center_lat": 50.41127293007293,
+        "crop_center_lon": 30.904731564196933,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0840.jpg",
+        "crop_center_lat": 50.415777434577436,
+        "crop_center_lon": 30.914628371900356,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0841.jpg",
+        "crop_center_lat": 50.41757923637924,
+        "crop_center_lon": 30.865144333383228,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0842.jpg",
+        "crop_center_lat": 50.420281939081946,
+        "crop_center_lon": 30.86373050371131,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0843.jpg",
+        "crop_center_lat": 50.42388554268555,
+        "crop_center_lon": 30.866558163055146,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0844.jpg",
+        "crop_center_lat": 50.41667833547834,
+        "crop_center_lon": 30.901903904853096,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0845.jpg",
+        "crop_center_lat": 50.42388554268555,
+        "crop_center_lon": 30.907559223540765,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0846.jpg",
+        "crop_center_lat": 50.41037202917203,
+        "crop_center_lon": 30.893420926821587,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0847.jpg",
+        "crop_center_lat": 50.420281939081946,
+        "crop_center_lon": 30.8707996520709,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0848.jpg",
+        "crop_center_lat": 50.412173830973835,
+        "crop_center_lon": 30.866558163055146,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0849.jpg",
+        "crop_center_lat": 50.41127293007293,
+        "crop_center_lon": 30.887765608133915,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0850.jpg",
+        "crop_center_lat": 50.41667833547834,
+        "crop_center_lon": 30.896248586165424,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0851.jpg",
+        "crop_center_lat": 50.41757923637924,
+        "crop_center_lon": 30.880696459774327,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0852.jpg",
+        "crop_center_lat": 50.40947112827113,
+        "crop_center_lon": 30.883524119118164,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0853.jpg",
+        "crop_center_lat": 50.414876533676534,
+        "crop_center_lon": 30.87221348174282,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0854.jpg",
+        "crop_center_lat": 50.42568734448735,
+        "crop_center_lon": 30.875041141086655,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0855.jpg",
+        "crop_center_lat": 50.41667833547834,
+        "crop_center_lon": 30.900490075181178,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0856.jpg",
+        "crop_center_lat": 50.41037202917203,
+        "crop_center_lon": 30.894834756493506,
+        "source_image": "test.jpg"
+    },
+    {
+        "crop_filename": "test_unseen_crop_0857.jpg",
+        "crop_center_lat": 50.41397563277564,
+        "crop_center_lon": 30.886351778461997,
+        "source_image": "test.jpg"
+    }
+]

@@ -76,3 +76,5 @@ training_results_legacy/*
 **/*.avi
 
 uav_data
+
+real_data/*

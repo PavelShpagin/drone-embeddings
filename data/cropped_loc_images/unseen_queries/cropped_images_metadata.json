@@ -1,0 +1,702 @@
+[
+    {
+        "original_image_path": "data/earth_imagery/loc7/49.8234, 25.3612.autumn.jpg",
+        "crop_filename": "49.8234, 25.3612.autumn_crop0.jpg",
+        "crop_center_lat": 49.82297743457743,
+        "crop_center_lon": 25.362589780486235,
+        "season": "autumn"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc7/49.8234, 25.3612.spring.jpg",
+        "crop_filename": "49.8234, 25.3612.spring_crop1.jpg",
+        "crop_center_lat": 49.82748193908194,
+        "crop_center_lon": 25.334661177413558,
+        "season": "spring"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc1/45.3395, 29.6287.autumn.jpg",
+        "crop_filename": "45.3395, 29.6287.autumn_crop2.jpg",
+        "crop_center_lat": 45.33457293007293,
+        "crop_center_lon": 29.65048251122272,
+        "season": "autumn"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc8/50.1964, 36.3753.autumn.jpg",
+        "crop_filename": "50.1964, 36.3753.autumn_crop3.jpg",
+        "crop_center_lat": 50.20318464178464,
+        "crop_center_lon": 36.35418364414362,
+        "season": "autumn"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc1/45.3395, 29.6287.autumn.jpg",
+        "crop_filename": "45.3395, 29.6287.autumn_crop4.jpg",
+        "crop_center_lat": 45.33817653367653,
+        "crop_center_lon": 29.644074095200345,
+        "season": "autumn"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc1/45.3395, 29.6287.spring.jpg",
+        "crop_filename": "45.3395, 29.6287.spring_crop5.jpg",
+        "crop_center_lat": 45.34628464178464,
+        "crop_center_lon": 29.635102312769018,
+        "season": "spring"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc9/50.4162, 30.8906.spring.jpg",
+        "crop_filename": "50.4162, 30.8906.spring_crop6.jpg",
+        "crop_center_lat": 50.414876533676534,
+        "crop_center_lon": 30.904731564196933,
+        "season": "spring"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc4/48.5673, 33.4218.autumn.jpg",
+        "crop_filename": "48.5673, 33.4218.autumn_crop7.jpg",
+        "crop_center_lat": 48.574985542685546,
+        "crop_center_lon": 33.43268481683785,
+        "season": "autumn"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc7/49.8234, 25.3612.summer.jpg",
+        "crop_filename": "49.8234, 25.3612.summer_crop8.jpg",
+        "crop_center_lat": 49.82928374088374,
+        "crop_center_lon": 25.365382640793502,
+        "season": "summer"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc4/48.5673, 33.4218.winter.jpg",
+        "crop_filename": "48.5673, 33.4218.winter_crop9.jpg",
+        "crop_center_lat": 48.563273830973834,
+        "crop_center_lon": 33.42315492955277,
+        "season": "winter"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc9/50.4162, 30.8906.winter.jpg",
+        "crop_filename": "50.4162, 30.8906.winter_crop10.jpg",
+        "crop_center_lat": 50.42208374088374,
+        "crop_center_lon": 30.867971992727064,
+        "season": "winter"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc6/49.3721, 31.0945.spring.jpg",
+        "crop_filename": "49.3721, 31.0945.spring_crop11.jpg",
+        "crop_center_lat": 49.378884641784644,
+        "crop_center_lon": 31.106945510955335,
+        "season": "spring"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc7/49.8234, 25.3612.summer.jpg",
+        "crop_filename": "49.8234, 25.3612.summer_crop12.jpg",
+        "crop_center_lat": 49.81486932646933,
+        "crop_center_lon": 25.351418339257165,
+        "season": "summer"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc4/48.5673, 33.4218.winter.jpg",
+        "crop_filename": "48.5673, 33.4218.winter_crop13.jpg",
+        "crop_center_lat": 48.564174731874736,
+        "crop_center_lon": 33.41498645473699,
+        "season": "winter"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc2/46.6234, 32.7851.summer.jpg",
+        "crop_filename": "46.6234, 32.7851.summer_crop14.jpg",
+        "crop_center_lat": 46.62297743457743,
+        "crop_center_lon": 32.76017041557192,
+        "season": "summer"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc1/45.3395, 29.6287.summer.jpg",
+        "crop_filename": "45.3395, 29.6287.summer_crop15.jpg",
+        "crop_center_lat": 45.33096932646933,
+        "crop_center_lon": 29.61715874790637,
+        "season": "summer"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc9/50.4162, 30.8906.spring.jpg",
+        "crop_filename": "50.4162, 30.8906.spring_crop16.jpg",
+        "crop_center_lat": 50.41667833547834,
+        "crop_center_lon": 30.900490075181178,
+        "season": "spring"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc10/51.0820, 30.6485.autumn.jpg",
+        "crop_filename": "51.0820, 30.6485.autumn_crop17.jpg",
+        "crop_center_lat": 51.08067653367653,
+        "crop_center_lon": 30.649927252730283,
+        "season": "autumn"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc9/50.4162, 30.8906.autumn.jpg",
+        "crop_filename": "50.4162, 30.8906.autumn_crop18.jpg",
+        "crop_center_lat": 50.419381038181044,
+        "crop_center_lon": 30.89059326747775,
+        "season": "autumn"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc1/45.3395, 29.6287.autumn.jpg",
+        "crop_filename": "45.3395, 29.6287.autumn_crop19.jpg",
+        "crop_center_lat": 45.34087923637924,
+        "crop_center_lon": 29.60690528227057,
+        "season": "autumn"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc7/49.8234, 25.3612.spring.jpg",
+        "crop_filename": "49.8234, 25.3612.spring_crop20.jpg",
+        "crop_center_lat": 49.83108554268554,
+        "crop_center_lon": 25.37795051217621,
+        "season": "spring"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc3/48.2650, 24.3913.autumn.jpg",
+        "crop_filename": "48.2650, 24.3913.autumn_crop21.jpg",
+        "crop_center_lat": 48.27088374088374,
+        "crop_center_lon": 24.385880189696024,
+        "season": "autumn"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc10/51.0820, 30.6485.summer.jpg",
+        "crop_filename": "51.0820, 30.6485.summer_crop22.jpg",
+        "crop_center_lat": 51.08788374088374,
+        "crop_center_lon": 30.65853174287459,
+        "season": "summer"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc8/50.1964, 36.3753.spring.jpg",
+        "crop_filename": "50.1964, 36.3753.spring_crop23.jpg",
+        "crop_center_lat": 50.19597743457743,
+        "crop_center_lon": 36.376700608814346,
+        "season": "spring"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc1/45.3395, 29.6287.winter.jpg",
+        "crop_filename": "45.3395, 29.6287.winter_crop24.jpg",
+        "crop_center_lat": 45.34178013728014,
+        "crop_center_lon": 29.61459538149742,
+        "season": "winter"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc7/49.8234, 25.3612.summer.jpg",
+        "crop_filename": "49.8234, 25.3612.summer_crop25.jpg",
+        "crop_center_lat": 49.823878335478334,
+        "crop_center_lon": 25.354211199564432,
+        "season": "summer"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc4/48.5673, 33.4218.winter.jpg",
+        "crop_filename": "48.5673, 33.4218.winter_crop26.jpg",
+        "crop_center_lat": 48.574985542685546,
+        "crop_center_lon": 33.42451634202207,
+        "season": "winter"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc5/48.9483, 29.7241.autumn.jpg",
+        "crop_filename": "48.9483, 29.7241.autumn_crop27.jpg",
+        "crop_center_lat": 48.94967923637924,
+        "crop_center_lon": 29.703516803607084,
+        "season": "autumn"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc7/49.8234, 25.3612.autumn.jpg",
+        "crop_filename": "49.8234, 25.3612.autumn_crop28.jpg",
+        "crop_center_lat": 49.816671128271125,
+        "crop_center_lon": 25.36398621063987,
+        "season": "autumn"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc9/50.4162, 30.8906.autumn.jpg",
+        "crop_filename": "50.4162, 30.8906.autumn_crop29.jpg",
+        "crop_center_lat": 50.41307473187474,
+        "crop_center_lon": 30.865144333383228,
+        "season": "autumn"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc3/48.2650, 24.3913.spring.jpg",
+        "crop_filename": "48.2650, 24.3913.spring_crop30.jpg",
+        "crop_center_lat": 48.26097383097383,
+        "crop_center_lon": 24.370993433688668,
+        "season": "spring"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc1/45.3395, 29.6287.spring.jpg",
+        "crop_filename": "45.3395, 29.6287.spring_crop31.jpg",
+        "crop_center_lat": 45.34898734448735,
+        "crop_center_lon": 29.615877064701895,
+        "season": "spring"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc2/46.6234, 32.7851.autumn.jpg",
+        "crop_filename": "46.6234, 32.7851.autumn_crop32.jpg",
+        "crop_center_lat": 46.61937383097383,
+        "crop_center_lon": 32.77459971650624,
+        "season": "autumn"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc3/48.2650, 24.3913.autumn.jpg",
+        "crop_filename": "48.2650, 24.3913.autumn_crop33.jpg",
+        "crop_center_lat": 48.27178464178464,
+        "crop_center_lon": 24.37776014096474,
+        "season": "autumn"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc1/45.3395, 29.6287.autumn.jpg",
+        "crop_filename": "45.3395, 29.6287.autumn_crop34.jpg",
+        "crop_center_lat": 45.33457293007293,
+        "crop_center_lon": 29.610750331883995,
+        "season": "autumn"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc7/49.8234, 25.3612.autumn.jpg",
+        "crop_filename": "49.8234, 25.3612.autumn_crop35.jpg",
+        "crop_center_lat": 49.81486932646933,
+        "crop_center_lon": 25.38213980263711,
+        "season": "autumn"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc6/49.3721, 31.0945.summer.jpg",
+        "crop_filename": "49.3721, 31.0945.summer_crop36.jpg",
+        "crop_center_lat": 49.371677434577435,
+        "crop_center_lon": 31.090342711798403,
+        "season": "summer"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc9/50.4162, 30.8906.spring.jpg",
+        "crop_filename": "50.4162, 30.8906.spring_crop37.jpg",
+        "crop_center_lat": 50.40947112827113,
+        "crop_center_lon": 30.900490075181178,
+        "season": "spring"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc4/48.5673, 33.4218.winter.jpg",
+        "crop_filename": "48.5673, 33.4218.winter_crop38.jpg",
+        "crop_center_lat": 48.56147202917203,
+        "crop_center_lon": 33.412263629798396,
+        "season": "winter"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc10/51.0820, 30.6485.summer.jpg",
+        "crop_filename": "51.0820, 30.6485.summer_crop39.jpg",
+        "crop_center_lat": 51.07346932646933,
+        "crop_center_lon": 30.67143847809105,
+        "season": "summer"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc10/51.0820, 30.6485.summer.jpg",
+        "crop_filename": "51.0820, 30.6485.summer_crop40.jpg",
+        "crop_center_lat": 51.07707293007293,
+        "crop_center_lon": 30.654229497802437,
+        "season": "summer"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc6/49.3721, 31.0945.autumn.jpg",
+        "crop_filename": "49.3721, 31.0945.autumn_crop41.jpg",
+        "crop_center_lat": 49.364470227370234,
+        "crop_center_lon": 31.09864411137687,
+        "season": "autumn"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc6/49.3721, 31.0945.winter.jpg",
+        "crop_filename": "49.3721, 31.0945.winter_crop42.jpg",
+        "crop_center_lat": 49.36266842556843,
+        "crop_center_lon": 31.119397610323034,
+        "season": "winter"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc6/49.3721, 31.0945.winter.jpg",
+        "crop_filename": "49.3721, 31.0945.winter_crop43.jpg",
+        "crop_center_lat": 49.36266842556843,
+        "crop_center_lon": 31.10002767797328,
+        "season": "winter"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc8/50.1964, 36.3753.winter.jpg",
+        "crop_filename": "50.1964, 36.3753.winter_crop44.jpg",
+        "crop_center_lat": 50.19237383097383,
+        "crop_center_lon": 36.39921757348507,
+        "season": "winter"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc2/46.6234, 32.7851.summer.jpg",
+        "crop_filename": "46.6234, 32.7851.summer_crop45.jpg",
+        "crop_center_lat": 46.628382839982834,
+        "crop_center_lon": 32.789029017440555,
+        "season": "summer"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc3/48.2650, 24.3913.spring.jpg",
+        "crop_filename": "48.2650, 24.3913.spring_crop46.jpg",
+        "crop_center_lat": 48.26457743457743,
+        "crop_center_lon": 24.41024033588988,
+        "season": "spring"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc6/49.3721, 31.0945.summer.jpg",
+        "crop_filename": "49.3721, 31.0945.summer_crop47.jpg",
+        "crop_center_lat": 49.37077653367653,
+        "crop_center_lon": 31.07650704583429,
+        "season": "summer"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc6/49.3721, 31.0945.spring.jpg",
+        "crop_filename": "49.3721, 31.0945.spring_crop48.jpg",
+        "crop_center_lat": 49.37077653367653,
+        "crop_center_lon": 31.07373991264147,
+        "season": "spring"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc5/48.9483, 29.7241.spring.jpg",
+        "crop_filename": "48.9483, 29.7241.spring_crop49.jpg",
+        "crop_center_lat": 48.94877833547834,
+        "crop_center_lon": 29.74878546466799,
+        "season": "spring"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc1/45.3395, 29.6287.winter.jpg",
+        "crop_filename": "45.3395, 29.6287.winter_crop50.jpg",
+        "crop_center_lat": 45.33457293007293,
+        "crop_center_lon": 29.641510728791392,
+        "season": "winter"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc8/50.1964, 36.3753.winter.jpg",
+        "crop_filename": "50.1964, 36.3753.winter_crop51.jpg",
+        "crop_center_lat": 50.205887344487344,
+        "crop_center_lon": 36.358405575019376,
+        "season": "winter"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc3/48.2650, 24.3913.winter.jpg",
+        "crop_filename": "48.2650, 24.3913.winter_crop52.jpg",
+        "crop_center_lat": 48.26818103818104,
+        "crop_center_lon": 24.41294701880031,
+        "season": "winter"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc2/46.6234, 32.7851.spring.jpg",
+        "crop_filename": "46.6234, 32.7851.spring_crop53.jpg",
+        "crop_center_lat": 46.61577022737023,
+        "crop_center_lon": 32.79034077207095,
+        "season": "spring"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc10/51.0820, 30.6485.winter.jpg",
+        "crop_filename": "51.0820, 30.6485.winter_crop54.jpg",
+        "crop_center_lat": 51.07346932646933,
+        "crop_center_lon": 30.674306641472487,
+        "season": "winter"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc9/50.4162, 30.8906.summer.jpg",
+        "crop_filename": "50.4162, 30.8906.summer_crop55.jpg",
+        "crop_center_lat": 50.419381038181044,
+        "crop_center_lon": 30.869385822398982,
+        "season": "summer"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc1/45.3395, 29.6287.autumn.jpg",
+        "crop_filename": "45.3395, 29.6287.autumn_crop56.jpg",
+        "crop_center_lat": 45.347185542685544,
+        "crop_center_lon": 29.60946864867952,
+        "season": "autumn"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc2/46.6234, 32.7851.winter.jpg",
+        "crop_filename": "46.6234, 32.7851.winter_crop57.jpg",
+        "crop_center_lat": 46.61396842556842,
+        "crop_center_lon": 32.773287961875845,
+        "season": "winter"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc9/50.4162, 30.8906.autumn.jpg",
+        "crop_filename": "50.4162, 30.8906.autumn_crop58.jpg",
+        "crop_center_lat": 50.41037202917203,
+        "crop_center_lon": 30.894834756493506,
+        "season": "autumn"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc3/48.2650, 24.3913.winter.jpg",
+        "crop_filename": "48.2650, 24.3913.winter_crop59.jpg",
+        "crop_center_lat": 48.26007293007293,
+        "crop_center_lon": 24.40618031152424,
+        "season": "winter"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc3/48.2650, 24.3913.winter.jpg",
+        "crop_filename": "48.2650, 24.3913.winter_crop60.jpg",
+        "crop_center_lat": 48.26097383097383,
+        "crop_center_lon": 24.41024033588988,
+        "season": "winter"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc6/49.3721, 31.0945.summer.jpg",
+        "crop_filename": "49.3721, 31.0945.summer_crop61.jpg",
+        "crop_center_lat": 49.37347923637924,
+        "crop_center_lon": 31.080657745623526,
+        "season": "summer"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc2/46.6234, 32.7851.spring.jpg",
+        "crop_filename": "46.6234, 32.7851.spring_crop62.jpg",
+        "crop_center_lat": 46.61577022737023,
+        "crop_center_lon": 32.7824702442886,
+        "season": "spring"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc5/48.9483, 29.7241.autumn.jpg",
+        "crop_filename": "48.9483, 29.7241.autumn_crop63.jpg",
+        "crop_center_lat": 48.944273830973835,
+        "crop_center_lon": 29.714491024470334,
+        "season": "autumn"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc3/48.2650, 24.3913.winter.jpg",
+        "crop_filename": "48.2650, 24.3913.winter_crop64.jpg",
+        "crop_center_lat": 48.26637923637924,
+        "crop_center_lon": 24.380466823875167,
+        "season": "winter"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc9/50.4162, 30.8906.summer.jpg",
+        "crop_filename": "50.4162, 30.8906.summer_crop65.jpg",
+        "crop_center_lat": 50.414876533676534,
+        "crop_center_lon": 30.8707996520709,
+        "season": "summer"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc5/48.9483, 29.7241.autumn.jpg",
+        "crop_filename": "48.9483, 29.7241.autumn_crop66.jpg",
+        "crop_center_lat": 48.95778734448735,
+        "crop_center_lon": 29.7295805781573,
+        "season": "autumn"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc7/49.8234, 25.3612.autumn.jpg",
+        "crop_filename": "49.8234, 25.3612.autumn_crop67.jpg",
+        "crop_center_lat": 49.816671128271125,
+        "crop_center_lon": 25.347229048796265,
+        "season": "autumn"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc2/46.6234, 32.7851.autumn.jpg",
+        "crop_filename": "46.6234, 32.7851.autumn_crop68.jpg",
+        "crop_center_lat": 46.61577022737023,
+        "crop_center_lon": 32.79427603596213,
+        "season": "autumn"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc7/49.8234, 25.3612.spring.jpg",
+        "crop_filename": "49.8234, 25.3612.spring_crop69.jpg",
+        "crop_center_lat": 49.82748193908194,
+        "crop_center_lon": 25.372364791561672,
+        "season": "spring"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc6/49.3721, 31.0945.summer.jpg",
+        "crop_filename": "49.3721, 31.0945.summer_crop70.jpg",
+        "crop_center_lat": 49.38068644358645,
+        "crop_center_lon": 31.105561944358925,
+        "season": "summer"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc5/48.9483, 29.7241.summer.jpg",
+        "crop_filename": "48.9483, 29.7241.summer_crop71.jpg",
+        "crop_center_lat": 48.95328283998284,
+        "crop_center_lon": 29.743298354236366,
+        "season": "summer"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc1/45.3395, 29.6287.winter.jpg",
+        "crop_filename": "45.3395, 29.6287.winter_crop72.jpg",
+        "crop_center_lat": 45.33006842556843,
+        "crop_center_lon": 29.629975579951118,
+        "season": "winter"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc10/51.0820, 30.6485.winter.jpg",
+        "crop_filename": "51.0820, 30.6485.winter_crop73.jpg",
+        "crop_center_lat": 51.07437022737023,
+        "crop_center_lon": 30.662833987946744,
+        "season": "winter"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc7/49.8234, 25.3612.autumn.jpg",
+        "crop_filename": "49.8234, 25.3612.autumn_crop74.jpg",
+        "crop_center_lat": 49.813968425568426,
+        "crop_center_lon": 25.37096836140804,
+        "season": "autumn"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc4/48.5673, 33.4218.summer.jpg",
+        "crop_filename": "48.5673, 33.4218.summer_crop75.jpg",
+        "crop_center_lat": 48.571381939081945,
+        "crop_center_lon": 33.417709279675584,
+        "season": "summer"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc6/49.3721, 31.0945.spring.jpg",
+        "crop_filename": "49.3721, 31.0945.spring_crop76.jpg",
+        "crop_center_lat": 49.36356932646933,
+        "crop_center_lon": 31.079274179027113,
+        "season": "spring"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc6/49.3721, 31.0945.summer.jpg",
+        "crop_filename": "49.3721, 31.0945.summer_crop77.jpg",
+        "crop_center_lat": 49.37798374088374,
+        "crop_center_lon": 31.08342487881635,
+        "season": "summer"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc2/46.6234, 32.7851.spring.jpg",
+        "crop_filename": "46.6234, 32.7851.spring_crop78.jpg",
+        "crop_center_lat": 46.617572029172024,
+        "crop_center_lon": 32.78378199891899,
+        "season": "spring"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc10/51.0820, 30.6485.winter.jpg",
+        "crop_filename": "51.0820, 30.6485.winter_crop79.jpg",
+        "crop_center_lat": 51.075271128271126,
+        "crop_center_lon": 30.63415235413239,
+        "season": "winter"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc7/49.8234, 25.3612.autumn.jpg",
+        "crop_filename": "49.8234, 25.3612.autumn_crop80.jpg",
+        "crop_center_lat": 49.82207653367653,
+        "crop_center_lon": 25.369571931254406,
+        "season": "autumn"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc8/50.1964, 36.3753.winter.jpg",
+        "crop_filename": "50.1964, 36.3753.winter_crop81.jpg",
+        "crop_center_lat": 50.19327473187473,
+        "crop_center_lon": 36.371071367646664,
+        "season": "winter"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc6/49.3721, 31.0945.autumn.jpg",
+        "crop_filename": "49.3721, 31.0945.autumn_crop82.jpg",
+        "crop_center_lat": 49.36897473187474,
+        "crop_center_lon": 31.113863343937393,
+        "season": "autumn"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc8/50.1964, 36.3753.autumn.jpg",
+        "crop_filename": "50.1964, 36.3753.autumn_crop83.jpg",
+        "crop_center_lat": 50.20408554268554,
+        "crop_center_lon": 36.386551780857786,
+        "season": "autumn"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc7/49.8234, 25.3612.spring.jpg",
+        "crop_filename": "49.8234, 25.3612.spring_crop84.jpg",
+        "crop_center_lat": 49.82658103818104,
+        "crop_center_lon": 25.373761221715306,
+        "season": "spring"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc9/50.4162, 30.8906.spring.jpg",
+        "crop_filename": "50.4162, 30.8906.spring_crop85.jpg",
+        "crop_center_lat": 50.42208374088374,
+        "crop_center_lon": 30.916042201572274,
+        "season": "spring"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc6/49.3721, 31.0945.spring.jpg",
+        "crop_filename": "49.3721, 31.0945.spring_crop86.jpg",
+        "crop_center_lat": 49.36627202917203,
+        "crop_center_lon": 31.077890612430703,
+        "season": "spring"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc6/49.3721, 31.0945.spring.jpg",
+        "crop_filename": "49.3721, 31.0945.spring_crop87.jpg",
+        "crop_center_lat": 49.37438013728014,
+        "crop_center_lon": 31.08757557860558,
+        "season": "spring"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc9/50.4162, 30.8906.spring.jpg",
+        "crop_filename": "50.4162, 30.8906.spring_crop88.jpg",
+        "crop_center_lat": 50.41037202917203,
+        "crop_center_lon": 30.884937948790082,
+        "season": "spring"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc1/45.3395, 29.6287.autumn.jpg",
+        "crop_filename": "45.3395, 29.6287.autumn_crop89.jpg",
+        "crop_center_lat": 45.336374731874734,
+        "crop_center_lon": 29.632538946360068,
+        "season": "autumn"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc4/48.5673, 33.4218.winter.jpg",
+        "crop_filename": "48.5673, 33.4218.winter_crop90.jpg",
+        "crop_center_lat": 48.57588644358645,
+        "crop_center_lon": 33.41634786720629,
+        "season": "winter"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc2/46.6234, 32.7851.autumn.jpg",
+        "crop_filename": "46.6234, 32.7851.autumn_crop91.jpg",
+        "crop_center_lat": 46.62027473187473,
+        "crop_center_lon": 32.785093753549376,
+        "season": "autumn"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc9/50.4162, 30.8906.autumn.jpg",
+        "crop_filename": "50.4162, 30.8906.autumn_crop92.jpg",
+        "crop_center_lat": 50.420281939081946,
+        "crop_center_lon": 30.87928263010241,
+        "season": "autumn"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc5/48.9483, 29.7241.winter.jpg",
+        "crop_filename": "48.9483, 29.7241.winter_crop93.jpg",
+        "crop_center_lat": 48.93976932646933,
+        "crop_center_lon": 29.746041909452178,
+        "season": "winter"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc4/48.5673, 33.4218.summer.jpg",
+        "crop_filename": "48.5673, 33.4218.summer_crop94.jpg",
+        "crop_center_lat": 48.57678734448735,
+        "crop_center_lon": 33.412263629798396,
+        "season": "summer"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc8/50.1964, 36.3753.autumn.jpg",
+        "crop_filename": "50.1964, 36.3753.autumn_crop95.jpg",
+        "crop_center_lat": 50.18967112827112,
+        "crop_center_lon": 36.35699826472746,
+        "season": "autumn"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc8/50.1964, 36.3753.winter.jpg",
+        "crop_filename": "50.1964, 36.3753.winter_crop96.jpg",
+        "crop_center_lat": 50.19958103818104,
+        "crop_center_lon": 36.355590954435534,
+        "season": "winter"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc1/45.3395, 29.6287.autumn.jpg",
+        "crop_filename": "45.3395, 29.6287.autumn_crop97.jpg",
+        "crop_center_lat": 45.347185542685544,
+        "crop_center_lon": 29.651764194427194,
+        "season": "autumn"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc3/48.2650, 24.3913.autumn.jpg",
+        "crop_filename": "48.2650, 24.3913.autumn_crop98.jpg",
+        "crop_center_lat": 48.27448734448735,
+        "crop_center_lon": 24.40347362861381,
+        "season": "autumn"
+    },
+    {
+        "original_image_path": "data/earth_imagery/loc2/46.6234, 32.7851.autumn.jpg",
+        "crop_filename": "46.6234, 32.7851.autumn_crop99.jpg",
+        "crop_center_lat": 46.61667112827112,
+        "crop_center_lon": 32.769352697984665,
+        "season": "autumn"
+    }
+]

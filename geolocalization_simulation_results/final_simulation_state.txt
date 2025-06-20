@@ -1,0 +1,8 @@
+Final Statistics:
+Position Error (true vs VIO): 6.10m
+Distance Traveled: 4106.8m
+Final Radius: 500.0m
+Active Patches: 80
+True Position (m): (-238.09645139116893, -297.53713319820247)
+VIO Position (m): (-234.851980938155, -302.6987936923025)
+Circle Center (m): [-237.25723103 -295.72172438]
