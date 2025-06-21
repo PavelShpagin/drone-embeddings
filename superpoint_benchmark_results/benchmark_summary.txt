@@ -1,0 +1,27 @@
+SuperPoint Benchmark Summary Report
+==================================================
+
+Model: superpoint_uav_trained/superpoint_uav_epoch_20.pth
+Test Data: superpoint_training/uav_crops_test/loc1
+Test Images: 100
+Timestamp: 2025-06-21T08:37:42.807338
+
+KEYPOINT DETECTION:
+  Detection Rate: 1.000
+  Average Keypoints: 123.2 ± 73.7
+  Average Score: 0.148
+
+DESCRIPTOR MATCHING:
+  Average Matches: 14.0
+  Match Ratio: 0.306
+  Descriptor Distance: 0.495
+  Homography Success: 0.958
+
+HOMOGRAPHIC ADAPTATION:
+  Success Rate: 1.000
+  Reprojection Error: 0.90 pixels
+  Inlier Ratio: 0.838
+
+OVERALL ASSESSMENT:
+  Grade: A (110/100)
+

@@ -25,7 +25,16 @@ def main():
     config = Config()
 
     # Initialize localizer
-    localizer = NewGlobalLocalizer(config)
+    localizer = NewGlobalLocalizer(
+        config,
+        use_anyloc_vlad=True,
+        anyloc_vlad_kwargs={
+            "model_type": "dinov2_vits14",
+            "layer": 11,
+            "facet": "key",
+            "n_clusters": 32
+        }
+    )
 
     # Initialize drone at a random position within map bounds
     # The drone's init handles random start

@@ -15,6 +15,7 @@ import math
 sys.path.append(str(Path(__file__).parent.parent))
 from train_encoder import SiameseNet, get_eval_transforms
 from simple_superpoint import SuperPoint
+from geolocalization.anyloc_vlad_embedder import AnyLocVLADEmbedder
 
 def match_descriptors(desc1, desc2, threshold=0.8):
     """Match descriptors using ratio test. Duplicated from visualize_superpoint_clean.py"""
@@ -48,10 +49,13 @@ class NewGlobalLocalizer:
     2. Circle-based probability tracking 
     3. VIO prediction with 1D convolutions
     4. Correction triggers based on circle radius
+    Now supports AnyLoc DINOv2+VLAD as an alternative embedding backend.
     """
-    def __init__(self, config):
+    def __init__(self, config, use_anyloc_vlad=False, anyloc_vlad_kwargs=None):
         self.config = config
         self.device = config.DEVICE
+        self.use_anyloc_vlad = use_anyloc_vlad
+        self.anyloc_vlad_kwargs = anyloc_vlad_kwargs or {}
         
         # Load map image
         self.map_image = Image.open(config.MAP_IMAGE_PATH).convert('RGB')
@@ -60,9 +64,16 @@ class NewGlobalLocalizer:
         self.patch_size_m = config.GRID_PATCH_SIZE_M
         self.patch_size_px = int(self.patch_size_m / self.m_per_pixel)
         
-        # Load trained encoder model
-        self.model = self._load_model()
-        self.eval_transforms = get_eval_transforms()
+        # Choose embedding backend
+        if self.use_anyloc_vlad:
+            print("Using AnyLoc DINOv2+VLAD embedder for patch embeddings.")
+            self.embedder = AnyLocVLADEmbedder(device=self.device, **self.anyloc_vlad_kwargs)
+            self.model = None
+            self.eval_transforms = None
+        else:
+            self.model = self._load_model()
+            self.eval_transforms = get_eval_transforms()
+            self.embedder = None
 
         # Load SuperPoint model
         print(f"Loading SuperPoint model from: {self.config.SUPERPOINT_WEIGHTS_PATH}")
@@ -198,7 +209,7 @@ class NewGlobalLocalizer:
         """Compute embeddings and store images for a set of patch coordinates."""
         if not patch_coords:
             return
-            
+        
         patches_batch = []
         coords_batch = []
         images_to_store = {}
@@ -221,17 +232,26 @@ class NewGlobalLocalizer:
             patch_image_resized = patch_image.resize((self.config.CROP_SIZE_PX, self.config.CROP_SIZE_PX), 
                                            Image.Resampling.LANCZOS)
             
-            patches_batch.append(self.eval_transforms(patch_image_resized))
+            patches_batch.append(patch_image_resized)
             coords_batch.append((grid_row, grid_col))
         
-        # Compute embeddings in batch
-        with torch.no_grad():
-            batch_tensor = torch.stack(patches_batch).to(self.device)
-            embeddings = self.model.get_embedding(batch_tensor).cpu().numpy()
-            
+        if self.use_anyloc_vlad:
+            # Fit VLAD vocabulary on all patches in the current circle
+            print("Fitting AnyLoc VLAD vocabulary on current circle patches...")
+            self.embedder.fit_vocabulary(patches_batch)
+            print("VLAD vocabulary fit complete for current circle.")
             for i, coord in enumerate(coords_batch):
-                self.patch_embeddings[coord] = embeddings[i].astype('float32')
-                self.patch_images[coord] = images_to_store[coord] # Store the image after embedding computation
+                vlad_desc = self.embedder.get_embedding(patches_batch[i])
+                self.patch_embeddings[coord] = vlad_desc.astype('float32')
+                self.patch_images[coord] = images_to_store[coord]
+        else:
+            # Compute embeddings in batch
+            with torch.no_grad():
+                batch_tensor = torch.stack([self.eval_transforms(img) for img in patches_batch]).to(self.device)
+                embeddings = self.model.get_embedding(batch_tensor).cpu().numpy()
+                for i, coord in enumerate(coords_batch):
+                    self.patch_embeddings[coord] = embeddings[i].astype('float32')
+                    self.patch_images[coord] = images_to_store[coord] # Store the image after embedding computation
 
     def _set_new_patch_probabilities(self, new_patches: set):
         """Set probabilities for new patches based on neighbors (Q1 requirement)."""
@@ -329,9 +349,9 @@ class NewGlobalLocalizer:
         for row in range(grid_h):
             for col in range(grid_w):
                 # Convert back to original grid coordinates
-                    coord = (row + min_row, col + min_col)
+                coord = (row + min_row, col + min_col)
                 if prob_grid[row, col] > self.config.MIN_PROBABILITY_THRESHOLD and coord in self.patch_embeddings:
-                        self.patch_probabilities[coord] = prob_grid[row, col]
+                    self.patch_probabilities[coord] = prob_grid[row, col]
 
         # After convolution, prune very low probabilities to manage memory
         # Patches that exit the circle have their probabilities set to 0 in _update_circle_database
@@ -376,9 +396,12 @@ class NewGlobalLocalizer:
         camera_image_resized = camera_image.resize((self.config.CROP_SIZE_PX, self.config.CROP_SIZE_PX),
                                                   Image.Resampling.LANCZOS)
         
-        with torch.no_grad():
-            img_tensor = self.eval_transforms(camera_image_resized).unsqueeze(0).to(self.device)
-            query_embedding = self.model.get_embedding(img_tensor).squeeze().cpu().numpy()
+        if self.use_anyloc_vlad:
+            query_embedding = self.embedder.get_embedding(camera_image_resized)
+        else:
+            with torch.no_grad():
+                img_tensor = self.eval_transforms(camera_image_resized).unsqueeze(0).to(self.device)
+                query_embedding = self.model.get_embedding(img_tensor).squeeze().cpu().numpy()
         
         # Calculate likelihood for each patch in circle
         distances = {}
@@ -397,19 +420,19 @@ class NewGlobalLocalizer:
         print(f"Embedding Distance range: {min_embedding_distance:.4f} to {max(distances.values()):.4f}")
         
         # Update probabilities based on embedding similarity (lower distance = higher likelihood)
-            # Use temperature parameter to control sharpness of probability distribution
-            temperature = 0.5  # Lower = sharper distribution
-            
-            likelihoods = {}
-            for coord in self.patch_probabilities:
-                if coord in distances:
-                    distance = distances[coord]
-                    # Convert to likelihood using exponential with temperature
+        # Use temperature parameter to control sharpness of probability distribution
+        temperature = 0.5  # Lower = sharper distribution
+        
+        likelihoods = {}
+        for coord in self.patch_probabilities:
+            if coord in distances:
+                distance = distances[coord]
+                # Convert to likelihood using exponential with temperature
                 # Subtract min_embedding_distance for numerical stability
                 likelihood = np.exp(-(distance - min_embedding_distance) / temperature)
-                    likelihoods[coord] = likelihood
-                    # Update probability (multiply prior by likelihood)
-                    self.patch_probabilities[coord] *= likelihood
+                likelihoods[coord] = likelihood
+                # Update probability (multiply prior by likelihood)
+                self.patch_probabilities[coord] *= likelihood
             
         print(f"Likelihood range (embedding): {min(likelihoods.values()):.6f} to {max(likelihoods.values()):.6f}")
         

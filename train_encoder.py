@@ -88,13 +88,18 @@ class NetVLAD(nn.Module):
     NetVLAD layer implementation.
     This version is vectorized for efficiency and avoids Python loops.
     """
-    def __init__(self, num_clusters=32, dim=1024, normalize_input=True):
+    def __init__(self, num_clusters=32, dim=1024, normalize_input=True, cluster_centers_path=None, device=None):
         super(NetVLAD, self).__init__()
         self.num_clusters = num_clusters
         self.dim = dim
         self.normalize_input = normalize_input
         self.conv = nn.Conv2d(dim, num_clusters, kernel_size=(1, 1), bias=False)
         self.centroids = nn.Parameter(torch.rand(num_clusters, dim))
+        if cluster_centers_path is not None:
+            centers = torch.load(cluster_centers_path, map_location=device or 'cpu')
+            if centers.shape != (num_clusters, dim):
+                raise ValueError(f"Cluster centers shape {centers.shape} does not match ({num_clusters}, {dim})")
+            self.centroids = nn.Parameter(centers, requires_grad=False)
 
     def forward(self, x):
         N, C, H, W = x.shape
@@ -150,7 +155,7 @@ def get_backbone(backbone_name: str) -> (nn.Module, int):
     return model, feature_dim
 
 class SiameseNet(nn.Module):
-    def __init__(self, backbone_name):
+    def __init__(self, backbone_name, cluster_centers_path=None, device=None):
         super(SiameseNet, self).__init__()
         self.feature_extractor, feature_dim = get_backbone(backbone_name)
         
@@ -162,7 +167,7 @@ class SiameseNet(nn.Module):
             nn.ReLU(inplace=True)
         )
 
-        self.netvlad = NetVLAD(num_clusters=32, dim=self.projection_dim)
+        self.netvlad = NetVLAD(num_clusters=32, dim=self.projection_dim, cluster_centers_path=cluster_centers_path, device=device)
         
     def forward(self, x):
         # When using features_only=True, the extractor returns a list of feature maps.

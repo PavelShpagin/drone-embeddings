@@ -52,7 +52,7 @@ class Config:
     NEW_PATCH_DEFAULT_PROB = 1e-6 # Default probability for new patches if no neighbors
 
     # --- Simulation Parameters ---
-    NUM_STEPS = 9000           # Total number of simulation steps (for 5 minutes at 30 FPS)
+    NUM_STEPS = 300           # Total number of simulation steps (for 5 minutes at 30 FPS)
     DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
     # --- Visualization Parameters ---
