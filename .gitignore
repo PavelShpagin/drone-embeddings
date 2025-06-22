@@ -74,6 +74,7 @@ simulation_results/*
 training_results_legacy/*
 
 **/*.avi
+**/*.mp4
 
 uav_data
 
