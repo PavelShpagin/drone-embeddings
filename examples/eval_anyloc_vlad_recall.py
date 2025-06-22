@@ -6,7 +6,6 @@ from PIL import Image
 from torchvision import transforms as T
 from third_party.AnyLoc.utilities import DinoV2ExtractFeatures, VLAD
 import random
-from geolocalization.anyloc_vlad_embedder import AnyLocVLADEmbedder
 
 # Settings
 IMG_PATH = "data/test/test.jpg"
@@ -66,33 +65,42 @@ def compute_spatial_distance(c1, c2):
     return np.sqrt((c1[0] - c2[0]) ** 2 + (c1[1] - c2[1]) ** 2)
 
 def main():
-    # --- Step 1: Load VLAD vocabulary from c_centers.pt ---
-    embedder = DinoV2ExtractFeatures(MODEL_TYPE, LAYER, FACET, device=DEVICE)
-    vlad_embedder = AnyLocVLADEmbedder(model_type=MODEL_TYPE, layer=LAYER, facet=FACET, device=DEVICE, n_clusters=NC)
-    vlad_embedder.load_vocabulary('c_centers.pt')
+    # --- Step 1: Build Aerial Vocabulary from random crops ---
+    N_VOCAB_CROPS = 500  # Number of crops for aerial vocab
+    vocab_crops = get_aerial_vocab_crops(IMG_PATH, CROP_SIZE, N_VOCAB_CROPS)
 
     # --- Step 2: Build DB and Query crops with overlap ---
     STRIDE = CROP_SIZE // 2  # 50% overlap
     db_crops, db_coords = sliding_window_crops(IMG_PATH, CROP_SIZE, STRIDE)
     query_crops, query_coords = sliding_window_crops(IMG_PATH, CROP_SIZE, STRIDE)
+    # Optionally, you could offset the query window for more realism
+
     print(f"DB/query crops: {len(db_crops)}")
 
     print("Loading DINOv2 model...")
-    # (embedder already loaded above)
+    model = DinoV2ExtractFeatures(MODEL_TYPE, LAYER, FACET, device=DEVICE)
 
+    print("Extracting dense features for aerial vocabulary...")
+    vocab_feats = extract_dense_features(vocab_crops, model, DEVICE, BATCH_SIZE)  # [N, N_patches, D]
     print("Extracting dense features for database crops...")
-    db_feats = extract_dense_features(db_crops, embedder, DEVICE, BATCH_SIZE)  # [N, N_patches, D]
+    db_feats = extract_dense_features(db_crops, model, DEVICE, BATCH_SIZE)  # [N, N_patches, D]
     print("Extracting dense features for query crops...")
-    query_feats = extract_dense_features(query_crops, embedder, DEVICE, BATCH_SIZE)  # [N, N_patches, D]
+    query_feats = extract_dense_features(query_crops, model, DEVICE, BATCH_SIZE)  # [N, N_patches, D]
 
-    # --- Step 3: Compute VLAD descriptors for database and query crops ---
+    # --- Step 3: Build VLAD vocabulary on aerial vocab crops only ---
+    print(f"Running K-means for VLAD vocabulary (Nc={NC}) on aerial vocab crops...")
+    vocab_feats_flat = vocab_feats.reshape(-1, vocab_feats.shape[-1])
+    vlad = VLAD(NC, desc_dim=vocab_feats_flat.shape[1], device=DEVICE)
+    vlad.fit(vocab_feats_flat)
+    print("VLAD vocabulary built.")
+
+    # --- Step 4: Compute VLAD descriptors for database and query crops ---
     print("Aggregating VLAD descriptors for database crops...")
     db_vlad_descs = []
     for i in tqdm(range(0, len(db_feats), BATCH_SIZE), desc="VLAD aggregation (db)"):
         feats_batch = db_feats[i:i+BATCH_SIZE]
         for j in range(feats_batch.shape[0]):
-            device = vlad_embedder.vlad.c_centers.device
-            vlad_desc = vlad_embedder.vlad.generate(torch.tensor(feats_batch[j]).to(device))
+            vlad_desc = vlad.generate(feats_batch[j].to(DEVICE))
             db_vlad_descs.append(vlad_desc.cpu())
     db_vlad_descs = torch.stack(db_vlad_descs)  # [N, Nc*D]
 
@@ -101,15 +109,14 @@ def main():
     for i in tqdm(range(0, len(query_feats), BATCH_SIZE), desc="VLAD aggregation (query)"):
         feats_batch = query_feats[i:i+BATCH_SIZE]
         for j in range(feats_batch.shape[0]):
-            device = vlad_embedder.vlad.c_centers.device
-            vlad_desc = vlad_embedder.vlad.generate(torch.tensor(feats_batch[j]).to(device))
+            vlad_desc = vlad.generate(feats_batch[j].to(DEVICE))
             query_vlad_descs.append(vlad_desc.cpu())
     query_vlad_descs = torch.stack(query_vlad_descs)  # [N, Nc*D]
 
     print(f"VLAD descriptors shape: db {db_vlad_descs.shape}, query {query_vlad_descs.shape}")
 
-    # --- Step 4: Recall evaluation (query vs. database) ---
-    print("Computing similarity and recall (query vs. database)...")
+    # --- Step 5: Recall evaluation with spatial tolerance ---
+    print("Computing similarity and recall (query vs. database) with spatial tolerance...")
     sim = query_vlad_descs @ db_vlad_descs.T  # [N_query, N_db]
     recall1 = 0
     recall5 = 0

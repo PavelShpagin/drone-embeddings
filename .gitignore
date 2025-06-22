@@ -74,8 +74,12 @@ simulation_results/*
 training_results_legacy/*
 
 **/*.avi
-**/*.mp4
 
 uav_data
 
 real_data/*
+
+# Generated Training Outputs
+superpoint_training/crops/
+superpoint_training/pseudolabels/
+# superpoint_training/checkpoints/
