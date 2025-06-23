@@ -49,3 +49,4 @@ scipy
 matplotlib
 imgaug
 torchscan
+tensorboardX
