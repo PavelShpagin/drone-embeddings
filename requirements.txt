@@ -52,4 +52,4 @@ torchscan
 tensorboardX
 datasets
 
-utils
+util
