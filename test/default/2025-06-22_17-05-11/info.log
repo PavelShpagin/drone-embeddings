@@ -1,0 +1,22 @@
+2025-06-22 17:05:13   
+Traceback (most recent call last):
+  File "/home/pavel/dev/drone-embeddings/third_party/GLVL/eval_joint.py", line 30, in <module>
+    model = model.to(args.device)
+            ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/pavel/miniconda3/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1340, in to
+    return self._apply(convert)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/pavel/miniconda3/lib/python3.12/site-packages/torch/nn/modules/module.py", line 900, in _apply
+    module._apply(fn)
+  File "/home/pavel/miniconda3/lib/python3.12/site-packages/torch/nn/modules/module.py", line 900, in _apply
+    module._apply(fn)
+  File "/home/pavel/miniconda3/lib/python3.12/site-packages/torch/nn/modules/module.py", line 927, in _apply
+    param_applied = fn(param)
+                    ^^^^^^^^^
+  File "/home/pavel/miniconda3/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1326, in convert
+    return t.to(
+           ^^^^^
+  File "/home/pavel/miniconda3/lib/python3.12/site-packages/torch/cuda/__init__.py", line 319, in _lazy_init
+    torch._C._cuda_init()
+RuntimeError: No CUDA GPUs are available
+

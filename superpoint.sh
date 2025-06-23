@@ -1,0 +1,2 @@
+python superpoint_training/data_gen/generate_crops.py
+python3 superpoint_training/train/train_superpoint.py --pretrained_model_path superpoint_training/checkpoints/superpoint_uav_final.pth

@@ -5,6 +5,7 @@ import random
 import matplotlib.pyplot as plt
 from scipy.optimize import linear_sum_assignment
 from src.models.superpoint.superpoint_model import SuperPoint
+from src.contrast_normalize import normalize
 
 # --- CONFIG ---
 IMAGE_PATH = "inference/46.6234, 32.7851.jpg"  # Fixed: space after comma
@@ -15,8 +16,7 @@ MAX_OFFSET = 64  # max offset in pixels for "close" crops
 # Try different model paths in order of preference
 import os
 MODEL_PATHS = [
-    "superpoint_training/superpoint_fixed/final.pth",  # Fixed model (preferred)
-    "superpoint_training/superpoint/final.pth",        # Current model (fallback)
+    "superpoint_training/checkpoints/superpoint_uav_final.pth",  # Fixed model (preferred)
 ]
 
 # Find the first available model
@@ -70,18 +70,22 @@ for i in range(NUM_EXAMPLES):
     print(f"Crop 2 location: ({x2}, {y2})")
     print(f"Offset: ({dx}, {dy}) pixels")
 
+    # Apply contrast normalization to crops
+    normalized_crop1 = normalize(crop1)
+    normalized_crop2 = normalize(crop2)
+
     # --- SuperPoint inference ---
     try:
-        kpts1, scores1, desc1 = model.detect(crop1)
-        kpts2, scores2, desc2 = model.detect(crop2)
+        kpts1, scores1, desc1 = model.detect(normalized_crop1)
+        kpts2, scores2, desc2 = model.detect(normalized_crop2)
         
-        print(f"SuperPoint detected {len(kpts1)} keypoints in crop 1")
-        print(f"SuperPoint detected {len(kpts2)} keypoints in crop 2")
+        print(f"SuperPoint detected {len(kpts1)} keypoints in normalized crop 1")
+        print(f"SuperPoint detected {len(kpts2)} keypoints in normalized crop 2")
         
         if len(kpts1) > 0:
-            print(f"Crop 1 - Keypoint scores: min={scores1.min():.3f}, max={scores1.max():.3f}, mean={scores1.mean():.3f}")
+            print(f"Normalized Crop 1 - Keypoint scores: min={scores1.min():.3f}, max={scores1.max():.3f}, mean={scores1.mean():.3f}")
         if len(kpts2) > 0:
-            print(f"Crop 2 - Keypoint scores: min={scores2.min():.3f}, max={scores2.max():.3f}, mean={scores2.mean():.3f}")
+            print(f"Normalized Crop 2 - Keypoint scores: min={scores2.min():.3f}, max={scores2.max():.3f}, mean={scores2.mean():.3f}")
         
     except Exception as e:
         print(f"✗ Error during SuperPoint inference: {e}")
@@ -144,7 +148,7 @@ for i in range(NUM_EXAMPLES):
     fig, ax = plt.subplots(1, 1, figsize=(16, 8))
     
     # Stack crops side by side
-    vis = np.concatenate([crop1, crop2], axis=1)
+    vis = np.concatenate([normalized_crop1, normalized_crop2], axis=1)
     vis = cv2.cvtColor(vis, cv2.COLOR_GRAY2BGR)
     offset = np.array([CROP_SIZE, 0])
 
@@ -188,9 +192,9 @@ for i in range(NUM_EXAMPLES):
     ax.axis('off')
 
     plt.tight_layout()
-    plt.savefig(f"superpoint_pure_example_{i+1}.png", dpi=150, bbox_inches='tight')
+    plt.savefig(f"superpoint_contrast_norm_example_{i+1}.png", dpi=150, bbox_inches='tight')
     plt.show()
 
 print("\n=== SuperPoint Analysis Complete ===")
-print("Check the generated images to see SuperPoint's actual performance.")
+print("Check the generated images to see SuperPoint's actual performance with contrast normalization.")
 print("If descriptors are all zeros, the model needs proper training with the fixed descriptor loss.")

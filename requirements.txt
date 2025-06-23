@@ -39,3 +39,17 @@ kornia>=0.6.0
 # For SuperPoint keypoint detection
 opencv-python>=4.5.0
 transformers>=4.38.0
+
+-f https://download.pytorch.org/whl/torch_stable.html
+--extra-index-url https://download.pytorch.org/whl/cu121
+
+torch==1.8.1+cu111
+torchvision==0.9.1+cu111
+torchaudio==0.8.1
+
+opencv-python
+tqdm
+scipy
+matplotlib
+imgaug
+torchscan
