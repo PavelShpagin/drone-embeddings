@@ -50,3 +50,4 @@ matplotlib
 imgaug
 torchscan
 tensorboardX
+datasets
