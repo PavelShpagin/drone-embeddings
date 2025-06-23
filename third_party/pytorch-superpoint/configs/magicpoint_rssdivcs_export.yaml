@@ -1,6 +1,7 @@
 data:
   dataset: "RSSDIVCS"
   export_folder: "train"
+  root: "/home/ubuntu/drone-embeddings/third_party/pytorch-superpoint/datasets/RSSDIVCS"
   preprocessing:
     resize: [256, 256]
   gaussian_label:
