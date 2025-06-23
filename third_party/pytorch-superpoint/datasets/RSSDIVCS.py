@@ -111,11 +111,9 @@ class RSSDIVCS(data.Dataset):
 
     def init_var(self):
         torch.set_default_tensor_type(torch.FloatTensor)
-        from utils.utils import sample_homography_np as sample_homography
-
-        from util.utils import compute_valid_mask
-        from util.utils import ImgAugTransform, customizedTransform
-        from util.utils import inv_warp_image, inv_warp_image_batch, warp_points
+        from utils.homographies import sample_homography_np as sample_homography
+        from utils.photometric import ImgAugTransform, customizedTransform
+        from utils.utils import compute_valid_mask, inv_warp_image, inv_warp_image_batch, warp_points
 
         self.sample_homography = sample_homography
         self.inv_warp_image = inv_warp_image
@@ -248,7 +246,7 @@ class RSSDIVCS(data.Dataset):
 
 
         def get_labels_bi(warped_pnts, H, W):
-            from util import filter_points
+            from utils.utils import filter_points
             pnts_ext, res_ext = extrapolate_points(warped_pnts)
             # quan = lambda x: x.long()
             pnts_ext, mask = filter_points(pnts_ext, torch.tensor([W, H]), return_mask=True)
@@ -258,9 +256,9 @@ class RSSDIVCS(data.Dataset):
 
 
         def warpLabels(pnts, H, W, homography, bilinear=False):
-            from util import homography_scaling_torch as homography_scaling
-            from util import filter_points
-            from util import warp_points
+            from utils.homographies import homography_scaling_torch as homography_scaling
+            from utils.utils import filter_points
+            from utils.utils import warp_points
             if isinstance(pnts, torch.Tensor):
                 pnts = pnts.long()
             else:
@@ -444,7 +442,7 @@ class RSSDIVCS(data.Dataset):
                 if self.gaussian_label:
                     # print("do gaussian labels!")
                     # warped_labels_gaussian = get_labels_gaussian(warped_set['warped_pnts'].numpy())
-                    from util import squeezeToNumpy
+                    from utils.utils import squeezeToNumpy
                     # warped_labels_bi = self.inv_warp_image(labels_2D.squeeze(), inv_homography, mode='nearest').unsqueeze(0) # bilinear, nearest
                     warped_labels_bi = warped_set['labels_bi']
                     warped_labels_gaussian = self.gaussian_blur(squeezeToNumpy(warped_labels_bi))
