@@ -111,11 +111,11 @@ class RSSDIVCS(data.Dataset):
 
     def init_var(self):
         torch.set_default_tensor_type(torch.FloatTensor)
-        from util import sample_homography_np as sample_homography
+        from utils.utils import sample_homography_np as sample_homography
 
-        from util import compute_valid_mask
-        from util import ImgAugTransform, customizedTransform
-        from util import inv_warp_image, inv_warp_image_batch, warp_points
+        from util.utils import compute_valid_mask
+        from util.utils import ImgAugTransform, customizedTransform
+        from util.utils import inv_warp_image, inv_warp_image_batch, warp_points
 
         self.sample_homography = sample_homography
         self.inv_warp_image = inv_warp_image
