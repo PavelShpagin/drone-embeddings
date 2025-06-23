@@ -3,7 +3,7 @@ import numpy as np
 import torch
 from pathlib import Path
 import torch.utils.data as data
-import collections
+import collections.abc
 # from .base_dataset import BaseDataset
 
 import cv2
@@ -23,7 +23,7 @@ def dict_update(d, u):
         The updated dictionary.
     """
     for k, v in u.items():
-        if isinstance(v, collections.Mapping):
+        if isinstance(v, collections.abc.Mapping):
             d[k] = dict_update(d.get(k, {}), v)
         else:
             d[k] = v
