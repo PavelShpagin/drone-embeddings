@@ -72,7 +72,10 @@ class RSSDIVCS(data.Dataset):
         self.action = 'train' if task == 'train' else 'val'
 
         # get files
-        base_path = Path(DATA_PATH, 'RSSDIVCS/' + task)
+        dataset_root = self.config.get('root', None)
+        if dataset_root is None:
+            raise ValueError("Dataset root directory must be specified in the config file under 'root'.")
+        base_path = Path(dataset_root, task)
         # base_path = Path(DATA_PATH, 'COCO_small/' + task + '2014/')
         image_paths = list(base_path.iterdir())
 
