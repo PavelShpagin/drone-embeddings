@@ -79,6 +79,6 @@ uav_data
 
 real_data/*
 
-datasets/*
+/datasets/*
 
-datasets
+/datasets
