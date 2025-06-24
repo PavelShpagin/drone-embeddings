@@ -56,7 +56,7 @@ argparse
 scipy
 opencv-contrib-python
 imageio
-tensorflow==1.14.0
+tensorflow
 pyyaml
 jupyter
 scikit-learn
