@@ -81,17 +81,17 @@ def parse_arguments():
     parser.add_argument("--random_resized_crop", type=float, default=0, help="_")
     parser.add_argument("--random_rotation", type=float, default=0, help="_")
     # Paths parameters
-    parser.add_argument("--datasets_folder", type=str, default="datasets/", help="Path with all datasets")
+    parser.add_argument("--datasets_folder", type=str, default="/home/ubuntu/drone-embeddings/third_party/GLVL/datasets/", help="Path with all datasets")
     parser.add_argument("--dataset_name", type=str, default="RSSDIVCS",
                         help="Relative path of the dataset")  # pitts30k \ ICRA2022 \TianJin \village\ AID \Manchester
     parser.add_argument("--save_dir", type=str, default="default",
                         help="Folder name of the current run (saved in ./logs/)")
-    parser.add_argument("--config", type=str, default="superpoint_RSSDIVCS_train.yaml",
+    parser.add_argument("--config", type=str, default="/home/ubuntu/drone-embeddings/third_party/GLVL/superpoint_RSSDIVCS_train.yaml",
                         help="Configs of SuperPointNet training")
 
 
     ### eval_joint
-    parser.add_argument("--test_datasets_folder", type=str, default="datasets/",
+    parser.add_argument("--test_datasets_folder", type=str, default="/home/ubuntu/drone-embeddings/third_party/GLVL/datasets/",
                         help="Path with all datasets")
 
     parser.add_argument("--test_dataset_name", type=str, default="village",

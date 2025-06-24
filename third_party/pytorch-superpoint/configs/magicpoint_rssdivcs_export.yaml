@@ -41,4 +41,4 @@ model:
   subpixel:
     enable: true
 
-pretrained: "logs/superpoint_coco_heat2_0/checkpoints/superPointNet_170000_checkpoint.pth.tar" # Path to your MagicPoint COCO checkpoint
+pretrained: "/home/ubuntu/drone-embeddings/third_party/pytorch-superpoint/logs/superpoint_coco_heat2_0/checkpoints/superPointNet_170000_checkpoint.pth.tar" # Path to your MagicPoint COCO checkpoint

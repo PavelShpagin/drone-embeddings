@@ -2,7 +2,7 @@ data:
   # name: 'coco'
   dataset: "RSSDIVCS" # 'RSSDIVCS' /'Coco'
 
-  labels: third_party/superpoint-train/logs/magicpoint_synth_homoAdapt_RSSDIVCS/predictions
+  labels: /home/ubuntu/drone-embeddings/third_party/superpoint-train/logs/magicpoint_synth_homoAdapt_RSSDIVCS/predictions
   #    labels: logs/magicpoint_synth_homoAdapt_coco/predictions
   root: # datasets/COCO
   root_split_txt: # /datasets/COCO
@@ -105,7 +105,7 @@ tensorboard_interval: 200
 save_interval: 200
 validation_size: 5
 save_dir: logs/superpoint_rssdivcs_h100
-pretrained: "logs/superpoint_coco_heat2_0/checkpoints/superPointNet_170000_checkpoint.pth.tar" # Pretrained on COCO
+pretrained: "/home/ubuntu/drone-embeddings/third_party/pytorch-superpoint/logs/superpoint_coco_heat2_0/checkpoints/superPointNet_170000_checkpoint.pth.tar" # Pretrained on COCO
 
 #pretrained : '/home/lhl/data/visgeoloca/logs/default/2023-07-17_23-16-28/best_model.pth'                             # raw
 

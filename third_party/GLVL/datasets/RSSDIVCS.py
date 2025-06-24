@@ -9,7 +9,7 @@ import collections.abc
 import cv2
 
 
-DATA_PATH = '/home/lhl/data/data/superpoint-train/datasets' # path for datasets
+DATA_PATH = '/home/ubuntu/drone-embeddings/third_party/pytorch-superpoint/datasets' # path for datasets
 DEBUG = False # true: will make synthetic data only uses draw_checkboard and ignore other classes
 
 def dict_update(d, u):
