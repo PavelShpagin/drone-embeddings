@@ -54,7 +54,7 @@ datasets
 
 argparse
 scipy
-opencv-contrib-python==3.4.2.16
+opencv-contrib-python
 imageio
 tensorflow==1.14.0
 pyyaml
