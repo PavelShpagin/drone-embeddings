@@ -86,3 +86,58 @@ real_data/*
 **/*.pt
 
 /vpair_sample
+
+# LARGE DIRECTORIES - NEWLY ADDED
+# Training and experiment results (3.5GB)
+training_results/
+/training_results
+
+# Third party libraries and dependencies (3.1GB)  
+third_party/
+/third_party
+
+# Data directories (763MB)
+data/
+/data
+
+# Profiling and benchmark results (279MB)
+profile_results/
+/profile_results
+
+# Large output files
+outputs/
+/outputs
+output/
+/output
+
+# Large media files
+*.mp4
+*.avi
+*.mov
+*.mkv
+*.webm
+
+# Large compressed files
+*.zip
+*.tar.gz
+*.tar.bz2
+*.7z
+*.rar
+
+# Model files and checkpoints
+*.pth
+*.ckpt
+*.h5
+*.pb
+*.onnx
+*.tflite
+
+# Large numpy arrays
+*.npy
+*.npz
+
+# Example outputs and generated models (keep structure, ignore large files)
+examples/optimized_models/
+examples/outputs/
+examples/*/output/
+examples/**/optimized_models/
