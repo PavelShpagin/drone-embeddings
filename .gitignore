@@ -84,3 +84,5 @@ real_data/*
 /datasets
 
 **/*.pt
+
+/vpair_sample
