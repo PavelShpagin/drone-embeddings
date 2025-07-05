@@ -1,0 +1,121 @@
+Processing results from: optimization_results/optimization_results_20250705_081151.json
+
+====================================================================================================
+MODEL OPTIMIZATION RESULTS SUMMARY
+====================================================================================================
+                Model  Size (MB)  Avg Inference (ms)  Throughput (FPS)    Input Size
+ mobilenetv2_original      13.50               13.13             76.16 [3, 224, 224]
+ mobilenetv3_original      21.01               14.75             67.81 [3, 224, 224]
+efficientnet_original      20.33               19.01             52.60 [3, 224, 224]
+  superpoint_original       4.96               38.12             26.23 [1, 224, 224]
+    resnet50_original      97.70               43.14             23.18 [3, 224, 224]
+    superpoint_mobile       0.00              101.73              9.83 [1, 224, 224]
+        dino_original     327.30              115.04              8.69 [3, 224, 224]
+   mobilenetv2_mobile       0.00              230.57              4.34 [3, 224, 224]
+      resnet50_mobile       0.00              314.20              3.18 [3, 224, 224]
+   mobilenetv3_mobile       0.00              316.93              3.16 [3, 224, 224]
+          dino_mobile       0.00              397.12              2.52 [3, 224, 224]
+  efficientnet_mobile       0.00              410.56              2.44 [3, 224, 224]
+
+====================================================================================================
+DETAILED PERFORMANCE ANALYSIS
+====================================================================================================
+
+SUPERPOINT:
+  original: 5.0MB, 26.2FPS, 38.1ms
+  mobile: 0.0MB, 9.8FPS, 101.7ms
+
+MOBILENETV2:
+  original: 13.5MB, 76.2FPS, 13.1ms
+  mobile: 0.0MB, 4.3FPS, 230.6ms
+
+MOBILENETV3:
+  original: 21.0MB, 67.8FPS, 14.7ms
+  mobile: 0.0MB, 3.2FPS, 316.9ms
+
+EFFICIENTNET:
+  original: 20.3MB, 52.6FPS, 19.0ms
+  mobile: 0.0MB, 2.4FPS, 410.6ms
+
+RESNET50:
+  original: 97.7MB, 23.2FPS, 43.1ms
+  mobile: 0.0MB, 3.2FPS, 314.2ms
+
+DINO:
+  original: 327.3MB, 8.7FPS, 115.0ms
+  mobile: 0.0MB, 2.5FPS, 397.1ms
+
+====================================================================================================
+BEST PERFORMERS BY CATEGORY
+====================================================================================================
+
+Best Throughput: mobilenetv2_original
+  - 76.16 FPS
+  - 13.50 MB
+  - 13.13 ms avg inference
+
+Smallest Size: superpoint_mobile
+  - 0.00 MB
+  - 9.83 FPS
+
+Fastest Inference: mobilenetv2_original
+  - 13.13 ms
+  - 76.16 FPS
+
+====================================================================================================
+RASPBERRY PI ZERO RECOMMENDATIONS
+====================================================================================================
+
+Models suitable for Raspberry Pi Zero (< 50MB, > 5 FPS):
+                Model  Size (MB)  Throughput (FPS)  Avg Inference (ms)
+ mobilenetv2_original      13.50             76.16               13.13
+ mobilenetv3_original      21.01             67.81               14.75
+efficientnet_original      20.33             52.60               19.01
+  superpoint_original       4.96             26.23               38.12
+    superpoint_mobile       0.00              9.83              101.73
+
+  ORIGINAL MODELS (Recommended):
+    mobilenetv2: 13.5MB, 76.2FPS
+    mobilenetv3: 21.0MB, 67.8FPS
+    efficientnet: 20.3MB, 52.6FPS
+    superpoint: 5.0MB, 26.2FPS
+
+  OPTIMIZED MODELS:
+    superpoint_mobile: 0.0MB, 9.8FPS
+
+====================================================================================================
+MODEL-SPECIFIC RECOMMENDATIONS
+====================================================================================================
+
+SUPERPOINT: Keypoint detection and matching
+  Best variant: original (26.2 FPS, 5.0 MB)
+
+MOBILENETV2: General classification, best size/performance ratio
+  Best variant: original (76.2 FPS, 13.5 MB)
+
+MOBILENETV3: Latest mobile architecture with optimizations
+  Best variant: original (67.8 FPS, 21.0 MB)
+
+EFFICIENTNET: Efficient classification with compound scaling
+  Best variant: original (52.6 FPS, 20.3 MB)
+
+RESNET50: Traditional CNN, good accuracy but large
+  Best variant: original (23.2 FPS, 97.7 MB)
+
+DINO: Self-supervised vision transformer
+  Best variant: original (8.7 FPS, 327.3 MB)
+
+====================================================================================================
+FILES GENERATED
+====================================================================================================
+Detailed results: optimization_results/optimization_results_20250705_081151.json
+Detailed CSV: optimization_results/detailed_benchmark_results.csv
+Summary CSV: optimization_results/benchmark_summary.csv
+Logs: logs/optimization_detailed.log
+
+====================================================================================================
+BENCHMARK COMPLETE!
+====================================================================================================
+Total models tested: 12
+Successful benchmarks: 12
+Pi Zero suitable models: 5

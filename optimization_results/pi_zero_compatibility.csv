@@ -1,0 +1,2 @@
+Model,Original_MB,FPS,INT8_MB,INT4_MB,Pi_Zero_Compatible,Description
+SuperPoint,5.0,26.3,1.25,0.625,Yes,Keypoint detection → ~5MB (Reference)

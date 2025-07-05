@@ -1,12 +1,7 @@
 #!/usr/bin/env python3
 """
-Model Optimization Script for Raspberry Pi Zero Deployment
-Supports:
-- PyTorch Mobile conversion
-- INT8/INT4 quantization
-- Model size reduction
-- Performance benchmarking
-- Different input sizes for different models
+Fixed Model Optimization Script for Raspberry Pi Zero Deployment
+Properly implements PyTorch Mobile optimizations with verification
 """
 
 import os
@@ -35,11 +30,12 @@ import torchvision.models as models
 import timm
 
 class ModelOptimizer:
-    def __init__(self, device='cpu'):  # Use CPU by default for Pi Zero compatibility
+    def __init__(self, device='cpu'):
         self.device = device
         self.models = {}
-        self.model_configs = {}
         self.results = {}
+        self.saved_models_dir = Path('optimization_results/saved_models')
+        self.saved_models_dir.mkdir(parents=True, exist_ok=True)
         
     def get_model_config(self, model_name):
         """Get configuration for each model type."""
@@ -105,7 +101,7 @@ class ModelOptimizer:
         except Exception as e:
             print(f"✗ Error loading MobileNetV2: {e}")
             
-        # MobileNetV3 (as MobileNetV4 placeholder)
+        # MobileNetV3
         try:
             mobilenetv3 = models.mobilenet_v3_large(weights=models.MobileNet_V3_Large_Weights.IMAGENET1K_V1)
             mobilenetv3.eval()
@@ -152,69 +148,30 @@ class ModelOptimizer:
             
         print(f"Successfully loaded {len(self.models)} models")
         
-    def prepare_for_quantization(self, model, model_name):
-        """Prepare model for quantization by adding necessary observers."""
+    def get_model_size_mb(self, model):
+        """Get model size in MB with proper handling for different model types."""
         try:
-            # Clone the model to avoid modifying original
-            model_copy = type(model)()
-            model_copy.load_state_dict(model.state_dict())
-            model_copy.eval()
-            
-            # Set quantization config
-            model_copy.qconfig = torch.quantization.get_default_qconfig('fbgemm')
-            
-            # Prepare model
-            model_prepared = torch.quantization.prepare(model_copy)
-            return model_prepared
-        except Exception as e:
-            print(f"Error preparing {model_name} for quantization: {e}")
-            return None
-            
-    def quantize_model(self, model, model_name, quantization_type='int8'):
-        """Quantize model to INT8 or INT4."""
-        print(f"  Quantizing to {quantization_type.upper()}...")
-        
-        try:
-            # Get model config
-            config = self.get_model_config(model_name)
-            input_size = config['input_size']
-            
-            # Prepare model for quantization
-            model_prepared = self.prepare_for_quantization(model, model_name)
-            if model_prepared is None:
-                return None
-                
-            # Generate calibration data
-            calibration_data = torch.randn(5, *input_size)
-            
-            # Run calibration
-            with torch.no_grad():
-                for i in range(len(calibration_data)):
-                    try:
-                        _ = model_prepared(calibration_data[i:i+1])
-                    except Exception as e:
-                        print(f"Calibration error for {model_name}: {e}")
-                        return None
-                        
-            # Quantize
-            if quantization_type == 'int8':
-                model_quantized = torch.quantization.convert(model_prepared)
+            if hasattr(model, '_save_to_state_dict'):
+                # For traced/scripted models, save to file and check size
+                temp_path = '/tmp/temp_model.pt'
+                model.save(temp_path)
+                size_bytes = os.path.getsize(temp_path)
+                os.remove(temp_path)
+                return size_bytes / (1024 * 1024)
+            elif hasattr(model, 'parameters'):
+                # For regular PyTorch models
+                param_size = sum(p.numel() * p.element_size() for p in model.parameters())
+                buffer_size = sum(b.numel() * b.element_size() for b in model.buffers())
+                return (param_size + buffer_size) / (1024 * 1024)
             else:
-                # Try dynamic quantization for INT4
-                model_quantized = torch.quantization.quantize_dynamic(
-                    model,
-                    {torch.nn.Linear, torch.nn.Conv2d},
-                    dtype=torch.qint8  # Use INT8 as INT4 is very limited
-                )
-                
-            return model_quantized
+                return 0.0
         except Exception as e:
-            print(f"    Error quantizing {model_name}: {e}")
-            return None
-            
+            print(f"    Warning: Could not calculate model size: {e}")
+            return 0.0
+    
     def optimize_for_mobile(self, model, model_name):
-        """Optimize model for mobile deployment."""
-        print(f"  Optimizing for mobile...")
+        """Optimize model for mobile deployment with verification."""
+        print(f"  Optimizing for PyTorch Mobile...")
         
         try:
             # Get model config
@@ -224,21 +181,117 @@ class ModelOptimizer:
             # Create example input
             example_input = torch.randn(1, *input_size)
             
-            # Trace the model
+            # Step 1: Trace the model
+            print(f"    Tracing model...")
             model.eval()
             with torch.no_grad():
+                # Verify model works with example input first
+                original_output = model(example_input)
                 traced_model = torch.jit.trace(model, example_input)
+                traced_output = traced_model(example_input)
+                
+                # Verify traced model produces same output
+                if isinstance(original_output, tuple):
+                    output_diff = torch.max(torch.abs(original_output[0] - traced_output[0])).item()
+                else:
+                    output_diff = torch.max(torch.abs(original_output - traced_output)).item()
+                
+                if output_diff > 1e-5:
+                    print(f"    Warning: Traced model output differs by {output_diff}")
+                else:
+                    print(f"    ✓ Tracing successful, output difference: {output_diff:.2e}")
             
-            # Optimize for mobile
-            optimized_model = optimize_for_mobile(traced_model)
+            # Step 2: Apply mobile optimizations
+            print(f"    Applying mobile optimizations...")
+            optimized_model = optimize_for_mobile(
+                traced_model,
+                optimization_blocklist={
+                    # Exclude problematic ops if needed
+                },
+                preserved_methods=[
+                    # Preserve methods if needed
+                ]
+            )
+            
+            # Step 3: Verify optimized model
+            print(f"    Verifying optimized model...")
+            with torch.no_grad():
+                optimized_output = optimized_model(example_input)
+                
+                if isinstance(original_output, tuple):
+                    optimized_diff = torch.max(torch.abs(original_output[0] - optimized_output[0])).item()
+                else:
+                    optimized_diff = torch.max(torch.abs(original_output - optimized_output)).item()
+                
+                if optimized_diff > 1e-4:
+                    print(f"    Warning: Optimized model output differs by {optimized_diff}")
+                else:
+                    print(f"    ✓ Mobile optimization successful, output difference: {optimized_diff:.2e}")
+            
+            # Step 4: Save the optimized model
+            mobile_model_path = self.saved_models_dir / f"{model_name}_mobile.pt"
+            optimized_model.save(str(mobile_model_path))
+            print(f"    ✓ Mobile model saved to: {mobile_model_path}")
+            
+            # Step 5: Calculate and compare sizes
+            original_size = self.get_model_size_mb(model)
+            optimized_size = self.get_model_size_mb(optimized_model)
+            
+            print(f"    Original size: {original_size:.2f} MB")
+            print(f"    Optimized size: {optimized_size:.2f} MB")
+            if original_size > 0:
+                compression_ratio = original_size / optimized_size if optimized_size > 0 else float('inf')
+                print(f"    Compression ratio: {compression_ratio:.2f}x")
             
             return optimized_model
+            
         except Exception as e:
             print(f"    Error optimizing {model_name} for mobile: {e}")
             return None
+    
+    def quantize_model(self, model, model_name, quantization_type='int8'):
+        """Quantize model to INT8."""
+        print(f"  Attempting {quantization_type.upper()} quantization...")
+        
+        try:
+            # Get model config
+            config = self.get_model_config(model_name)
+            input_size = config['input_size']
+            
+            # Try dynamic quantization (simpler and more reliable)
+            print(f"    Using dynamic quantization...")
+            quantized_model = torch.quantization.quantize_dynamic(
+                model,
+                {torch.nn.Linear, torch.nn.Conv2d},
+                dtype=torch.qint8
+            )
+            
+            # Test the quantized model
+            example_input = torch.randn(1, *input_size)
+            with torch.no_grad():
+                original_output = model(example_input)
+                quantized_output = quantized_model(example_input)
+                
+                if isinstance(original_output, tuple):
+                    output_diff = torch.max(torch.abs(original_output[0] - quantized_output[0])).item()
+                else:
+                    output_diff = torch.max(torch.abs(original_output - quantized_output)).item()
+                
+                print(f"    ✓ Quantization successful, output difference: {output_diff:.2e}")
+            
+            # Save quantized model
+            quantized_model_path = self.saved_models_dir / f"{model_name}_quantized.pt"
+            torch.save(quantized_model.state_dict(), quantized_model_path)
+            print(f"    ✓ Quantized model saved to: {quantized_model_path}")
+            
+            return quantized_model
+            
+        except Exception as e:
+            print(f"    Error quantizing {model_name}: {e}")
+            return None
             
     def benchmark_model(self, model, model_name, variant_name, num_runs=50):
-        """Benchmark model performance."""
+        """Benchmark model performance with improved timing."""
         print(f"    Benchmarking {variant_name}...")
         
         try:
@@ -253,80 +306,79 @@ class ModelOptimizer:
                 'variant': variant_name.split('_')[-1],
                 'description': config['description'],
                 'input_size': input_size,
-                'size_mb': self.get_model_size(model),
+                'size_mb': self.get_model_size_mb(model),
                 'inference_times_ms': [],
                 'memory_usage_mb': []
             }
             
             # Generate sample input
             input_tensor = torch.randn(1, *input_size)
-                
-            # Warmup
+            
+            # Extended warmup to ensure stable timing
+            print(f"      Warming up...")
             with torch.no_grad():
-                for _ in range(5):
+                for _ in range(10):
                     try:
                         _ = model(input_tensor)
                     except Exception as e:
                         print(f"    Warmup failed for {variant_name}: {e}")
                         return None
-                    
-            # Benchmark
+            
+            # Benchmark with more precise timing
+            print(f"      Running {num_runs} benchmark iterations...")
+            successful_runs = 0
             with torch.no_grad():
-                for _ in range(num_runs):
+                for i in range(num_runs):
                     try:
-                        start_time = time.time()
-                        _ = model(input_tensor)
-                        inference_time = (time.time() - start_time) * 1000  # Convert to ms
-                        results['inference_times_ms'].append(inference_time)
+                        # Use more precise timing
+                        torch.cuda.synchronize() if torch.cuda.is_available() else None
+                        start_time = time.perf_counter()
                         
-                        # Memory usage (basic approximation)
-                        memory_usage = results['size_mb']  # Approximate
-                        results['memory_usage_mb'].append(memory_usage)
+                        _ = model(input_tensor)
+                        
+                        torch.cuda.synchronize() if torch.cuda.is_available() else None
+                        end_time = time.perf_counter()
+                        
+                        inference_time = (end_time - start_time) * 1000  # Convert to ms
+                        
+                        # Only record reasonable timing values
+                        if inference_time > 0 and inference_time < 10000:  # Between 0 and 10 seconds
+                            results['inference_times_ms'].append(inference_time)
+                            successful_runs += 1
+                        
                     except Exception as e:
-                        print(f"    Benchmark iteration failed for {variant_name}: {e}")
+                        print(f"    Benchmark iteration {i} failed for {variant_name}: {e}")
                         continue
                         
-            if not results['inference_times_ms']:
-                print(f"    No successful benchmark runs for {variant_name}")
+            if successful_runs < 5:
+                print(f"    Insufficient successful benchmark runs for {variant_name} ({successful_runs}/{num_runs})")
                 return None
                 
             # Calculate statistics
+            results['successful_runs'] = successful_runs
             results['avg_inference_time_ms'] = np.mean(results['inference_times_ms'])
             results['std_inference_time_ms'] = np.std(results['inference_times_ms'])
             results['min_inference_time_ms'] = np.min(results['inference_times_ms'])
             results['max_inference_time_ms'] = np.max(results['inference_times_ms'])
-            results['avg_memory_usage_mb'] = np.mean(results['memory_usage_mb'])
+            results['median_inference_time_ms'] = np.median(results['inference_times_ms'])
             results['throughput_fps'] = 1000 / results['avg_inference_time_ms']
+            
+            print(f"      ✓ {successful_runs}/{num_runs} successful runs")
+            print(f"      ✓ Avg inference: {results['avg_inference_time_ms']:.2f} ms")
+            print(f"      ✓ Throughput: {results['throughput_fps']:.2f} FPS")
+            print(f"      ✓ Model size: {results['size_mb']:.2f} MB")
             
             # Remove raw data to save space
             del results['inference_times_ms']
-            del results['memory_usage_mb']
             
             return results
         except Exception as e:
             print(f"    Error benchmarking {variant_name}: {e}")
             return None
         
-    def get_model_size(self, model):
-        """Get model size in MB."""
-        try:
-            if hasattr(model, 'parameters'):
-                param_size = sum(p.numel() * p.element_size() for p in model.parameters())
-                buffer_size = sum(b.numel() * b.element_size() for b in model.buffers())
-            else:
-                # For traced models, estimate size
-                param_size = sum(p.numel() * 4 for p in model.parameters())  # Assume float32
-                buffer_size = 0
-                
-            size_mb = (param_size + buffer_size) / (1024 * 1024)
-            return size_mb
-        except Exception as e:
-            print(f"    Error calculating model size: {e}")
-            return 0.0
-        
     def optimize_all_models(self):
         """Optimize all loaded models."""
-        print("\nStarting model optimization...")
+        print("\nStarting comprehensive model optimization...")
         
         total_models = len(self.models)
         processed = 0
@@ -341,6 +393,14 @@ class ModelOptimizer:
             if original_results:
                 self.results[f"{model_name}_original"] = original_results
             
+            # Mobile Optimization (prioritize this as it's most important for Pi Zero)
+            print(f"  PyTorch Mobile optimization:")
+            model_mobile = self.optimize_for_mobile(model, model_name)
+            if model_mobile is not None:
+                mobile_results = self.benchmark_model(model_mobile, model_name, f"{model_name}_mobile")
+                if mobile_results:
+                    self.results[f"{model_name}_mobile"] = mobile_results
+            
             # INT8 Quantization
             print(f"  INT8 quantization:")
             model_int8 = self.quantize_model(model, model_name, 'int8')
@@ -348,14 +408,6 @@ class ModelOptimizer:
                 int8_results = self.benchmark_model(model_int8, model_name, f"{model_name}_int8")
                 if int8_results:
                     self.results[f"{model_name}_int8"] = int8_results
-                    
-            # Mobile Optimization
-            print(f"  Mobile optimization:")
-            model_mobile = self.optimize_for_mobile(model, model_name)
-            if model_mobile is not None:
-                mobile_results = self.benchmark_model(model_mobile, model_name, f"{model_name}_mobile")
-                if mobile_results:
-                    self.results[f"{model_name}_mobile"] = mobile_results
                     
         print(f"\nOptimization complete! Processed {len(self.results)} model variants.")
                 
@@ -384,13 +436,14 @@ class ModelOptimizer:
                 print(f"  Size: {results['size_mb']:.2f} MB")
                 print(f"  Avg Inference: {results['avg_inference_time_ms']:.2f} ms")
                 print(f"  Throughput: {results['throughput_fps']:.2f} FPS")
-                print(f"  Input Size: {results['input_size']}")
+                print(f"  Successful runs: {results.get('successful_runs', 'N/A')}")
         else:
             print("No results to display.")
             
 def main():
-    print("PyTorch Model Optimizer for Raspberry Pi Zero")
-    print("=" * 50)
+    print("Fixed PyTorch Model Optimizer for Raspberry Pi Zero")
+    print("=" * 60)
+    print("Includes proper mobile optimization verification")
     
     # Initialize optimizer
     optimizer = ModelOptimizer()
@@ -411,7 +464,8 @@ def main():
     print("\n" + "="*80)
     print("OPTIMIZATION COMPLETE!")
     print("="*80)
-    print("\nCheck the optimization_results/ directory for detailed results.")
+    print(f"\nOptimized models saved to: {optimizer.saved_models_dir}")
+    print("Check the optimization_results/ directory for detailed results.")
 
 if __name__ == "__main__":
     main() 

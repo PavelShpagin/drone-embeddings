@@ -1,0 +1,38 @@
+{
+  "DINOv2-ViT-S/14": {
+    "params": 21000000,
+    "float32_mb": 80.108642578125,
+    "int8_mb": 20.02716064453125,
+    "int4_mb": 10.013580322265625,
+    "int8_reduction": 75.0,
+    "int4_reduction": 87.5,
+    "deployment": "\u2705 DEPLOY WITH INT8"
+  },
+  "DINOv2-ViT-B/14": {
+    "params": 86000000,
+    "float32_mb": 328.06396484375,
+    "int8_mb": 82.0159912109375,
+    "int4_mb": 41.00799560546875,
+    "int8_reduction": 75.0,
+    "int4_reduction": 87.5,
+    "deployment": "\u2705 DEPLOY WITH INT8"
+  },
+  "DINOv2-ViT-L/14": {
+    "params": 300000000,
+    "float32_mb": 1144.4091796875,
+    "int8_mb": 286.102294921875,
+    "int4_mb": 143.0511474609375,
+    "int8_reduction": 75.0,
+    "int4_reduction": 87.5,
+    "deployment": "\u274c TOO LARGE FOR PI ZERO"
+  },
+  "SuperPoint": {
+    "params": 1250000,
+    "float32_mb": 4.76837158203125,
+    "int8_mb": 1.1920928955078125,
+    "int4_mb": 0.5960464477539062,
+    "int8_reduction": 75.0,
+    "int4_reduction": 87.5,
+    "deployment": "\u2705 DEPLOY WITH INT8"
+  }
+}

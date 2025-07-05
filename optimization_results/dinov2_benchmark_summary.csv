@@ -1,0 +1,3 @@
+Model,FPS,Inference_Time_ms,Memory_MB,Mobile_FPS,Mobile_Memory_MB,Description
+SuperPoint,26.5,37.7,5.0,9.397186613658485,4.972673416137695,Keypoint detection model (comparison)
+MobileNetV2,72.1,13.9,13.5,3.642679620071562,13.261114120483398,Lightweight CNN (comparison)

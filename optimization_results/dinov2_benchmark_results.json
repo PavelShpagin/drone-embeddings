@@ -1,0 +1,30 @@
+{
+  "SuperPoint": {
+    "original": {
+      "inference_time": 37.67429828643799,
+      "fps": 26.543294646047343,
+      "memory_mb": 4.962406158447266
+    },
+    "description": "Keypoint detection model (comparison)",
+    "variant": "superpoint",
+    "mobile": {
+      "inference_time": 106.41482830047607,
+      "fps": 9.397186613658485,
+      "memory_mb": 4.972673416137695
+    }
+  },
+  "MobileNetV2": {
+    "original": {
+      "inference_time": 13.872323036193848,
+      "fps": 72.08597993219529,
+      "memory_mb": 13.50054931640625
+    },
+    "description": "Lightweight CNN (comparison)",
+    "variant": "mobilenetv2",
+    "mobile": {
+      "inference_time": 274.5231819152832,
+      "fps": 3.642679620071562,
+      "memory_mb": 13.261114120483398
+    }
+  }
+}

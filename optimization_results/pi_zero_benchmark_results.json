@@ -1,0 +1,18 @@
+{
+  "SuperPoint": {
+    "original": {
+      "inference_time": 37.977401415506996,
+      "fps": 26.331448775525708,
+      "memory_mb": 4.962406158447266
+    },
+    "description": "Keypoint detection \u2192 ~5MB (Reference)",
+    "variant": "superpoint",
+    "expected_int8_mb": 1.25,
+    "expected_int4_mb": 0.625,
+    "mobile": {
+      "inference_time": 105.66051801045735,
+      "fps": 9.464273115725486,
+      "memory_mb": 4.972673416137695
+    }
+  }
+}
