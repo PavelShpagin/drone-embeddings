@@ -1,0 +1,19 @@
+VPAIR Visual Place Recognition Evaluation
+=============================================
+
+Dataset: 200 queries, 200 references
+Distance threshold: 25.0m
+Vocabulary: 32 clusters
+Model: DINOv2-ViT-B/14
+
+Concatenated VLAD Results:
+  Recall@ 1:   8.0%
+  Recall@ 5:  23.1%
+  Recall@10:  28.1%
+  Recall@20:  32.7%
+
+Chamfer Similarity Results:
+  Recall@ 1:  27.1%
+  Recall@ 5:  75.4%
+  Recall@10:  84.9%
+  Recall@20:  94.5%

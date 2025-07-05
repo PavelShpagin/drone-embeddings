@@ -86,7 +86,9 @@ class SuperPoint:
             
             # Handle different checkpoint formats
             if isinstance(checkpoint, dict):
-                if 'model' in checkpoint:
+                if 'model_state_dict' in checkpoint:
+                    state_dict = checkpoint['model_state_dict']
+                elif 'model' in checkpoint:
                     state_dict = checkpoint['model']
                 elif 'state_dict' in checkpoint:
                     state_dict = checkpoint['state_dict']

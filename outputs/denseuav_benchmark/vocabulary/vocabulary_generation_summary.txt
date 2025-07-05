@@ -1,0 +1,11 @@
+DenseUAV VLAD Vocabulary Generation Summary
+=========================================
+
+Dataset: DenseUAV
+Model: DINOv2-ViT-B/14
+Clusters: 32
+Feature dimension: 768
+Images used: 1000
+Features extracted: 5296
+Patches per image (max): 10
+Vocabulary file: denseuav_vlad_vocabulary_32clusters.pkl

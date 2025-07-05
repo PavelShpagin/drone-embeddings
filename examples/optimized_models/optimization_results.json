@@ -1,0 +1,145 @@
+{
+  "efficientnet_b0": {
+    "model_name": "efficientnet_b0",
+    "original_size_mb": 20.334861755371094,
+    "original_benchmark": {
+      "avg_inference_time_ms": 40.26294231414795,
+      "std_inference_time_ms": 23.483706398029348,
+      "throughput_fps": 24.836734290246124
+    },
+    "conversions": {
+      "onnx": {
+        "skipped": "ONNX not available"
+      },
+      "onnx_quantized": {
+        "skipped": "ONNX not available"
+      },
+      "pytorch_mobile": {
+        "path": "optimized_models/pytorch_mobile/efficientnet_b0_mobile.pt",
+        "size_mb": 20.072388648986816
+      },
+      "quantized_pytorch": {
+        "path": "optimized_models/quantized_pytorch/efficientnet_b0_quantized.pt",
+        "size_mb": 16.798852920532227
+      },
+      "tflite": {
+        "error": "ONNX not available. Install with: pip install onnx onnxruntime"
+      }
+    }
+  },
+  "mobilenet_v2": {
+    "model_name": "mobilenet_v2",
+    "original_size_mb": 13.50054931640625,
+    "original_benchmark": {
+      "avg_inference_time_ms": 40.960140228271484,
+      "std_inference_time_ms": 41.921314051973305,
+      "throughput_fps": 24.413978917723053
+    },
+    "conversions": {
+      "onnx": {
+        "skipped": "ONNX not available"
+      },
+      "onnx_quantized": {
+        "skipped": "ONNX not available"
+      },
+      "pytorch_mobile": {
+        "path": "optimized_models/pytorch_mobile/mobilenet_v2_mobile.pt",
+        "size_mb": 13.271357536315918
+      },
+      "quantized_pytorch": {
+        "path": "optimized_models/quantized_pytorch/mobilenet_v2_quantized.pt",
+        "size_mb": 9.942132949829102
+      },
+      "tflite": {
+        "error": "ONNX not available. Install with: pip install onnx onnxruntime"
+      }
+    }
+  },
+  "mobilenet_v4": {
+    "model_name": "mobilenet_v4",
+    "original_size_mb": 14.492813110351562,
+    "original_benchmark": {
+      "avg_inference_time_ms": 22.272260189056396,
+      "std_inference_time_ms": 14.103348564538361,
+      "throughput_fps": 44.89890076317246
+    },
+    "conversions": {
+      "onnx": {
+        "skipped": "ONNX not available"
+      },
+      "onnx_quantized": {
+        "skipped": "ONNX not available"
+      },
+      "pytorch_mobile": {
+        "path": "optimized_models/pytorch_mobile/mobilenet_v4_mobile.pt",
+        "size_mb": 14.5867280960083
+      },
+      "quantized_pytorch": {
+        "path": "optimized_models/quantized_pytorch/mobilenet_v4_quantized.pt",
+        "size_mb": 14.590099334716797
+      },
+      "tflite": {
+        "error": "ONNX not available. Install with: pip install onnx onnxruntime"
+      }
+    }
+  },
+  "resnet50": {
+    "model_name": "resnet50",
+    "original_size_mb": 97.69538116455078,
+    "original_benchmark": {
+      "avg_inference_time_ms": 60.047011375427246,
+      "std_inference_time_ms": 15.88129463320341,
+      "throughput_fps": 16.6536181750625
+    },
+    "conversions": {
+      "onnx": {
+        "skipped": "ONNX not available"
+      },
+      "onnx_quantized": {
+        "skipped": "ONNX not available"
+      },
+      "pytorch_mobile": {
+        "path": "optimized_models/pytorch_mobile/resnet50_mobile.pt",
+        "size_mb": 97.3217191696167
+      },
+      "quantized_pytorch": {
+        "path": "optimized_models/quantized_pytorch/resnet50_quantized.pt",
+        "size_mb": 91.93577575683594
+      },
+      "tflite": {
+        "error": "ONNX not available. Install with: pip install onnx onnxruntime"
+      }
+    }
+  },
+  "dinov2": {
+    "model_name": "dinov2",
+    "original_size_mb": 330.275390625,
+    "original_benchmark": {
+      "avg_inference_time_ms": 1092.006869316101,
+      "std_inference_time_ms": 332.3946755693778,
+      "throughput_fps": 0.9157451551804587
+    },
+    "conversions": {
+      "onnx": {
+        "skipped": "ONNX not available"
+      },
+      "onnx_quantized": {
+        "skipped": "ONNX not available"
+      },
+      "pytorch_mobile": {
+        "path": "optimized_models/pytorch_mobile/dinov2_mobile.pt",
+        "size_mb": 330.3508405685425
+      },
+      "quantized_pytorch": {
+        "path": "optimized_models/quantized_pytorch/dinov2_quantized.pt",
+        "size_mb": 87.37004852294922
+      },
+      "tflite": {
+        "error": "ONNX not available. Install with: pip install onnx onnxruntime"
+      }
+    }
+  },
+  "dino": {
+    "error": "Input height (224) doesn't match model (518)."
+  }
+}

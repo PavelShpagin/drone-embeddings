@@ -1,0 +1,25 @@
+{
+  "total_models": 4,
+  "model_types": {
+    "PyTorch": 4
+  },
+  "best_performers": {
+    "Model Size (MB)": {
+      "model": "mobilenet_v2_pytorch",
+      "value": 13.50054931640625
+    },
+    "Inference Time (ms)": {
+      "model": "mobilenet_v4_pytorch",
+      "value": 5.868632793426514
+    },
+    "Peak Memory (MB)": {
+      "model": "mobilenet_v4_pytorch",
+      "value": 493.7763671875
+    },
+    "Throughput (FPS)": {
+      "model": "mobilenet_v4_pytorch",
+      "value": 170.39743926730347
+    }
+  },
+  "optimization_gains": {}
+}

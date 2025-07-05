@@ -19,8 +19,9 @@ PATCH_SIZE_M = CROP_SIZE_PX * M_PER_PIXEL
 VIO_NOISE_STD = 10.0  # meters per step
 STEP_SIZE_M = 50.0  # meters per step
 UPDATE_INTERVAL_M = 100.0
-VIDEO_FILENAME = "dinovit_probmap_simulation.avi"
+VIDEO_FILENAME = "dinovit_chamfer_probmap_simulation.avi"
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
+USE_CHAMFER = True  # Set to True to use Chamfer similarity, False for VLAD concatenation
 
 # --- Load map and prepare database crops (grid cells) ---
 map_image = Image.open(MAP_IMAGE_PATH).convert("RGB")
@@ -43,6 +44,7 @@ GRID_W = (map_w - CROP_SIZE_PX) // CROP_STRIDE_PX + 1
 GRID_H = (map_h - CROP_SIZE_PX) // CROP_STRIDE_PX + 1
 
 print(f"Database grid: {GRID_W}x{GRID_H} = {len(db_images)} crops")
+print(f"Using {'Chamfer similarity' if USE_CHAMFER else 'VLAD concatenation + L2 distance'}")
 
 # --- Use fixed aerial vocabulary (FAIR: don't fit on same data) ---
 embedder = AnyLocVLADEmbedder(device=DEVICE)
@@ -85,9 +87,13 @@ print(f"Fitting VLAD vocabulary on {vocab_feats.shape[0]} features...")
 embedder.fit_vocabulary_from_features(vocab_feats)
 
 # Compute embeddings for database crops
-print("Computing embeddings for database crops...")
-db_embeddings = [embedder.get_embedding(img) for img in tqdm(db_images)]
-db_embeddings = np.stack(db_embeddings)
+if USE_CHAMFER:
+    print("Computing VLAD cluster vectors for database crops (Chamfer mode)...")
+    db_vlad_vectors = [embedder.get_vlad_vectors(img) for img in tqdm(db_images)]
+else:
+    print("Computing concatenated VLAD embeddings for database crops...")
+    db_embeddings = [embedder.get_embedding(img) for img in tqdm(db_images)]
+    db_embeddings = np.stack(db_embeddings)
 
 # --- Simulate drone trajectories ---
 def random_trajectory(start, steps, step_size, noise_std, bounds):
@@ -153,20 +159,38 @@ for step in tqdm(range(1, num_steps+1)):
         paste_y = max(0, -y0)
         query_crop.paste(crop_img, (paste_x, paste_y))
         
-        # Get query embedding
-        query_emb = embedder.get_embedding(query_crop)
-        
-        # Compute L2 distance to all database embeddings
-        l2_dists = np.linalg.norm(db_embeddings - query_emb, axis=1)
-        
-        # Get top-5 closest matches
-        top5_idx = np.argpartition(l2_dists, 5)[:5]
-        sorted_top5 = top5_idx[np.argsort(l2_dists[top5_idx])]
+        # Compute similarities
+        if USE_CHAMFER:
+            # Get query VLAD cluster vectors
+            query_vlad_vectors = embedder.get_vlad_vectors(query_crop)
+            
+            # Compute Chamfer similarity to all database crops
+            similarities = []
+            for db_vlad_vecs in db_vlad_vectors:
+                chamfer_sim = embedder.chamfer_similarity(query_vlad_vectors, db_vlad_vecs)
+                similarities.append(chamfer_sim)
+            similarities = np.array(similarities)
+            
+            # Get top-5 closest matches (highest Chamfer similarity)
+            top5_idx = np.argpartition(similarities, -5)[-5:]
+            sorted_top5 = top5_idx[np.argsort(similarities[top5_idx])[::-1]]  # Descending order
+            
+        else:
+            # Get query embedding
+            query_emb = embedder.get_embedding(query_crop)
+            
+            # Compute L2 distance to all database embeddings
+            l2_dists = np.linalg.norm(db_embeddings - query_emb, axis=1)
+            
+            # Get top-5 closest matches (lowest L2 distance)
+            top5_idx = np.argpartition(l2_dists, 5)[:5]
+            sorted_top5 = top5_idx[np.argsort(l2_dists[top5_idx])]
+            similarities = -l2_dists  # Convert to similarity scores for logging
         
         # Get the closest match position
         closest_idx = sorted_top5[0]
         closest_pos = db_centers_m[closest_idx]
-        closest_dist = l2_dists[closest_idx]
+        closest_score = similarities[closest_idx] if USE_CHAMFER else -l2_dists[closest_idx]
         
         # --- Recall@1 and Recall@5 with spatial tolerance ---
         # Calculate spatial distances from database centers to true position
@@ -184,9 +208,13 @@ for step in tqdm(range(1, num_steps+1)):
             recall5_count += 1
             
         # Log retrieval results
+        method_str = "Chamfer" if USE_CHAMFER else "L2"
         print(f"Step {step}: True pos: {true_pos}, Closest match: {closest_pos}")
-        print(f"  Embedding distance: {closest_dist:.4f}, Spatial distance: {top1_spatial_dist:.1f}m")
-        print(f"  Top-5 embedding distances: {l2_dists[sorted_top5]}")
+        print(f"  {method_str} score: {closest_score:.4f}, Spatial distance: {top1_spatial_dist:.1f}m")
+        if USE_CHAMFER:
+            print(f"  Top-5 Chamfer scores: {similarities[sorted_top5]}")
+        else:
+            print(f"  Top-5 L2 distances: {l2_dists[sorted_top5]}")
         print(f"  Top-5 spatial distances: {top5_spatial_dists}")
         print(f"  Spatial tolerance: {SPATIAL_TOL_M:.1f}m")
 
@@ -231,9 +259,10 @@ for step in tqdm(range(1, num_steps+1)):
     video_out.write(vis_resized)
 
 video_out.release()
+method_name = "Chamfer" if USE_CHAMFER else "VLAD"
 print(f"Simulation video saved to {VIDEO_FILENAME}")
 if recall_total > 0:
-    print(f"Final Recall@1: {recall1_count}/{recall_total} = {recall1_count/recall_total:.3f}")
-    print(f"Final Recall@5: {recall5_count}/{recall_total} = {recall5_count/recall_total:.3f}")
+    print(f"Final {method_name} Recall@1: {recall1_count}/{recall_total} = {recall1_count/recall_total:.3f}")
+    print(f"Final {method_name} Recall@5: {recall5_count}/{recall_total} = {recall5_count/recall_total:.3f}")
 else:
     print("No recall statistics to report.") 

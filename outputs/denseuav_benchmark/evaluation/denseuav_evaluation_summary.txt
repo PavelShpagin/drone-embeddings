@@ -1,0 +1,19 @@
+DenseUAV VLAD Evaluation Results
+===============================
+
+Queries: 50
+Gallery: 100
+Distance threshold: 25.0m
+Vocabulary clusters: 32
+
+Concatenated VLAD Results:
+  Recall@ 1:  48.0%
+  Recall@ 5:  58.0%
+  Recall@10:  58.0%
+  Recall@20:  62.0%
+
+Chamfer Similarity Results:
+  Recall@ 1:  56.0%
+  Recall@ 5:  56.0%
+  Recall@10:  60.0%
+  Recall@20:  60.0%

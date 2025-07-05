@@ -21,7 +21,7 @@ def fastbox3x2(image: np.ndarray) -> np.ndarray:
     return blurred
 
 
-def normalize(image: np.ndarray, contrasting: int = 1, blur_map_iters: int = 1) -> np.ndarray:
+def normalize(image: np.ndarray, contrasting: int = 1, blur_map_iters: int = 0) -> np.ndarray:
     """
     Normalizes contrast of an 8-bit grayscale image with local contrast adjustment.
 

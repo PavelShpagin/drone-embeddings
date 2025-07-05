@@ -1,0 +1,29 @@
+# Requirements for PyTorch Model Optimization for Raspberry Pi Zero
+# Core PyTorch and deep learning libraries
+torch>=1.13.0
+torchvision>=0.14.0
+torchtext>=0.14.0
+timm>=0.6.0
+
+# Model optimization libraries
+onnx>=1.12.0
+onnxruntime>=1.12.0
+onnxsim>=0.4.0
+
+# Quantization and optimization
+tensorflow>=2.10.0  # For TensorFlow Lite conversion
+tf2onnx>=1.13.0     # For ONNX to TFLite conversion
+
+# Analysis and profiling
+thop>=0.1.0         # For FLOPs calculation
+psutil>=5.9.0       # For memory monitoring
+pandas>=1.5.0       # For data analysis
+matplotlib>=3.5.0   # For plotting
+seaborn>=0.11.0     # For advanced plotting
+tqdm>=4.64.0        # For progress bars
+
+# Image processing
+Pillow>=9.0.0       # For image loading and processing
+numpy>=1.21.0       # For numerical operations
+
+# Note: json, logging, typing, and pathlib are built-in Python modules 
