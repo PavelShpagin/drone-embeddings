@@ -1,0 +1,26 @@
+{
+  "comparison_timestamp": "2025-07-05 20:41:33",
+  "methods_compared": [
+    "Cosine Similarity (2-c)/2",
+    "Exponential Distance exp(-e)"
+  ],
+  "cosine_metrics": {
+    "avg_recall_1": 0.05,
+    "avg_recall_5": 0.3,
+    "avg_position_error": 281.36589909596813,
+    "avg_confidence": 0.4294929556415945
+  },
+  "exp_metrics": {
+    "avg_recall_1": 0.45,
+    "avg_recall_5": 0.8,
+    "avg_position_error": 129.14666247992875,
+    "avg_confidence": 0.7178207049423231
+  },
+  "improvements": {
+    "recall_1": 800.0,
+    "recall_5": 166.66666666666669,
+    "position_error": -54.10010136449426,
+    "confidence": 67.13212533835684
+  },
+  "recommendation": "Exponential Distance"
+}
