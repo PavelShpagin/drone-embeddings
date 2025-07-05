@@ -1,0 +1,41 @@
+{
+  "comparison_timestamp": "2025-07-05 21:18:58",
+  "methods_analyzed": [
+    "Cosine Similarity (2-c)/2",
+    "Exponential Distance exp(-e)",
+    "Enhanced + SuperPoint"
+  ],
+  "best_methods": {
+    "Recall@1 (100m)": "Exponential exp(-e)",
+    "Recall@5 (200m)": "Enhanced + SuperPoint",
+    "Position Error (m)": "Exponential exp(-e)",
+    "Confidence Score": "Enhanced + SuperPoint"
+  },
+  "superpoint_improvements": {
+    "Recall@1": -25.92592592592593,
+    "Recall@5": 4.166666666666666,
+    "Position Error": 4.242884676538272,
+    "Confidence": 3.5521327608220346
+  },
+  "final_recommendation": "Enhanced + SuperPoint",
+  "summary": {
+    "cosine_metrics": {
+      "avg_recall_1": 0.05,
+      "avg_recall_5": 0.3,
+      "avg_position_error": 281.36589909596813,
+      "avg_confidence": 0.4294929556415945
+    },
+    "exponential_metrics": {
+      "avg_recall_1": 0.45,
+      "avg_recall_5": 0.8,
+      "avg_position_error": 129.14666247992875,
+      "avg_confidence": 0.7178207049423231
+    },
+    "enhanced_metrics": {
+      "avg_recall_1": 0.3333333333333333,
+      "avg_recall_5": 0.8333333333333334,
+      "avg_position_error": 134.62620643255025,
+      "avg_confidence": 0.743318649366543
+    }
+  }
+}
