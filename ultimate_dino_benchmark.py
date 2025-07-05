@@ -206,16 +206,16 @@ class UltimateDinoBenchmark:
         print("📊 Proper size calculations based on actual quantized models")
         print("=" * 80)
         
-        # Define ALL DINO model configurations
+        # Define ALL DINO model configurations with correct timm names
         models = {
-            'DINO-S/16': lambda: timm.create_model('dino_vits16', pretrained=True),
-            'DINO-S/8': lambda: timm.create_model('dino_vits8', pretrained=True),
-            'DINO-B/16': lambda: timm.create_model('dino_vitb16', pretrained=True),
-            'DINO-B/8': lambda: timm.create_model('dino_vitb8', pretrained=True),
-            'DINOv2-S/14': lambda: timm.create_model('dinov2_vits14', pretrained=True),
-            'DINOv2-B/14': lambda: timm.create_model('dinov2_vitb14', pretrained=True),
-            'DINOv2-L/14': lambda: timm.create_model('dinov2_vitl14', pretrained=True),
-            'DINOv2-G/14': lambda: timm.create_model('dinov2_vitg14', pretrained=True),
+            'DINO-S/16': lambda: timm.create_model('vit_small_patch16_224.dino', pretrained=True),
+            'DINO-S/8': lambda: timm.create_model('vit_small_patch8_224.dino', pretrained=True),
+            'DINO-B/16': lambda: timm.create_model('vit_base_patch16_224.dino', pretrained=True),
+            'DINO-B/8': lambda: timm.create_model('vit_base_patch8_224.dino', pretrained=True),
+            'DINOv2-S/14': lambda: timm.create_model('vit_small_patch14_dinov2.lvd142m', pretrained=True),
+            'DINOv2-B/14': lambda: timm.create_model('vit_base_patch14_dinov2.lvd142m', pretrained=True),
+            'DINOv2-L/14': lambda: timm.create_model('vit_large_patch14_dinov2.lvd142m', pretrained=True),
+            'DINOv2-G/14': lambda: timm.create_model('vit_giant_patch14_dinov2.lvd142m', pretrained=True),
         }
         
         # Test all quantization types
