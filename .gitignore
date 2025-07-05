@@ -132,6 +132,11 @@ output/
 *.onnx
 *.tflite
 
+# Exception: Allow SuperPoint trained weights
+!superpoint_uav_trained/*.pth
+!superpoint_v1.pth
+!**/superpoint_pretrained.pth
+
 # Large numpy arrays
 *.npy
 *.npz
