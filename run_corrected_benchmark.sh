@@ -288,11 +288,26 @@ echo "✓ PyTorch Mobile optimizations ARE working"
 echo "⚠ Mobile optimizations hurt x86 performance (expected)"
 echo "✓ Mobile optimizations will help Pi Zero ARM performance"
 echo "✓ Model sizes and quantization are properly measured"
+
+echo "🎯 CORRECTED DINO BENCHMARK"
+echo "🔧 Fixed quantization and size calculation issues"
+echo "📊 Proper theoretical vs actual size comparison"
+echo "================================================================="
+
+echo "🚀 Running corrected DINO benchmark..."
+python corrected_dino_benchmark.py
+
 echo ""
-echo "Files generated:"
-echo "📊 optimization_results/benchmark_results.json"
+echo "📊 Checking results..."
+if [ -f "corrected_dino_results.json" ]; then
+    echo "✅ Results saved to: corrected_dino_results.json"
+    echo "📄 Results file size: $(du -h corrected_dino_results.json | cut -f1)"
+else
+    echo "❌ No results file found!"
+fi
+
 echo ""
-echo "For Pi Zero deployment:"
-echo "1. Use 'original' or 'quantized' variants for best results"
-echo "2. Mobile variants will perform better on actual Pi Zero"
-echo "3. Focus on models < 50MB for Pi Zero's limited memory" 
+echo "🏁 Corrected DINO benchmark complete!"
+echo "🔧 This should fix the suspicious 1.5MB quantized sizes"
+echo "📊 Shows real quantization effectiveness vs theoretical"
+echo "🎯 Identifies if PyTorch quantization actually works for ViTs" 
