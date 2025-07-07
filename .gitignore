@@ -137,6 +137,11 @@ output/
 !superpoint_v1.pth
 !**/superpoint_pretrained.pth
 
+# Exception: Allow performance benchmark models (for Pi Zero testing)
+!perf_benchmark/models/*.pt
+!perf_benchmark/models/*.onnx
+!perf_benchmark/models/*.tflite
+
 # Large numpy arrays
 *.npy
 *.npz
