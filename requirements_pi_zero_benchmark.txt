@@ -1,0 +1,38 @@
+# Minimal Requirements for Pi Zero Performance Benchmarks
+# These are the ESSENTIAL packages needed for dino_tflite_fixed.py and related benchmarks
+
+# Core PyTorch (essential)
+torch>=1.13.0
+torchvision>=0.14.0
+timm>=0.6.0
+
+# Performance monitoring (essential)
+psutil>=5.9.0       # For memory monitoring
+numpy>=1.21.0       # For numerical operations
+
+# Data handling (essential)
+tqdm>=4.64.0        # For progress bars
+pandas>=1.5.0       # For data analysis (optional but recommended)
+
+# Image processing (if needed)
+Pillow>=9.0.0       # For image loading
+
+# Model analysis (lightweight)
+thop>=0.1.0         # For FLOPs calculation (optional)
+
+# ONNX support (if using ONNX benchmarks)
+# onnx>=1.12.0
+# onnxruntime>=1.12.0
+
+# TensorFlow Lite (if using TFLite benchmarks)
+# tensorflow>=2.9.0
+
+# NOT NEEDED FOR BASIC BENCHMARKS:
+# - matplotlib (visualization only)
+# - seaborn (visualization only)  
+# - opencv-python (not used in DINO benchmarks)
+# - jupyter (not needed for scripts)
+# - scikit-learn (not used in basic benchmarks)
+
+# Built-in Python modules (no installation needed):
+# - json, os, gc, time, warnings, pathlib, typing 
