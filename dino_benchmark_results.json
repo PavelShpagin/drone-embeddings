@@ -1,0 +1,160 @@
+{
+  "benchmark_info": {
+    "platform": "Raspberry Pi Zero Simulation",
+    "specs": {
+      "memory_mb": 512,
+      "cpu_cores": 1,
+      "cpu_freq_mhz": 1000,
+      "gpu": null,
+      "architecture": "ARM v6"
+    },
+    "timestamp": "2025-07-24 17:10:46",
+    "total_configurations": 12
+  },
+  "results": [
+    {
+      "model_name": "DINO-Micro",
+      "quantization": "none",
+      "memory_peak_mb": 54.81,
+      "memory_avg_mb": 43.85,
+      "inference_time_ms": 129.86,
+      "throughput_fps": 7.7,
+      "accuracy": 0.7234,
+      "model_size_mb": 3.19,
+      "cpu_usage_percent": 49.3,
+      "pi_zero_compatible": true
+    },
+    {
+      "model_name": "DINO-Micro",
+      "quantization": "8bit",
+      "memory_peak_mb": 30.18,
+      "memory_avg_mb": 24.14,
+      "inference_time_ms": 101.75,
+      "throughput_fps": 9.83,
+      "accuracy": 0.7135,
+      "model_size_mb": 0.8,
+      "cpu_usage_percent": 38.0,
+      "pi_zero_compatible": true
+    },
+    {
+      "model_name": "DINO-Micro",
+      "quantization": "4bit",
+      "memory_peak_mb": 23.06,
+      "memory_avg_mb": 18.45,
+      "inference_time_ms": 77.83,
+      "throughput_fps": 12.85,
+      "accuracy": 0.6536,
+      "model_size_mb": 0.4,
+      "cpu_usage_percent": 36.0,
+      "pi_zero_compatible": true
+    },
+    {
+      "model_name": "DINO-Micro",
+      "quantization": "binary",
+      "memory_peak_mb": 10.32,
+      "memory_avg_mb": 8.26,
+      "inference_time_ms": 45.16,
+      "throughput_fps": 22.14,
+      "accuracy": 0.5456,
+      "model_size_mb": 0.1,
+      "cpu_usage_percent": 40.8,
+      "pi_zero_compatible": true
+    },
+    {
+      "model_name": "DINO-Tiny",
+      "quantization": "none",
+      "memory_peak_mb": 61.08,
+      "memory_avg_mb": 48.87,
+      "inference_time_ms": 193.3,
+      "throughput_fps": 5.17,
+      "accuracy": 0.7685,
+      "model_size_mb": 8.45,
+      "cpu_usage_percent": 56.1,
+      "pi_zero_compatible": true
+    },
+    {
+      "model_name": "DINO-Tiny",
+      "quantization": "8bit",
+      "memory_peak_mb": 31.73,
+      "memory_avg_mb": 25.39,
+      "inference_time_ms": 156.68,
+      "throughput_fps": 6.38,
+      "accuracy": 0.7329,
+      "model_size_mb": 2.11,
+      "cpu_usage_percent": 42.4,
+      "pi_zero_compatible": true
+    },
+    {
+      "model_name": "DINO-Tiny",
+      "quantization": "4bit",
+      "memory_peak_mb": 25.04,
+      "memory_avg_mb": 20.03,
+      "inference_time_ms": 110.57,
+      "throughput_fps": 9.04,
+      "accuracy": 0.7097,
+      "model_size_mb": 1.06,
+      "cpu_usage_percent": 43.5,
+      "pi_zero_compatible": true
+    },
+    {
+      "model_name": "DINO-Tiny",
+      "quantization": "binary",
+      "memory_peak_mb": 12.15,
+      "memory_avg_mb": 9.72,
+      "inference_time_ms": 69.37,
+      "throughput_fps": 14.42,
+      "accuracy": 0.5597,
+      "model_size_mb": 0.26,
+      "cpu_usage_percent": 38.1,
+      "pi_zero_compatible": true
+    },
+    {
+      "model_name": "DINO-Small",
+      "quantization": "none",
+      "memory_peak_mb": 97.69,
+      "memory_avg_mb": 78.15,
+      "inference_time_ms": 311.2,
+      "throughput_fps": 3.21,
+      "accuracy": 0.7977,
+      "model_size_mb": 45.04,
+      "cpu_usage_percent": 95,
+      "pi_zero_compatible": true
+    },
+    {
+      "model_name": "DINO-Small",
+      "quantization": "8bit",
+      "memory_peak_mb": 57.61,
+      "memory_avg_mb": 46.09,
+      "inference_time_ms": 242.0,
+      "throughput_fps": 4.13,
+      "accuracy": 0.793,
+      "model_size_mb": 11.26,
+      "cpu_usage_percent": 62.9,
+      "pi_zero_compatible": true
+    },
+    {
+      "model_name": "DINO-Small",
+      "quantization": "4bit",
+      "memory_peak_mb": 39.71,
+      "memory_avg_mb": 31.77,
+      "inference_time_ms": 177.93,
+      "throughput_fps": 5.62,
+      "accuracy": 0.7332,
+      "model_size_mb": 5.63,
+      "cpu_usage_percent": 47.0,
+      "pi_zero_compatible": true
+    },
+    {
+      "model_name": "DINO-Small",
+      "quantization": "binary",
+      "memory_peak_mb": 18.98,
+      "memory_avg_mb": 15.18,
+      "inference_time_ms": 120.19,
+      "throughput_fps": 8.32,
+      "accuracy": 0.6027,
+      "model_size_mb": 1.41,
+      "cpu_usage_percent": 45.5,
+      "pi_zero_compatible": true
+    }
+  ]
+}
