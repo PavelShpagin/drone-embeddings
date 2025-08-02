@@ -1,0 +1,3 @@
+[submodule "drone-embeddings-server"]
+	path = drone-embeddings-server
+	url = https://github.com/PavelShpagin/drone-embeddings-server.git
