@@ -63,3 +63,14 @@ scikit-learn
 torchgeometry
 torchsummary
 coloredlogs
+
+# Google Earth Engine dependencies
+earthengine-api>=0.1.384
+geemap>=0.31.0
+google-cloud-storage>=2.10.0
+google-auth>=2.23.0
+python-dotenv>=1.0.0
+retry>=0.9.2
+
+# Google Maps API dependencies
+requests>=2.28.0
